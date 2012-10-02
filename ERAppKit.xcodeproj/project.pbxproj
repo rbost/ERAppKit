@@ -29,6 +29,7 @@
 		6C27B5CF161B955E002D1EF9 /* ERAppKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6C27B57B161B9158002D1EF9 /* ERAppKit.framework */; };
 		6C27B5D2161B983B002D1EF9 /* ERAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C27B57B161B9158002D1EF9 /* ERAppKit.framework */; };
 		6C27B5D8161B9CD4002D1EF9 /* doxyfile in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B5D7161B9CD4002D1EF9 /* doxyfile */; };
+		6C27B5E3161BA36B002D1EF9 /* LICENCE in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B5E2161BA36B002D1EF9 /* LICENCE */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@
 		6C27B5C9161B9480002D1EF9 /* ERDummyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERDummyView.h; sourceTree = "<group>"; };
 		6C27B5CA161B9480002D1EF9 /* ERDummyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERDummyView.m; sourceTree = "<group>"; };
 		6C27B5D7161B9CD4002D1EF9 /* doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = doxyfile; sourceTree = "<group>"; };
+		6C27B5E2161BA36B002D1EF9 /* LICENCE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENCE; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 		6C27B585161B9158002D1EF9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6C27B5E2161BA36B002D1EF9 /* LICENCE */,
 				6C27B5D7161B9CD4002D1EF9 /* doxyfile */,
 				6C27B586161B9158002D1EF9 /* ERAppKit-Info.plist */,
 				6C27B587161B9158002D1EF9 /* InfoPlist.strings */,
@@ -309,6 +312,7 @@
 			files = (
 				6C27B589161B9158002D1EF9 /* InfoPlist.strings in Resources */,
 				6C27B5D8161B9CD4002D1EF9 /* doxyfile in Resources */,
+				6C27B5E3161BA36B002D1EF9 /* LICENCE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,6 +523,7 @@
 				6C27B592161B9158002D1EF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6C27B5C6161B93EE002D1EF9 /* Build configuration list for PBXNativeTarget "ERAppKitDemo" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +532,7 @@
 				6C27B5C8161B93EE002D1EF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
