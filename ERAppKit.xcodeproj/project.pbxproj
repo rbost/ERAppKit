@@ -9,8 +9,50 @@
 /* Begin PBXBuildFile section */
 		6C27B57F161B9158002D1EF9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C27B57E161B9158002D1EF9 /* Cocoa.framework */; };
 		6C27B589161B9158002D1EF9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B587161B9158002D1EF9 /* InfoPlist.strings */; };
-		6C27B58D161B9158002D1EF9 /* ERAppKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B58C161B9158002D1EF9 /* ERAppKit.m */; };
+		6C27B5A3161B91CD002D1EF9 /* ERFadingAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B598161B91CD002D1EF9 /* ERFadingAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C27B5A4161B91CD002D1EF9 /* ERFadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B599161B91CD002D1EF9 /* ERFadingAnimation.m */; };
+		6C27B5A5161B91CD002D1EF9 /* ERMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B59B161B91CD002D1EF9 /* ERMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C27B5A6161B91CD002D1EF9 /* ERMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B59C161B91CD002D1EF9 /* ERMenu.m */; };
+		6C27B5A7161B91CD002D1EF9 /* ERRadialMenuItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B59D161B91CD002D1EF9 /* ERRadialMenuItem.h */; };
+		6C27B5A8161B91CD002D1EF9 /* ERRadialMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B59E161B91CD002D1EF9 /* ERRadialMenuItem.m */; };
+		6C27B5A9161B91CD002D1EF9 /* ERRadialMenuView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B59F161B91CD002D1EF9 /* ERRadialMenuView.h */; };
+		6C27B5AA161B91CD002D1EF9 /* ERRadialMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B5A0161B91CD002D1EF9 /* ERRadialMenuView.m */; };
+		6C27B5AB161B91CD002D1EF9 /* ERRadialMenuWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B5A1161B91CD002D1EF9 /* ERRadialMenuWindow.h */; };
+		6C27B5AC161B91CD002D1EF9 /* ERRadialMenuWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B5A2161B91CD002D1EF9 /* ERRadialMenuWindow.m */; };
+		6C27B5B3161B93EE002D1EF9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C27B57E161B9158002D1EF9 /* Cocoa.framework */; };
+		6C27B5B9161B93EE002D1EF9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B5B7161B93EE002D1EF9 /* InfoPlist.strings */; };
+		6C27B5BB161B93EE002D1EF9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B5BA161B93EE002D1EF9 /* main.m */; };
+		6C27B5BF161B93EE002D1EF9 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B5BD161B93EE002D1EF9 /* Credits.rtf */; };
+		6C27B5C2161B93EE002D1EF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B5C1161B93EE002D1EF9 /* AppDelegate.m */; };
+		6C27B5C5161B93EE002D1EF9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B5C3161B93EE002D1EF9 /* MainMenu.xib */; };
+		6C27B5CB161B9480002D1EF9 /* ERDummyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B5CA161B9480002D1EF9 /* ERDummyView.m */; };
+		6C27B5CF161B955E002D1EF9 /* ERAppKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6C27B57B161B9158002D1EF9 /* ERAppKit.framework */; };
+		6C27B5D2161B983B002D1EF9 /* ERAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C27B57B161B9158002D1EF9 /* ERAppKit.framework */; };
+		6C27B5D8161B9CD4002D1EF9 /* doxyfile in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B5D7161B9CD4002D1EF9 /* doxyfile */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6C27B5D0161B9829002D1EF9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6C27B571161B9157002D1EF9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6C27B57A161B9158002D1EF9;
+			remoteInfo = ERAppKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6C27B5CE161B9559002D1EF9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6C27B5CF161B955E002D1EF9 /* ERAppKit.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6C27B57B161B9158002D1EF9 /* ERAppKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ERAppKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,7 +64,28 @@
 		6C27B588161B9158002D1EF9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6C27B58A161B9158002D1EF9 /* ERAppKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ERAppKit-Prefix.pch"; sourceTree = "<group>"; };
 		6C27B58B161B9158002D1EF9 /* ERAppKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ERAppKit.h; sourceTree = "<group>"; };
-		6C27B58C161B9158002D1EF9 /* ERAppKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ERAppKit.m; sourceTree = "<group>"; };
+		6C27B598161B91CD002D1EF9 /* ERFadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERFadingAnimation.h; sourceTree = "<group>"; };
+		6C27B599161B91CD002D1EF9 /* ERFadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERFadingAnimation.m; sourceTree = "<group>"; };
+		6C27B59B161B91CD002D1EF9 /* ERMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERMenu.h; sourceTree = "<group>"; };
+		6C27B59C161B91CD002D1EF9 /* ERMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERMenu.m; sourceTree = "<group>"; };
+		6C27B59D161B91CD002D1EF9 /* ERRadialMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERRadialMenuItem.h; sourceTree = "<group>"; };
+		6C27B59E161B91CD002D1EF9 /* ERRadialMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERRadialMenuItem.m; sourceTree = "<group>"; };
+		6C27B59F161B91CD002D1EF9 /* ERRadialMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERRadialMenuView.h; sourceTree = "<group>"; };
+		6C27B5A0161B91CD002D1EF9 /* ERRadialMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERRadialMenuView.m; sourceTree = "<group>"; };
+		6C27B5A1161B91CD002D1EF9 /* ERRadialMenuWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERRadialMenuWindow.h; sourceTree = "<group>"; };
+		6C27B5A2161B91CD002D1EF9 /* ERRadialMenuWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERRadialMenuWindow.m; sourceTree = "<group>"; };
+		6C27B5B1161B93EE002D1EF9 /* ERAppKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ERAppKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C27B5B6161B93EE002D1EF9 /* ERAppKitDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ERAppKitDemo-Info.plist"; sourceTree = "<group>"; };
+		6C27B5B8161B93EE002D1EF9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6C27B5BA161B93EE002D1EF9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6C27B5BC161B93EE002D1EF9 /* ERAppKitDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ERAppKitDemo-Prefix.pch"; sourceTree = "<group>"; };
+		6C27B5BE161B93EE002D1EF9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		6C27B5C0161B93EE002D1EF9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		6C27B5C1161B93EE002D1EF9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		6C27B5C4161B93EE002D1EF9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		6C27B5C9161B9480002D1EF9 /* ERDummyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERDummyView.h; sourceTree = "<group>"; };
+		6C27B5CA161B9480002D1EF9 /* ERDummyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERDummyView.m; sourceTree = "<group>"; };
+		6C27B5D7161B9CD4002D1EF9 /* doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = doxyfile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +97,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6C27B5AE161B93EE002D1EF9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C27B5B3161B93EE002D1EF9 /* Cocoa.framework in Frameworks */,
+				6C27B5D2161B983B002D1EF9 /* ERAppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -41,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				6C27B584161B9158002D1EF9 /* ERAppKit */,
+				6C27B5B4161B93EE002D1EF9 /* ERAppKitDemo */,
 				6C27B57D161B9158002D1EF9 /* Frameworks */,
 				6C27B57C161B9158002D1EF9 /* Products */,
 			);
@@ -50,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				6C27B57B161B9158002D1EF9 /* ERAppKit.framework */,
+				6C27B5B1161B93EE002D1EF9 /* ERAppKitDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -77,7 +151,8 @@
 			isa = PBXGroup;
 			children = (
 				6C27B58B161B9158002D1EF9 /* ERAppKit.h */,
-				6C27B58C161B9158002D1EF9 /* ERAppKit.m */,
+				6C27B597161B91CD002D1EF9 /* Animations */,
+				6C27B59A161B91CD002D1EF9 /* Radial Menu */,
 				6C27B585161B9158002D1EF9 /* Supporting Files */,
 			);
 			path = ERAppKit;
@@ -86,9 +161,61 @@
 		6C27B585161B9158002D1EF9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6C27B5D7161B9CD4002D1EF9 /* doxyfile */,
 				6C27B586161B9158002D1EF9 /* ERAppKit-Info.plist */,
 				6C27B587161B9158002D1EF9 /* InfoPlist.strings */,
 				6C27B58A161B9158002D1EF9 /* ERAppKit-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6C27B597161B91CD002D1EF9 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				6C27B598161B91CD002D1EF9 /* ERFadingAnimation.h */,
+				6C27B599161B91CD002D1EF9 /* ERFadingAnimation.m */,
+			);
+			name = Animations;
+			path = src/Animations;
+			sourceTree = "<group>";
+		};
+		6C27B59A161B91CD002D1EF9 /* Radial Menu */ = {
+			isa = PBXGroup;
+			children = (
+				6C27B59B161B91CD002D1EF9 /* ERMenu.h */,
+				6C27B59C161B91CD002D1EF9 /* ERMenu.m */,
+				6C27B59D161B91CD002D1EF9 /* ERRadialMenuItem.h */,
+				6C27B59E161B91CD002D1EF9 /* ERRadialMenuItem.m */,
+				6C27B59F161B91CD002D1EF9 /* ERRadialMenuView.h */,
+				6C27B5A0161B91CD002D1EF9 /* ERRadialMenuView.m */,
+				6C27B5A1161B91CD002D1EF9 /* ERRadialMenuWindow.h */,
+				6C27B5A2161B91CD002D1EF9 /* ERRadialMenuWindow.m */,
+			);
+			name = "Radial Menu";
+			path = "src/Radial Menu";
+			sourceTree = "<group>";
+		};
+		6C27B5B4161B93EE002D1EF9 /* ERAppKitDemo */ = {
+			isa = PBXGroup;
+			children = (
+				6C27B5C0161B93EE002D1EF9 /* AppDelegate.h */,
+				6C27B5C1161B93EE002D1EF9 /* AppDelegate.m */,
+				6C27B5C9161B9480002D1EF9 /* ERDummyView.h */,
+				6C27B5CA161B9480002D1EF9 /* ERDummyView.m */,
+				6C27B5C3161B93EE002D1EF9 /* MainMenu.xib */,
+				6C27B5B5161B93EE002D1EF9 /* Supporting Files */,
+			);
+			path = ERAppKitDemo;
+			sourceTree = "<group>";
+		};
+		6C27B5B5161B93EE002D1EF9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6C27B5B6161B93EE002D1EF9 /* ERAppKitDemo-Info.plist */,
+				6C27B5B7161B93EE002D1EF9 /* InfoPlist.strings */,
+				6C27B5BA161B93EE002D1EF9 /* main.m */,
+				6C27B5BC161B93EE002D1EF9 /* ERAppKitDemo-Prefix.pch */,
+				6C27B5BD161B93EE002D1EF9 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -100,6 +227,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C27B5A5161B91CD002D1EF9 /* ERMenu.h in Headers */,
+				6C27B5A3161B91CD002D1EF9 /* ERFadingAnimation.h in Headers */,
+				6C27B5A7161B91CD002D1EF9 /* ERRadialMenuItem.h in Headers */,
+				6C27B5A9161B91CD002D1EF9 /* ERRadialMenuView.h in Headers */,
+				6C27B5AB161B91CD002D1EF9 /* ERRadialMenuWindow.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +256,25 @@
 			productReference = 6C27B57B161B9158002D1EF9 /* ERAppKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		6C27B5B0161B93EE002D1EF9 /* ERAppKitDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C27B5C6161B93EE002D1EF9 /* Build configuration list for PBXNativeTarget "ERAppKitDemo" */;
+			buildPhases = (
+				6C27B5AD161B93EE002D1EF9 /* Sources */,
+				6C27B5AE161B93EE002D1EF9 /* Frameworks */,
+				6C27B5AF161B93EE002D1EF9 /* Resources */,
+				6C27B5CE161B9559002D1EF9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6C27B5D1161B9829002D1EF9 /* PBXTargetDependency */,
+			);
+			name = ERAppKitDemo;
+			productName = ERAppKitDemo;
+			productReference = 6C27B5B1161B93EE002D1EF9 /* ERAppKitDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -146,6 +297,7 @@
 			projectRoot = "";
 			targets = (
 				6C27B57A161B9158002D1EF9 /* ERAppKit */,
+				6C27B5B0161B93EE002D1EF9 /* ERAppKitDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -156,6 +308,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C27B589161B9158002D1EF9 /* InfoPlist.strings in Resources */,
+				6C27B5D8161B9CD4002D1EF9 /* doxyfile in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C27B5AF161B93EE002D1EF9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C27B5B9161B93EE002D1EF9 /* InfoPlist.strings in Resources */,
+				6C27B5BF161B93EE002D1EF9 /* Credits.rtf in Resources */,
+				6C27B5C5161B93EE002D1EF9 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,11 +329,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C27B58D161B9158002D1EF9 /* ERAppKit.m in Sources */,
+				6C27B5A4161B91CD002D1EF9 /* ERFadingAnimation.m in Sources */,
+				6C27B5A6161B91CD002D1EF9 /* ERMenu.m in Sources */,
+				6C27B5A8161B91CD002D1EF9 /* ERRadialMenuItem.m in Sources */,
+				6C27B5AA161B91CD002D1EF9 /* ERRadialMenuView.m in Sources */,
+				6C27B5AC161B91CD002D1EF9 /* ERRadialMenuWindow.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C27B5AD161B93EE002D1EF9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C27B5BB161B93EE002D1EF9 /* main.m in Sources */,
+				6C27B5C2161B93EE002D1EF9 /* AppDelegate.m in Sources */,
+				6C27B5CB161B9480002D1EF9 /* ERDummyView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6C27B5D1161B9829002D1EF9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6C27B57A161B9158002D1EF9 /* ERAppKit */;
+			targetProxy = 6C27B5D0161B9829002D1EF9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		6C27B587161B9158002D1EF9 /* InfoPlist.strings */ = {
@@ -179,6 +364,30 @@
 				6C27B588161B9158002D1EF9 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		6C27B5B7161B93EE002D1EF9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6C27B5B8161B93EE002D1EF9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		6C27B5BD161B93EE002D1EF9 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6C27B5BE161B93EE002D1EF9 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		6C27B5C3161B93EE002D1EF9 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6C27B5C4161B93EE002D1EF9 /* en */,
+			);
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -245,6 +454,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ERAppKit/ERAppKit-Prefix.pch";
 				INFOPLIST_FILE = "ERAppKit/ERAppKit-Info.plist";
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -260,8 +470,33 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ERAppKit/ERAppKit-Prefix.pch";
 				INFOPLIST_FILE = "ERAppKit/ERAppKit-Info.plist";
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		6C27B5C7161B93EE002D1EF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ERAppKitDemo/ERAppKitDemo-Prefix.pch";
+				INFOPLIST_FILE = "ERAppKitDemo/ERAppKitDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		6C27B5C8161B93EE002D1EF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ERAppKitDemo/ERAppKitDemo-Prefix.pch";
+				INFOPLIST_FILE = "ERAppKitDemo/ERAppKitDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
@@ -282,6 +517,14 @@
 			buildConfigurations = (
 				6C27B591161B9158002D1EF9 /* Debug */,
 				6C27B592161B9158002D1EF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		6C27B5C6161B93EE002D1EF9 /* Build configuration list for PBXNativeTarget "ERAppKitDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C27B5C7161B93EE002D1EF9 /* Debug */,
+				6C27B5C8161B93EE002D1EF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
