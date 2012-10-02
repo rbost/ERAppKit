@@ -1,0 +1,291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6C27B57F161B9158002D1EF9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C27B57E161B9158002D1EF9 /* Cocoa.framework */; };
+		6C27B589161B9158002D1EF9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B587161B9158002D1EF9 /* InfoPlist.strings */; };
+		6C27B58D161B9158002D1EF9 /* ERAppKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B58C161B9158002D1EF9 /* ERAppKit.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6C27B57B161B9158002D1EF9 /* ERAppKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ERAppKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C27B57E161B9158002D1EF9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		6C27B581161B9158002D1EF9 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		6C27B582161B9158002D1EF9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		6C27B583161B9158002D1EF9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6C27B586161B9158002D1EF9 /* ERAppKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ERAppKit-Info.plist"; sourceTree = "<group>"; };
+		6C27B588161B9158002D1EF9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6C27B58A161B9158002D1EF9 /* ERAppKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ERAppKit-Prefix.pch"; sourceTree = "<group>"; };
+		6C27B58B161B9158002D1EF9 /* ERAppKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ERAppKit.h; sourceTree = "<group>"; };
+		6C27B58C161B9158002D1EF9 /* ERAppKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ERAppKit.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6C27B577161B9158002D1EF9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C27B57F161B9158002D1EF9 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6C27B56F161B9157002D1EF9 = {
+			isa = PBXGroup;
+			children = (
+				6C27B584161B9158002D1EF9 /* ERAppKit */,
+				6C27B57D161B9158002D1EF9 /* Frameworks */,
+				6C27B57C161B9158002D1EF9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6C27B57C161B9158002D1EF9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6C27B57B161B9158002D1EF9 /* ERAppKit.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6C27B57D161B9158002D1EF9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6C27B57E161B9158002D1EF9 /* Cocoa.framework */,
+				6C27B580161B9158002D1EF9 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6C27B580161B9158002D1EF9 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6C27B581161B9158002D1EF9 /* AppKit.framework */,
+				6C27B582161B9158002D1EF9 /* CoreData.framework */,
+				6C27B583161B9158002D1EF9 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		6C27B584161B9158002D1EF9 /* ERAppKit */ = {
+			isa = PBXGroup;
+			children = (
+				6C27B58B161B9158002D1EF9 /* ERAppKit.h */,
+				6C27B58C161B9158002D1EF9 /* ERAppKit.m */,
+				6C27B585161B9158002D1EF9 /* Supporting Files */,
+			);
+			path = ERAppKit;
+			sourceTree = "<group>";
+		};
+		6C27B585161B9158002D1EF9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6C27B586161B9158002D1EF9 /* ERAppKit-Info.plist */,
+				6C27B587161B9158002D1EF9 /* InfoPlist.strings */,
+				6C27B58A161B9158002D1EF9 /* ERAppKit-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		6C27B578161B9158002D1EF9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		6C27B57A161B9158002D1EF9 /* ERAppKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C27B590161B9158002D1EF9 /* Build configuration list for PBXNativeTarget "ERAppKit" */;
+			buildPhases = (
+				6C27B576161B9158002D1EF9 /* Sources */,
+				6C27B577161B9158002D1EF9 /* Frameworks */,
+				6C27B578161B9158002D1EF9 /* Headers */,
+				6C27B579161B9158002D1EF9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ERAppKit;
+			productName = ERAppKit;
+			productReference = 6C27B57B161B9158002D1EF9 /* ERAppKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6C27B571161B9157002D1EF9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Evan Altman, Raphael Bost";
+			};
+			buildConfigurationList = 6C27B574161B9157002D1EF9 /* Build configuration list for PBXProject "ERAppKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6C27B56F161B9157002D1EF9;
+			productRefGroup = 6C27B57C161B9158002D1EF9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6C27B57A161B9158002D1EF9 /* ERAppKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6C27B579161B9158002D1EF9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C27B589161B9158002D1EF9 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6C27B576161B9158002D1EF9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C27B58D161B9158002D1EF9 /* ERAppKit.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		6C27B587161B9158002D1EF9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6C27B588161B9158002D1EF9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6C27B58E161B9158002D1EF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		6C27B58F161B9158002D1EF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		6C27B591161B9158002D1EF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ERAppKit/ERAppKit-Prefix.pch";
+				INFOPLIST_FILE = "ERAppKit/ERAppKit-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		6C27B592161B9158002D1EF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ERAppKit/ERAppKit-Prefix.pch";
+				INFOPLIST_FILE = "ERAppKit/ERAppKit-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6C27B574161B9157002D1EF9 /* Build configuration list for PBXProject "ERAppKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C27B58E161B9158002D1EF9 /* Debug */,
+				6C27B58F161B9158002D1EF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6C27B590161B9158002D1EF9 /* Build configuration list for PBXNativeTarget "ERAppKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C27B591161B9158002D1EF9 /* Debug */,
+				6C27B592161B9158002D1EF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6C27B571161B9157002D1EF9 /* Project object */;
+}
