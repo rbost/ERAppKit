@@ -17,8 +17,13 @@ typedef enum{
 } ERFadingAnimationType;
 
 @interface ERFadingAnimation : NSAnimation
+{
+    @protected
+    NSWindow *_window;
+    ERFadingAnimationType _type;
+}
 @property (assign) NSWindow *window;
-@property (assign) int type;
+@property (assign) ERFadingAnimationType type;
 
 - (id)initWithDuration:(NSTimeInterval)duration animationCurve:(NSAnimationCurve)animationCurve window:(NSWindow *)target animationType:(ERFadingAnimationType)aType;
 - (id)initWithDuration:(NSTimeInterval)duration animationCurve:(NSAnimationCurve)animationCurve window:(NSWindow *)target endAlpha:(CGFloat)alpha;

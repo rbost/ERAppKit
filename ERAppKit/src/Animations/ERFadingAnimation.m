@@ -72,5 +72,6 @@
 }
 
 @synthesize startAlpha, endAlpha;
+@synthesize window = _window, type = _type;
 
 @end

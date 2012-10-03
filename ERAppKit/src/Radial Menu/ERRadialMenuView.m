@@ -13,8 +13,8 @@
 @interface ERRadialMenuView ()
 @property (readwrite,copy) NSArray *radialMenuItems; // we want the menu items to be assigned once, at the intialization
 @property (assign) ERRadialMenuItem *selectedItem;
-@property (assign) ERRadialMenuView *superMenu;
-@property (retain) ERRadialMenuView *subMenu;
+@property (assign) ERRadialMenuView *supermenu;
+@property (retain) ERRadialMenuView *submenu;
 
 - (void)_submenuResign;
 - (void)_closeCascadingMenus;
@@ -86,7 +86,7 @@
 - (void)dealloc
 {
     [self setRadialMenuItems:nil];
-    [self setSubMenu:nil];
+    [self setSubmenu:nil];
     
     [_menu release];
     
@@ -110,6 +110,7 @@
 }
 
 @synthesize radialMenuItems = _radialMenuItems, selectedItem = _selectedItem, menu = _menu;
+@synthesize submenu = _submenu, supermenu = _supermenu;
 
 - (NSInteger)numberOfItems
 {
@@ -179,8 +180,8 @@
     // trigger action depending on the selected item
 
     if ([[self selectedItem] isCentral]) {
-        if ([self superMenu]) {
-            [[self superMenu] closeSubmenu:self];
+        if ([self supermenu]) {
+            [[self supermenu] closeSubmenu:self];
 
         }else{ // we are the main menu
             [[self window] close];
@@ -192,8 +193,8 @@
             // open a new menu for the submenu
             ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[item submenu] atLocation:[[self selectedItem] centerPoint] inView:self];
             
-            [(ERRadialMenuView *)[menuWindow contentView] setSuperMenu:self];
-            [self setSubMenu:[menuWindow contentView]];
+            [(ERRadialMenuView *)[menuWindow contentView] setSupermenu:self];
+            [self setSubmenu:[menuWindow contentView]];
             
             [menuWindow makeKeyAndOrderFront:self];
             [menuWindow fadeIn:self];
@@ -206,7 +207,7 @@
             
         }else{
             [NSApp sendAction:[item action] to:[item target] from:item];
-            [[self superMenu] _closeCascadingMenus];
+            [[self supermenu] _closeCascadingMenus];
             [[self window] close];
             
         }
@@ -218,13 +219,13 @@
 - (void)windowResign
 {
 //   NSLog(@"window resigns");
-    if ([self subMenu]) {
+    if ([self submenu]) {
         // we have a submenu
     }else{
         // we are the top menu
 
         // tell the supermenu we are resigning
-        ERRadialMenuView *superMenu = [self superMenu];
+        ERRadialMenuView *superMenu = [self supermenu];
         // close ourself
         [[self window] close];
 
@@ -254,15 +255,15 @@
     
     if([self selectedItem]){
         // the click happened in our menu, great !
-        [[self subMenu] setSuperMenu:nil];
-        [self setSubMenu:nil];
+        [[self submenu] setSupermenu:nil];
+        [self setSubmenu:nil];
         [[self window] makeKeyWindow];
 //        [self cascadingSendFront:self];
         [self cascadingSendToLevel:1.0];
 
     }else{
         // mouse outside -> close
-        [[self superMenu] _submenuResign];
+        [[self supermenu] _submenuResign];
         [[self window] close];
     }
     
@@ -271,9 +272,9 @@
 - (void)closeSubmenu:(id)sender
 {
 //    NSLog(@"close submenu");
-    ERRadialMenuView *sub = [self subMenu];
-    [[self subMenu] setSuperMenu:nil];
-    [self setSubMenu:nil];
+    ERRadialMenuView *sub = [self submenu];
+    [[self submenu] setSupermenu:nil];
+    [self setSubmenu:nil];
     [[sub window] close];
     [[self window] makeKeyWindow];
     [self cascadingSendFront:self];
@@ -281,9 +282,9 @@
 
 - (void)_closeCascadingMenus
 {
-    [[self subMenu] setSuperMenu:nil];
-    [self setSubMenu:nil];
-    [[self superMenu] _closeCascadingMenus];
+    [[self submenu] setSupermenu:nil];
+    [self setSubmenu:nil];
+    [[self supermenu] _closeCascadingMenus];
     [[self window] close];
 }
 - (void)sendBack:(id)sender
@@ -296,7 +297,7 @@
 {
     [self sendBack:sender];
 
-    [[self superMenu] cascadingSendBack:sender];
+    [[self supermenu] cascadingSendBack:sender];
 }
 
 - (void)sendFront:(id)sender
@@ -309,7 +310,7 @@
 {
     [self sendFront:sender];
     
-    [[self superMenu] cascadingSendFront:sender];
+    [[self supermenu] cascadingSendFront:sender];
 }
 
 - (void)cascadingSendToLevel:(CGFloat)alpha
@@ -317,7 +318,7 @@
     if([[self window] respondsToSelector:@selector(fadeToAlpha:)])
         [(ERRadialMenuWindow *)[self window] fadeToAlpha:alpha];
     
-    [[self superMenu] cascadingSendToLevel:alpha/2.];
+    [[self supermenu] cascadingSendToLevel:alpha/2.];
 
 }
 

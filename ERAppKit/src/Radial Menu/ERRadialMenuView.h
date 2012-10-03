@@ -17,10 +17,15 @@
 
 @interface ERRadialMenuView : NSView
 {
-    @private
+    @protected
     NSMenu *_menu;
     NSArray *_radialMenuItems;
+    
+    @private
     ERRadialMenuItem *_selectedItem;
+    
+    ERRadialMenuView *_supermenu;
+    ERRadialMenuView *_submenu;
 }
 @property (readonly,copy) NSArray *radialMenuItems;
 @property (readonly) ERRadialMenuItem *selectedItem;
