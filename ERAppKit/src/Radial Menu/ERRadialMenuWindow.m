@@ -29,23 +29,29 @@
 @implementation ERRadialMenuWindow
 - (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view
 {
+    // first of all, intialize the menu view which will be our content view
+    // it takes care about displaying the menu and calculating the necessary content frame we need
     ERRadialMenuView *menuView = [[ERRadialMenuView alloc] initWithMenu:menu];
     NSRect contentRect = NSZeroRect;
     
+    // get the location on the screen
     if(view){
         loc = [view convertPoint:loc toView:nil];
         NSRect convertRect; convertRect.origin = loc; convertRect.size = NSZeroSize;
         loc = [[view window] convertRectToScreen:convertRect].origin;
     }
     
-    
+    // set the size of the content rect
     contentRect.size = [menuView frame].size;
+    // and center it on the location
     contentRect.origin = loc;
     contentRect.origin.x -= contentRect.size.width/2.;
     contentRect.origin.y -= contentRect.size.height/2.;
     
+    // be sure we use a par of the screen which is visible
     contentRect = ERPutRectInRectWithMargin(contentRect, [[NSScreen mainScreen] visibleFrame],ERMenuXMargin,ERMenuYMargin);
     
+    // now, let's create ourself ...
 	self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
 	
 	[self setMovableByWindowBackground:NO];
@@ -53,28 +59,30 @@
     [self setBackgroundColor: [NSColor clearColor]];
     [self setHasShadow: YES];
 	[self setShowsResizeIndicator:YES];
-    [self setContentView:menuView]; [menuView release];
-    [self setAlphaValue:0.];
     
+    // set the content view
+    [self setContentView:menuView]; [menuView release];
+    // hide ourself; we will we showed when ordered front
+    [self setAlphaValue:0.];
+    // to have a pretty animation when opening the menu
+    [self setAnimationBehavior:NSWindowAnimationBehaviorAlertPanel];
+
+    
+    // we accept mouse moved event to track mouse position on the menu
     [self setAcceptsMouseMovedEvents:YES];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(windowWillClose:)
-                                                 name:NSWindowWillCloseNotification
-                                               object:self];
-    
-    [self setAnimationBehavior:NSWindowAnimationBehaviorAlertPanel];
 	return self;
 }
 
 - (void)dealloc
 {
+    // stop the current animation 
     [_currentAnimation stopAnimation];
 
     [super dealloc];
 }
 
-
+// launch animation when opening the menu
 - (void)fadeIn:(id)sender
 {
     ERFadingAnimation *animation = [[ERFadingAnimation alloc] initWithDuration:.2 animationCurve:NSAnimationLinear window:self animationType:ERFadeInAnimation];
@@ -87,6 +95,7 @@
     [animation release];
 }
 
+// launch animation when closing the menu
 - (void)fadeOut:(id)sender
 {
     ERFadingAnimation *animation = [[ERFadingAnimation alloc] initWithDuration:.2 animationCurve:NSAnimationLinear window:self animationType:ERFadeOutAnimation];
@@ -99,6 +108,7 @@
     [animation release];
 }
 
+// launch animation when opening a submenu
 - (void)fadeBack:(id)sender
 {
     ERFadingAnimation *animation = [[ERFadingAnimation alloc] initWithDuration:.2 animationCurve:NSAnimationLinear window:self animationType:ERFadeBackAnimation];
@@ -111,6 +121,7 @@
     [animation release];
 }
 
+// launch animation when closing a submenu
 - (void)fadeFront:(id)sender
 {
     ERFadingAnimation *animation = [[ERFadingAnimation alloc] initWithDuration:.2 animationCurve:NSAnimationLinear window:self animationType:ERFadeFrontAnimation];
@@ -123,6 +134,7 @@
     [animation release];
 }
 
+// launch animation to fade to a specific opacity
 - (void)fadeToAlpha:(CGFloat)alpha
 {
     ERFadingAnimation *animation = [[ERFadingAnimation alloc] initWithDuration:.2 animationCurve:NSAnimationLinear window:self endAlpha:alpha];
@@ -146,10 +158,12 @@
 
 - (BOOL)canBecomeKeyWindow
 {
+    // we have to override this method as the implementation of NSWindow return NO when the window has NSBorderlessWindowMask
     return YES;
 }
 - (void)resignKeyWindow
 {
+    // override this to catch clicks outside the menu
     [super resignKeyWindow];
     [(ERRadialMenuView *)[self contentView] windowResign];
 }
@@ -170,15 +184,8 @@
 
 
 // override close method to perform a fade out
-
 - (void)close
 {
     [self fadeOut:self];
 }
-
-- (void)windowWillClose:(NSNotification *)note
-{
-//    [self fadeOut:self];
-}
-
 @end
