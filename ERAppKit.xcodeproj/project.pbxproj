@@ -30,6 +30,8 @@
 		6C27B5D2161B983B002D1EF9 /* ERAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C27B57B161B9158002D1EF9 /* ERAppKit.framework */; };
 		6C27B5D8161B9CD4002D1EF9 /* doxyfile in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B5D7161B9CD4002D1EF9 /* doxyfile */; };
 		6C27B5E3161BA36B002D1EF9 /* LICENCE in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B5E2161BA36B002D1EF9 /* LICENCE */; };
+		6C27B5E6161E1224002D1EF9 /* ERGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B5E4161E1224002D1EF9 /* ERGeometry.h */; };
+		6C27B5E7161E1224002D1EF9 /* ERGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B5E5161E1224002D1EF9 /* ERGeometry.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +90,8 @@
 		6C27B5CA161B9480002D1EF9 /* ERDummyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERDummyView.m; sourceTree = "<group>"; };
 		6C27B5D7161B9CD4002D1EF9 /* doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = doxyfile; sourceTree = "<group>"; };
 		6C27B5E2161BA36B002D1EF9 /* LICENCE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENCE; sourceTree = SOURCE_ROOT; };
+		6C27B5E4161E1224002D1EF9 /* ERGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERGeometry.h; path = src/Tools/ERGeometry.h; sourceTree = "<group>"; };
+		6C27B5E5161E1224002D1EF9 /* ERGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERGeometry.m; path = src/Tools/ERGeometry.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +160,7 @@
 				6C27B597161B91CD002D1EF9 /* Animations */,
 				6C27B59A161B91CD002D1EF9 /* Radial Menu */,
 				6C27B585161B9158002D1EF9 /* Supporting Files */,
+				6C27B5E8161E122B002D1EF9 /* Tools */,
 			);
 			path = ERAppKit;
 			sourceTree = "<group>";
@@ -223,6 +228,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		6C27B5E8161E122B002D1EF9 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				6C27B5E4161E1224002D1EF9 /* ERGeometry.h */,
+				6C27B5E5161E1224002D1EF9 /* ERGeometry.m */,
+			);
+			name = Tools;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -235,6 +249,7 @@
 				6C27B5A7161B91CD002D1EF9 /* ERRadialMenuItem.h in Headers */,
 				6C27B5A9161B91CD002D1EF9 /* ERRadialMenuView.h in Headers */,
 				6C27B5AB161B91CD002D1EF9 /* ERRadialMenuWindow.h in Headers */,
+				6C27B5E6161E1224002D1EF9 /* ERGeometry.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +353,7 @@
 				6C27B5A8161B91CD002D1EF9 /* ERRadialMenuItem.m in Sources */,
 				6C27B5AA161B91CD002D1EF9 /* ERRadialMenuView.m in Sources */,
 				6C27B5AC161B91CD002D1EF9 /* ERRadialMenuWindow.m in Sources */,
+				6C27B5E7161E1224002D1EF9 /* ERGeometry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,6 +11,11 @@
 #import "ERRadialMenuView.h"
 
 #import "ERFadingAnimation.h"
+#import "ERGeometry.h"
+
+#define ERMenuXMargin 5.
+#define ERMenuYMargin 5.
+
 
 @interface ERRadialMenuWindow (PrivateAPI)
 
@@ -37,6 +42,8 @@
     contentRect.origin = loc;
     contentRect.origin.x -= contentRect.size.width/2.;
     contentRect.origin.y -= contentRect.size.height/2.;
+    
+    contentRect = ERPutRectInRectWithMargin(contentRect, [[NSScreen mainScreen] visibleFrame],ERMenuXMargin,ERMenuYMargin);
     
 	self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
 	
