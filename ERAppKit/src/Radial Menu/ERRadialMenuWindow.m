@@ -34,7 +34,8 @@
     
     if(view){
         loc = [view convertPoint:loc toView:nil];
-        loc = [[view window] convertBaseToScreen:loc]; // ATTENTION: deprecated !
+        NSRect convertRect; convertRect.origin = loc; convertRect.size = NSZeroSize;
+        loc = [[view window] convertRectToScreen:convertRect].origin;
     }
     
     
