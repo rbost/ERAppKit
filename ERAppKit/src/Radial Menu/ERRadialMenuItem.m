@@ -9,6 +9,7 @@
 #import "ERRadialMenuItem.h"
 
 NSGradient *__selectedItemGradient = nil;
+BOOL ERDrawCentralMenuItem = YES;
 
 @implementation ERRadialMenuItem
 
@@ -75,47 +76,46 @@ NSGradient *__selectedItemGradient = nil;
 {
     [NSGraphicsContext saveGraphicsState];
     
-    if([self menuItem]){
+    if(ERDrawCentralMenuItem || ![self isCentral]){
         [[NSColor controlBackgroundColor] set];
         [_hitBox fill];
+    }
 
-        [[NSColor colorWithCalibratedRed:0.898 green:0.898 blue:0.898 alpha:1] set];
-        [_hitBox stroke];
-        
-        NSAttributedString *attributedTitle = nil;
-        if([[self menuItem] attributedTitle]){
-            attributedTitle = [[[self menuItem] attributedTitle] copy];
-        }else if([[self menuItem] title]){
-            attributedTitle = [[NSAttributedString alloc] initWithString:[[self menuItem] title] attributes:[[self class] menuTitleAttributes]];
-        }
+    [[NSColor colorWithCalibratedRed:0.898 green:0.898 blue:0.898 alpha:1] set];
+    [_hitBox stroke];
+    
+    NSAttributedString *attributedTitle = nil;
+    if([[self menuItem] attributedTitle]){
+        attributedTitle = [[[self menuItem] attributedTitle] copy];
+    }else if([[self menuItem] title]){
+        attributedTitle = [[NSAttributedString alloc] initWithString:[[self menuItem] title] attributes:[[self class] menuTitleAttributes]];
+    }
 
-        NSSize titleSize = [attributedTitle size];
-        NSPoint drawLocation = [self centerPoint];
-        
-        drawLocation.x -= titleSize.width/2.;
-        drawLocation.y -= titleSize.height/2.;
+    NSSize titleSize = [attributedTitle size];
+    NSPoint drawLocation = [self centerPoint];
+    
+    drawLocation.x -= titleSize.width/2.;
+    drawLocation.y -= titleSize.height/2.;
 
-        [attributedTitle drawAtPoint:drawLocation];
-        [attributedTitle release];
+    [attributedTitle drawAtPoint:drawLocation];
+    [attributedTitle release];
+    
+    if([[self menuItem] hasSubmenu]){
+        CGFloat angularWidth = 2*M_PI/[_menuView numberOfItems];
+        CGFloat radianFactor = M_PI/180.;
+        NSBezierPath *arrow = [NSBezierPath bezierPath];
+        CGFloat r1 = OUTER_RADIUS - ER_SUBMENU_INNER_OFFSET;
+        CGFloat r2 = OUTER_RADIUS - ER_SUBMENU_OUTTER_OFFSET;
         
-        if([[self menuItem] hasSubmenu]){
-            CGFloat angularWidth = 2*M_PI/[_menuView numberOfItems];
-            CGFloat radianFactor = M_PI/180.;
-            NSBezierPath *arrow = [NSBezierPath bezierPath];
-            CGFloat r1 = OUTER_RADIUS - ER_SUBMENU_INNER_OFFSET;
-            CGFloat r2 = OUTER_RADIUS - ER_SUBMENU_OUTTER_OFFSET;
-            
-            [arrow moveToPoint:NSMakePoint(r1*cos(radianFactor*_angle - 0.5*ER_SUBMENU_ARROW_FRACTION*angularWidth), r1*sin(radianFactor*_angle - 0.5*ER_SUBMENU_ARROW_FRACTION*angularWidth))];
-            [arrow lineToPoint:NSMakePoint(r2*cos(radianFactor*_angle), r2*sin(radianFactor*_angle))];
-            [arrow lineToPoint:NSMakePoint(r1*cos(radianFactor*_angle + 0.5*ER_SUBMENU_ARROW_FRACTION*angularWidth), r1*sin(radianFactor*_angle + 0.5*ER_SUBMENU_ARROW_FRACTION*angularWidth))];
-            
-            [[NSColor colorWithCalibratedWhite:0.3 alpha:1.] set];
-            [arrow setLineWidth:2.5];
-            [arrow setLineCapStyle:NSRoundLineCapStyle];
-            [arrow stroke];
+        [arrow moveToPoint:NSMakePoint(r1*cos(radianFactor*_angle - 0.5*ER_SUBMENU_ARROW_FRACTION*angularWidth), r1*sin(radianFactor*_angle - 0.5*ER_SUBMENU_ARROW_FRACTION*angularWidth))];
+        [arrow lineToPoint:NSMakePoint(r2*cos(radianFactor*_angle), r2*sin(radianFactor*_angle))];
+        [arrow lineToPoint:NSMakePoint(r1*cos(radianFactor*_angle + 0.5*ER_SUBMENU_ARROW_FRACTION*angularWidth), r1*sin(radianFactor*_angle + 0.5*ER_SUBMENU_ARROW_FRACTION*angularWidth))];
+        
+        [[NSColor colorWithCalibratedWhite:0.3 alpha:1.] set];
+        [arrow setLineWidth:2.5];
+        [arrow setLineCapStyle:NSRoundLineCapStyle];
+        [arrow stroke];
 
-        }
-        
     }
     
     [NSGraphicsContext restoreGraphicsState];
