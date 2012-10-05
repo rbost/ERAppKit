@@ -11,9 +11,24 @@
 #import "ERRadialMenuWindow.h"
 
 @implementation ERMenu
+
++ (void)popUpContextMenu:(NSMenu *)menu withEvent:(NSEvent *)event forView:(NSView *)view menuStyle:(ERMenuStyle)style
+{
+    ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:menu atLocation:[event locationInWindow] inView:[[view window] contentView] menuStyle:style];
+    
+    [menuWindow setReleasedWhenClosed:YES];
+    [menuWindow makeKeyAndOrderFront:self];
+    [menuWindow fadeIn:self];
+}
+
 + (void)popUpContextMenu:(NSMenu *)menu withEvent:(NSEvent *)event forView:(NSView *)view
 {
-    ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:menu atLocation:[event locationInWindow] inView:[[view window] contentView]];
+    [self popUpContextMenu:menu withEvent:event forView:view menuStyle:ERDefaultMenuStyle];
+}
+
++ (void)popUpContextMenu:(NSMenu *)menu atLocation:(NSPoint)point inView:(NSView *)view menuStyle:(ERMenuStyle)style
+{
+    ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:menu atLocation:point inView:view menuStyle:style];
     
     [menuWindow setReleasedWhenClosed:YES];
     [menuWindow makeKeyAndOrderFront:self];
@@ -22,10 +37,6 @@
 
 + (void)popUpContextMenu:(NSMenu *)menu atLocation:(NSPoint)point inView:(NSView *)view
 {
-    ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:menu atLocation:point inView:view];
-    
-    [menuWindow setReleasedWhenClosed:YES];
-    [menuWindow makeKeyAndOrderFront:self];
-    [menuWindow fadeIn:self];
+    [self popUpContextMenu:menu atLocation:point inView:view menuStyle:ERDefaultMenuStyle];
 }
 @end

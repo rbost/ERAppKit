@@ -8,13 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import <ERAppKit/ERGlobals.h>
+
 @interface ERRadialMenuWindow : NSPanel <NSAnimationDelegate>
 {
     @private
-//    NSViewAnimation *_fadeInAnimation;
-//    NSViewAnimation *_fadeOutAnimation;
     NSAnimation *_currentAnimation;
 }
+
+- (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view menuStyle:(ERMenuStyle)style;
 - (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view;
 - (void)fadeIn:(id)sender;
 - (void)fadeOut:(id)sender;

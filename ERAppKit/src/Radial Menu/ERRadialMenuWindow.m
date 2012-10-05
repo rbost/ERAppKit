@@ -27,11 +27,11 @@
 
 
 @implementation ERRadialMenuWindow
-- (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view
+- (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view menuStyle:(ERMenuStyle)style
 {
     // first of all, intialize the menu view which will be our content view
     // it takes care about displaying the menu and calculating the necessary content frame we need
-    ERRadialMenuView *menuView = [[ERRadialMenuView alloc] initWithMenu:menu];
+    ERRadialMenuView *menuView = [[ERRadialMenuView alloc] initWithMenu:menu style:style];
     NSRect contentRect = NSZeroRect;
     
     // get the location on the screen
@@ -66,12 +66,17 @@
     [self setAlphaValue:0.];
     // to have a pretty animation when opening the menu
     [self setAnimationBehavior:NSWindowAnimationBehaviorAlertPanel];
-
+    
     
     // we accept mouse moved event to track mouse position on the menu
     [self setAcceptsMouseMovedEvents:YES];
-
+    
 	return self;
+
+}
+- (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view
+{
+    return [self initWithMenu:menu atLocation:loc inView:view menuStyle:ERDefaultMenuStyle];
 }
 
 - (void)dealloc
