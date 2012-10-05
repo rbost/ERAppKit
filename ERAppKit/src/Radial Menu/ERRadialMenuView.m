@@ -36,7 +36,7 @@
 
 - (id)initWithMenu:(NSMenu *)menu
 {
-    return [self initWithMenu:menu style:ERUpperMenuStyle];
+    return [self initWithMenu:menu style:ERDefaultMenuStyle];
 }
 
 - (id)initWithMenu:(NSMenu *)menu style:(ERMenuStyle)style

@@ -10,6 +10,7 @@
 #define ERAppKit_ERGlobals_h
 
 typedef enum{
+    ERDefaultMenuStyle = -1,
     ERCenteredMenuStyle = 0,
     ERUpperMenuStyle = 1,
     EREmptyQuarterMenuStyle = 2
