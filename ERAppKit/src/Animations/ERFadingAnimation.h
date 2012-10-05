@@ -8,13 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum{
-    ERCustomAnimation = -1,
-    ERFadeInAnimation = 0,
-    ERFadeOutAnimation = 1,
-    ERFadeBackAnimation = 2,
-    ERFadeFrontAnimation = 3
-} ERFadingAnimationType;
+#import <ERAppKit/ERGlobals.h>
 
 @interface ERFadingAnimation : NSAnimation
 {

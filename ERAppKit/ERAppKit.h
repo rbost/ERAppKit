@@ -8,6 +8,7 @@
 
 #import <AppKit/AppKit.h>
 
+#import <ERAppKit/ERGlobals.h>
 #import <ERAppKit/ERMenu.h>
 #import <ERAppKit/ERFadingAnimation.h>
 #import <ERAppKit/ERGeometry.h>

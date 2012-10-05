@@ -32,6 +32,7 @@
 		6C27B5E3161BA36B002D1EF9 /* LICENCE in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B5E2161BA36B002D1EF9 /* LICENCE */; };
 		6C27B5E6161E1224002D1EF9 /* ERGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B5E4161E1224002D1EF9 /* ERGeometry.h */; };
 		6C27B5E7161E1224002D1EF9 /* ERGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B5E5161E1224002D1EF9 /* ERGeometry.m */; };
+		6C27B5EA161F8C9D002D1EF9 /* ERGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		6C27B5E2161BA36B002D1EF9 /* LICENCE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENCE; sourceTree = SOURCE_ROOT; };
 		6C27B5E4161E1224002D1EF9 /* ERGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERGeometry.h; path = src/Tools/ERGeometry.h; sourceTree = "<group>"; };
 		6C27B5E5161E1224002D1EF9 /* ERGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERGeometry.m; path = src/Tools/ERGeometry.m; sourceTree = "<group>"; };
+		6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ERGlobals.h; path = src/ERGlobals.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				6C27B58B161B9158002D1EF9 /* ERAppKit.h */,
+				6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */,
 				6C27B597161B91CD002D1EF9 /* Animations */,
 				6C27B59A161B91CD002D1EF9 /* Radial Menu */,
 				6C27B585161B9158002D1EF9 /* Supporting Files */,
@@ -250,6 +253,7 @@
 				6C27B5A9161B91CD002D1EF9 /* ERRadialMenuView.h in Headers */,
 				6C27B5AB161B91CD002D1EF9 /* ERRadialMenuWindow.h in Headers */,
 				6C27B5E6161E1224002D1EF9 /* ERGeometry.h in Headers */,
+				6C27B5EA161F8C9D002D1EF9 /* ERGlobals.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

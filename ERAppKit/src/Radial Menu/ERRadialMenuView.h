@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "ERRadialMenuItem.h"
-#import <ERAppKit/ERMenu.h>
+#import <ERAppKit/ERGlobals.h>
 
 #define OUTER_RADIUS 100.
 #define INNER_RADIUS 30.
