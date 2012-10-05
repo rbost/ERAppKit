@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "ERRadialMenuItem.h"
+#import <ERAppKit/ERMenu.h>
 
 #define OUTER_RADIUS 100.
 #define INNER_RADIUS 30.
@@ -32,6 +33,10 @@
 @property (readonly) NSMenu *menu;
 
 - (id)initWithMenu:(NSMenu *)menu;
+- (id)initWithMenu:(NSMenu *)menu style:(ERMenuStyle)style;
+- (id)initWithCenteredMenu:(NSMenu *)menu;
+- (id)initWithMenu:(NSMenu *)menu emptyAngle:(CGFloat)emptyAngle;
+
 
 - (NSInteger)numberOfItems;
 

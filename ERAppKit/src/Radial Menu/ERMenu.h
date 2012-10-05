@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum{
+    ERCenteredMenuStyle = 0,
+    ERUpperMenuStyle = 1,
+    EREmptyQuarterMenuStyle = 2
+}ERMenuStyle;
+
+
 @interface ERMenu : NSObject
 /**
  Displays radial contextual menu over a view for an event.

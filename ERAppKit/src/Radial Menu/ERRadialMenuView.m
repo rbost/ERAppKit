@@ -36,6 +36,32 @@
 
 - (id)initWithMenu:(NSMenu *)menu
 {
+    return [self initWithMenu:menu style:ERUpperMenuStyle];
+}
+
+- (id)initWithMenu:(NSMenu *)menu style:(ERMenuStyle)style
+{
+    switch (style) {
+        case ERCenteredMenuStyle:
+            return [self initWithCenteredMenu:menu];
+            break;
+            
+        case ERUpperMenuStyle:
+            return [self initWithMenu:menu emptyAngle:180.];
+            break;
+
+        case EREmptyQuarterMenuStyle:
+            return [self initWithMenu:menu emptyAngle:90.];
+            break;
+
+        default:
+            return [self initWithCenteredMenu:menu];
+            break;
+    }
+}
+
+- (id)initWithCenteredMenu:(NSMenu *)menu
+{
     self = [self initWithFrame:NSMakeRect(0, 0, 2*OUTER_RADIUS, 2*OUTER_RADIUS)];
     
     if(self){
@@ -79,6 +105,55 @@
     }
     
 
+    [self setBoundsOrigin:NSMakePoint(-OUTER_RADIUS, -OUTER_RADIUS)];
+    return self;
+}
+
+- (id)initWithMenu:(NSMenu *)menu emptyAngle:(CGFloat)emptyAngle;
+{
+    self = [self initWithFrame:NSMakeRect(0, 0, 2*OUTER_RADIUS, 2*OUTER_RADIUS)];
+    
+    if(self){
+        _menu = [menu retain];
+        NSArray *menuItems = [menu itemArray];
+        NSMutableArray *radialItems = [[NSMutableArray alloc] initWithCapacity:([menuItems count]+1)];
+        
+        ERRadialMenuItem *centerItem = [[ERRadialMenuItem alloc] initWithMenuItem:nil hitBox:[NSBezierPath bezierPathWithOvalInRect:NSMakeRect(-INNER_RADIUS, -INNER_RADIUS, 2*INNER_RADIUS, 2*INNER_RADIUS)] isCentral:YES angle:0. inRadialMenuView:self];
+        
+        
+        [radialItems addObject:centerItem];
+        [self setSelectedItem:centerItem];
+        [centerItem release];
+        
+        CGFloat itemAngle = (360.-emptyAngle)/[menuItems count];
+        CGFloat currentAngle = 270.-emptyAngle/2.; // = -90 + 360 + empty/2
+        CGFloat radianFactor = M_PI/180.;
+        
+        for (NSMenuItem *item in menuItems) {
+            NSBezierPath *bp = [[NSBezierPath alloc] init];
+            [bp appendBezierPathWithArcWithCenter:NSZeroPoint radius:INNER_RADIUS startAngle:(currentAngle) endAngle:(currentAngle-itemAngle) clockwise:YES];
+            [bp appendBezierPathWithArcWithCenter:NSZeroPoint radius:OUTER_RADIUS startAngle:(currentAngle-itemAngle) endAngle:(currentAngle) clockwise:NO];
+            [bp closePath];
+            
+            ERRadialMenuItem *rItem = [[ERRadialMenuItem alloc] initWithMenuItem:item hitBox:bp isCentral:NO angle:currentAngle-itemAngle/2. inRadialMenuView:self];
+            
+            CGFloat r = (INNER_RADIUS+OUTER_RADIUS)*.5;
+            
+            [rItem setCenterPoint:NSMakePoint(r*cos(radianFactor*(currentAngle-itemAngle/2)), r*sin(radianFactor*(currentAngle-itemAngle/2)))];
+            [radialItems addObject:rItem];
+            
+            [rItem release];
+            [bp release];
+            
+            currentAngle -= itemAngle; // turn clockwise
+        }
+        
+        [self setRadialMenuItems:radialItems];
+        [radialItems release];
+        
+    }
+    
+    
     [self setBoundsOrigin:NSMakePoint(-OUTER_RADIUS, -OUTER_RADIUS)];
     return self;
 }
