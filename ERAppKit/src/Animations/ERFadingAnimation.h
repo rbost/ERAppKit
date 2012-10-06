@@ -11,6 +11,18 @@
 #import <ERAppKit/ERGlobals.h>
 
 /**
+ \enum ERFadingAnimationType
+ \brief Types of fading animations
+ */
+typedef enum{
+    ERCustomAnimation = -1,     /**< Custom animation */
+    ERFadeInAnimation = 0,      /**< Fade in animation: set alpha value to 1 */
+    ERFadeOutAnimation = 1,     /**< Fade out animation: set alpha value to 0*/
+    ERFadeBackAnimation = 2,    /**< Fade back animation: divides the alpha value by 2 */
+    ERFadeFrontAnimation = 3    /**< Fade front animation: multiplies the alpha value by 2 */
+} ERFadingAnimationType;
+
+/**
  The ERFadingAnimation class offers a convienient way to create fading animations for windows.
  
  By default, these animations are on the NSAnimationNonblocking mode but you can configure this behavior by using NSAnimation methods.
