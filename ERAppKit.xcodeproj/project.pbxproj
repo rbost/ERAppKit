@@ -162,8 +162,8 @@
 				6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */,
 				6C27B597161B91CD002D1EF9 /* Animations */,
 				6C27B59A161B91CD002D1EF9 /* Radial Menu */,
-				6C27B585161B9158002D1EF9 /* Supporting Files */,
 				6C27B5E8161E122B002D1EF9 /* Tools */,
+				6C27B585161B9158002D1EF9 /* Supporting Files */,
 			);
 			path = ERAppKit;
 			sourceTree = "<group>";
