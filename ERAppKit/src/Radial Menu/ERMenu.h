@@ -43,7 +43,6 @@
  \param view The view object over which to display the contextual menu.
  \param style The style for the radial menu
  */
-
 + (void)popUpContextMenu:(NSMenu *)menu atLocation:(NSPoint)point inView:(NSView *)view menuStyle:(ERMenuStyle)style;
 
 /**
@@ -53,4 +52,129 @@
  \param view The view object over which to display the contextual menu.
  */
 + (void)popUpContextMenu:(NSMenu *)menu atLocation:(NSPoint)point inView:(NSView *)view;
+
+
+
+
+/**
+ Returns the gradient to fill a selected menu item
+ \remarks If this method returns nil, then you should use selectedItemColor.
+ \remarks Returns by default \verbatim [[NSGradient alloc] initWithStartingColor:
+ [NSColor colorWithCalibratedRed:.396 green:.541 blue:.941 alpha:1.]
+ endingColor:
+ [NSColor colorWithCalibratedRed:.157 green:.384 blue:.929 alpha:1.]] \endverbatim
+ */
++ (NSGradient *)selectedItemGradient;
+/**
+ Set the gradient to fill a selected menu item.
+ \param gradient The new gradient used to fill selected items.
+ \remarks If gradient is not nil, this method set selectedItemColor to nil.
+ */
++ (void)setSelectedItemGradient:(NSGradient *)gradient;
+
+/**
+ Returns the color to fill a selected menu item.
+ \remarks If this method returns nil, then you should use selectedItemGradient.
+ \remarks Return nil by default
+ */
++ (NSColor *)selectedItemColor;
+/**
+ Set the color to fill a selected menu item.
+ \param color The new color used to fill selected items.
+ \remarks If color is not nil, this method set selectedItemGradient to nil.
+ */
++ (void)setSelectedItemColor:(NSColor *)color;
+/**
+ Returns the color used to stroke a selected menu item boundaries.
+ \remarks Return by default \verbatim [NSColor colorWithCalibratedRed:0.898 green:0.898 blue:0.898 alpha:1] \endverbatim 
+ */
+
++ (NSColor *)selectedItemStrokeColor;
+/**
+ Sets the color used to stroke a selected menu item boundaries.
+ */
++ (void)setSelectedItemStrokeColor:(NSColor *)color;
+
+
+
+
+/**
+ Returns the gradient to fill a menu item
+ \remarks If this method returns nil, then you should use itemColor.
+ \remarks Return nil by default
+ */
++ (NSGradient *)itemGradient;
+/**
+ Set the gradient to fill a menu item.
+ \param gradient The new gradient used to fill items.
+ \remarks If gradient is not nil, this method set itemColor to nil.
+ */
++ (void)setItemGradient:(NSGradient *)gradient;
+
+/**
+ Returns the color to fill a menu item.
+ \remarks If this method returns nil, then you should use itemGradient.
+ \remarks Returns \verbatim [NSColor controlBackgroundColor] \endverbatim by default 
+ */
++ (NSColor *)itemColor;
+/**
+ Set the color to fill a menu item.
+ \param color The new color used to fill items.
+ \remarks If color is not nil, this method set itemGradient to nil.
+ */
++ (void)setItemColor:(NSColor *)color;
+
+/**
+ Returns the color used to stroke a menu item boundaries.
+ \remarks Return by default \verbatim [NSColor colorWithCalibratedRed:0.898 green:0.898 blue:0.898 alpha:1] \endverbatim
+ */
++ (NSColor *)itemStrokeColor;
+/**
+ Sets the color used to stroke a menu item boundaries.
+ */
++ (void)setItemStrokeColor:(NSColor *)color;
+
+
+
+
+/**
+ Returns the attributes used to display the title of a menu item
+ \remarks By default, these are \verbatim  [[NSDictionary alloc] initWithObjectsAndKeys:
+ [NSColor textColor], NSForegroundColorAttributeName,
+ [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
+ nil] \endverbatim
+ */
++ (NSDictionary *)menuItemTitleAttributes;
+/**
+ Sets the attributes used to display the title of a menu item
+ \param dict The attribute dictionary. See NSAttributedString documentation
+ */
++ (void)setMenuItemTitleAttributes:(NSDictionary *)dict;
+
+/**
+ Returns the attributes used to display the title of a menu item
+ \remarks By default, these are \verbatim  [[NSDictionary alloc] initWithObjectsAndKeys:
+ [NSColor selectedMenuItemTextColor], NSForegroundColorAttributeName,
+ [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
+ nil] \endverbatim
+ */
++ (NSDictionary *)selectedMenuItemTitleAttributes;
+/**
+ Sets the attributes used to display the title of a selected menu item
+ \param dict The attribute dictionary. See NSAttributedString documentation
+ */
++ (void)setSelectedMenuItemTitleAttributes:(NSDictionary *)dict;
+
+
+
+/**
+ Returns YES if the central menu item (the one closing the menu) is filled when not selected and NO otherwise.
+ \remarks Returns YES by default.
+ */
++ (BOOL)fillCentralMenuItem;
+/**
+ Sets if the central menu item has to be filled or not.
+ \param flag YES is it has to be filled, NO otherwise.
+ */
++ (void)setFillCentralMenuItem:(BOOL)flag;
 @end

@@ -10,6 +10,19 @@
 
 #import "ERRadialMenuWindow.h"
 
+static NSGradient *__selectedItemGradient = nil;
+static NSColor *__selectedItemColor = nil;
+static NSColor *__selectedItemStrokeColor = nil;
+static NSGradient *__itemGradient = nil;
+static NSColor *__itemColor = nil;
+static NSColor *__itemStrokeColor = nil;
+
+static NSDictionary *__menuItemTitleAttributes = nil;
+static NSDictionary *__selectedMenuItemTitleAttributes = nil;
+
+static BOOL __fillCentralMenuItem = YES;
+
+
 @implementation ERMenu
 
 + (void)popUpContextMenu:(NSMenu *)menu withEvent:(NSEvent *)event forView:(NSView *)view menuStyle:(ERMenuStyle)style
@@ -38,5 +51,167 @@
 + (void)popUpContextMenu:(NSMenu *)menu atLocation:(NSPoint)point inView:(NSView *)view
 {
     [self popUpContextMenu:menu atLocation:point inView:view menuStyle:ERDefaultMenuStyle];
+}
+
+#pragma mark Appearance Options
+
++ (NSGradient *)selectedItemGradient
+{
+    if(!__selectedItemGradient && !__selectedItemColor){ // no gradient and no color set --> the gradient is the default
+        __selectedItemGradient = [[NSGradient alloc] initWithStartingColor:
+                                  [NSColor colorWithCalibratedRed:.396 green:.541 blue:.941 alpha:1.]
+                                                               endingColor:
+                                  [NSColor colorWithCalibratedRed:.157 green:.384 blue:.929 alpha:1.]];
+    }
+    
+    return __selectedItemGradient;
+}
+
++ (void)setSelectedItemGradient:(NSGradient *)gradient
+{
+    [gradient retain];
+    [__selectedItemGradient release];
+    __selectedItemGradient = gradient;
+    
+    if(gradient){
+        [self setSelectedItemColor:nil]; // put the selected item color to nil so we know we are using a gradient
+    }
+}
+
++ (NSColor *)selectedItemColor
+{
+    return __selectedItemColor; // --> if the selected item color is nil, you should search for the selected item gradient
+}
+
++ (void)setSelectedItemColor:(NSColor *)color
+{
+    [color retain];
+    [__selectedItemColor release];
+    __selectedItemColor = color;
+    
+    if (color) {
+        [self setSelectedItemGradient:nil]; // put the selected item gradient to nil so we know we are using a color
+    }
+
+}
+
++ (NSColor *)selectedItemStrokeColor
+{
+    if(!__selectedItemStrokeColor){
+        __selectedItemStrokeColor = [[NSColor colorWithCalibratedRed:0.898 green:0.898 blue:0.898 alpha:1] copy];
+    }
+    
+    return __selectedItemStrokeColor;
+}
+
++ (void)setSelectedItemStrokeColor:(NSColor *)color
+{
+    [color retain];
+    [__selectedItemStrokeColor release];
+    __selectedItemStrokeColor = color;
+}
+
++ (NSGradient *)itemGradient
+{
+    return __itemGradient;
+}
+
++ (void)setItemGradient:(NSGradient *)gradient
+{
+    [gradient retain];
+    [__itemGradient release];
+    __itemGradient = gradient;
+    
+    if(gradient){
+        [self setItemColor:nil]; // put the item color to nil so we know we are using a gradient
+    }
+}
+
++ (NSColor *)itemColor
+{
+    if(!__itemColor && !__itemGradient){
+        __itemColor = [[NSColor controlBackgroundColor] copy];
+    }
+    
+    return __itemColor;
+}
+
++ (void)setItemColor:(NSColor *)color
+{
+    [color retain];
+    [__itemColor release];
+    __itemColor = color;
+    
+    if (color) {
+        [self setItemGradient:nil]; // put the item gradient to nil so we know we are using a color
+    }
+
+}
+
++ (NSColor *)itemStrokeColor
+{
+    if(!__itemStrokeColor){
+        __itemStrokeColor = [[NSColor colorWithCalibratedRed:0.898 green:0.898 blue:0.898 alpha:1] copy];
+    }
+    
+    return __itemStrokeColor;
+}
+
++ (void)setItemStrokeColor:(NSColor *)color
+{
+    [color retain];
+    [__itemStrokeColor release];
+    __itemStrokeColor = color;
+}
+
++ (NSDictionary *)menuItemTitleAttributes
+{
+    if(!__menuItemTitleAttributes){
+        __menuItemTitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 [NSColor textColor], NSForegroundColorAttributeName,
+                                 [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
+                                 nil];        
+    }
+    
+    
+    return __menuItemTitleAttributes;
+}
+
++ (void)setMenuItemTitleAttributes:(NSDictionary *)dict
+{
+    NSDictionary *newAttributes = [dict copy];
+    [__menuItemTitleAttributes release];
+    __menuItemTitleAttributes = newAttributes;
+}
+
++ (NSDictionary *)selectedMenuItemTitleAttributes
+{
+    if(!__selectedMenuItemTitleAttributes){
+        __selectedMenuItemTitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              [NSColor selectedMenuItemTextColor], NSForegroundColorAttributeName,
+                              [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
+                              nil];
+        
+    }
+    
+    return __selectedMenuItemTitleAttributes;
+}
+
++ (void)setSelectedMenuItemTitleAttributes:(NSDictionary *)dict
+{
+    NSDictionary *newAttributes = [dict copy];
+    [__selectedMenuItemTitleAttributes release];
+    __selectedMenuItemTitleAttributes = newAttributes;
+}
+
+
++ (BOOL)fillCentralMenuItem
+{
+    return __fillCentralMenuItem;
+}
+
++ (void)setFillCentralMenuItem:(BOOL)flag
+{
+    __fillCentralMenuItem = flag;
 }
 @end

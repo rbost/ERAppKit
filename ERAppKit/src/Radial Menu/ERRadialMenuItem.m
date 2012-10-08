@@ -8,46 +8,9 @@
 
 #import "ERRadialMenuItem.h"
 
-NSGradient *__selectedItemGradient = nil;
-BOOL ERDrawCentralMenuItem = YES;
+#import <ERAppKit/ERMenu.h>
 
 @implementation ERRadialMenuItem
-
-+ (NSDictionary *)menuTitleAttributes
-{
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          [NSColor textColor], NSForegroundColorAttributeName,
-                          [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
-                          nil];
-    
-    
-    
-    return dict;
-}
-
-+ (NSDictionary *)selectedMenuTitleAttributes
-{
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          [NSColor selectedMenuItemTextColor], NSForegroundColorAttributeName,
-                          [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
-                          nil];
-    
-    
-    
-    return dict;
-}
-
-+ (NSGradient *)selectedItemGradient
-{
-    if(!__selectedItemGradient){
-        __selectedItemGradient = [[NSGradient alloc] initWithStartingColor:
-                                  [NSColor colorWithCalibratedRed:.396 green:.541 blue:.941 alpha:1.]
-                                                               endingColor:
-                                  [NSColor colorWithCalibratedRed:.157 green:.384 blue:.929 alpha:1.]];
-    }
-    
-    return __selectedItemGradient;
-}
 
 - (id)initWithMenuItem:(NSMenuItem *)item hitBox:(NSBezierPath *)bp isCentral:(BOOL)flag angle:(CGFloat)position inRadialMenuView:(ERRadialMenuView *)v
 {
@@ -76,19 +39,24 @@ BOOL ERDrawCentralMenuItem = YES;
 {
     [NSGraphicsContext saveGraphicsState];
     
-    if(ERDrawCentralMenuItem || ![self isCentral]){
-        [[NSColor controlBackgroundColor] set];
-        [_hitBox fill];
+    if([ERMenu fillCentralMenuItem] || ![self isCentral]){
+        
+        if ([ERMenu itemColor]) {
+            [[ERMenu itemColor] set];
+            [_hitBox fill];
+        }else{
+            [[ERMenu itemGradient] drawFromCenter:NSZeroPoint radius:0 toCenter:NSZeroPoint radius:200 options:0];
+        }
     }
 
-    [[NSColor colorWithCalibratedRed:0.898 green:0.898 blue:0.898 alpha:1] set];
+    [[ERMenu itemStrokeColor] set];
     [_hitBox stroke];
     
     NSAttributedString *attributedTitle = nil;
     if([[self menuItem] attributedTitle]){
         attributedTitle = [[[self menuItem] attributedTitle] copy];
     }else if([[self menuItem] title]){
-        attributedTitle = [[NSAttributedString alloc] initWithString:[[self menuItem] title] attributes:[[self class] menuTitleAttributes]];
+        attributedTitle = [[NSAttributedString alloc] initWithString:[[self menuItem] title] attributes:[ERMenu menuItemTitleAttributes]];
     }
 
     NSSize titleSize = [attributedTitle size];
@@ -128,16 +96,21 @@ BOOL ERDrawCentralMenuItem = YES;
     
     [[self hitBox] addClip]; // draw the gradient only in the item
     
-    [[[self class] selectedItemGradient] drawFromCenter:NSZeroPoint radius:0 toCenter:NSZeroPoint radius:200 options:0];
+    if ([ERMenu selectedItemColor]) {
+        [[ERMenu selectedItemColor] set];
+        [_hitBox fill];
+    }else{
+        [[ERMenu selectedItemGradient] drawFromCenter:NSZeroPoint radius:0 toCenter:NSZeroPoint radius:200 options:0]; 
+    }
 
-    [[NSColor colorWithCalibratedRed:0.898 green:0.898 blue:0.898 alpha:1] set];
+    [[ERMenu selectedItemStrokeColor] set];
     [_hitBox stroke];
     
     NSAttributedString *attributedTitle = nil;
     if([[self menuItem] attributedTitle]){
         attributedTitle = [[[self menuItem] attributedTitle] copy];
     }else if([[self menuItem] title]){
-        attributedTitle = [[NSAttributedString alloc] initWithString:[[self menuItem] title] attributes:[[self class] selectedMenuTitleAttributes]];
+        attributedTitle = [[NSAttributedString alloc] initWithString:[[self menuItem] title] attributes:[ERMenu selectedMenuItemTitleAttributes]];
     }
     
     NSSize titleSize = [attributedTitle size];
