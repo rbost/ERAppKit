@@ -253,12 +253,17 @@
 
 - (void)_timerCallBack
 {
+    if([self submenu]){
+        return;
+    }
     if(![self selectedItem] && [self supermenu]){
         // mouse outside the menu, let's close it
         [[self supermenu] closeSubmenu:self];
     }else if([[[self selectedItem] menuItem] hasSubmenu]){
         // open the submenu
-        ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[[[self selectedItem] menuItem] submenu] atLocation:[[self selectedItem] centerPoint] inView:self menuStyle:[self style]];
+        NSPoint location = [[self window] mouseLocationOutsideOfEventStream];
+        location = [self convertPoint:location fromView:nil];
+        ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[[[self selectedItem] menuItem] submenu] atLocation:location inView:self menuStyle:[self style]];
         
         [(ERRadialMenuView *)[menuWindow contentView] setSupermenu:self];
         [self setSubmenu:[menuWindow contentView]];
@@ -329,7 +334,7 @@
         
         if ([item hasSubmenu]) {
             // open a new menu for the submenu
-            ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[item submenu] atLocation:[[self selectedItem] centerPoint] inView:self menuStyle:[self style]];
+            ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[item submenu] atLocation:location inView:self menuStyle:[self style]];
             
             [(ERRadialMenuView *)[menuWindow contentView] setSupermenu:self];
             [self setSubmenu:[menuWindow contentView]];
