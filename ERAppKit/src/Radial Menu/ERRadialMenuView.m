@@ -214,7 +214,10 @@
 - (void)setSelectedItem:(ERRadialMenuItem *)selectedItem
 {
     _selectedItem = selectedItem;
-    
+}
+
+- (void)resetMouseOverTimer
+{
     if ([ERMenu openSubmenusOnMouseOver]) {
         [_hitboxTimer reset];
     }
@@ -296,8 +299,13 @@
     if([self selectedItem] && [[self selectedItem] hitTest:location]){
         return; // do nothing, we are good
     }else{
+        ERRadialMenuItem *previousSelectedItem = [self selectedItem];
         [self selectItemUnderPoint:location];
-        [self setNeedsDisplay:YES];
+        
+        if ([self selectedItem] != previousSelectedItem) {
+            [self resetMouseOverTimer];
+            [self setNeedsDisplay:YES];
+        }
     }
 }
 
@@ -422,6 +430,7 @@
     [[self window] makeKeyWindow];
     [self cascadingSendFront:self];
     [self resetItemSelection];
+    [self resetMouseOverTimer];
 }
 
 - (void)_closeCascadingMenus
