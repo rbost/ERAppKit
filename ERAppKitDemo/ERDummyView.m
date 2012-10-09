@@ -44,7 +44,7 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
 //    [delegate showDummyMenu:theEvent];
-    [ERMenu popUpContextMenu:[self menu] withEvent:theEvent forView:self];
+    [ERMenu popUpContextMenu:[self menu] withEvent:theEvent forView:self menuStyle:EREmptyQuarterMenuStyle];
 }
 
 - (IBAction)setWhite:(id)sender

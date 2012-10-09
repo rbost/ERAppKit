@@ -25,6 +25,7 @@
     NSArray *_radialMenuItems;
     
     @private
+    ERMenuStyle _style;
     ERRadialMenuItem *_selectedItem;
     
     ERRadialMenuView *_supermenu;

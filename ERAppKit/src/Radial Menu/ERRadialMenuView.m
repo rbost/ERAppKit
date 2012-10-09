@@ -46,6 +46,7 @@
 
 - (id)initWithMenu:(NSMenu *)menu style:(ERMenuStyle)style
 {
+    _style = style;
     switch (style) {
         case ERCenteredMenuStyle:
             return [self initWithCenteredMenu:menu];
@@ -201,6 +202,10 @@
 @synthesize submenu = _submenu, supermenu = _supermenu;
 @dynamic selectedItem;
 
+- (ERMenuStyle)style
+{
+    return _style;
+}
 - (ERRadialMenuItem *)selectedItem
 {
     return _selectedItem;
@@ -253,7 +258,7 @@
         [[self supermenu] closeSubmenu:self];
     }else if([[[self selectedItem] menuItem] hasSubmenu]){
         // open the submenu
-        ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[[[self selectedItem] menuItem] submenu] atLocation:[[self selectedItem] centerPoint] inView:self];
+        ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[[[self selectedItem] menuItem] submenu] atLocation:[[self selectedItem] centerPoint] inView:self menuStyle:[self style]];
         
         [(ERRadialMenuView *)[menuWindow contentView] setSupermenu:self];
         [self setSubmenu:[menuWindow contentView]];
@@ -324,7 +329,7 @@
         
         if ([item hasSubmenu]) {
             // open a new menu for the submenu
-            ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[item submenu] atLocation:[[self selectedItem] centerPoint] inView:self];
+            ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[item submenu] atLocation:[[self selectedItem] centerPoint] inView:self menuStyle:[self style]];
             
             [(ERRadialMenuView *)[menuWindow contentView] setSupermenu:self];
             [self setSubmenu:[menuWindow contentView]];
