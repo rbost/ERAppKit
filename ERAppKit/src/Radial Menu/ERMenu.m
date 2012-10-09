@@ -22,6 +22,9 @@ static NSDictionary *__selectedMenuItemTitleAttributes = nil;
 
 static BOOL __fillCentralMenuItem = YES;
 
+static BOOL __openSubmenusOnMouseOver = YES;
+static NSTimeInterval __mouseOverMenuOpeningInterval = 0.5f;
+
 
 @implementation ERMenu
 
@@ -214,4 +217,25 @@ static BOOL __fillCentralMenuItem = YES;
 {
     __fillCentralMenuItem = flag;
 }
+
++ (BOOL)openSubmenusOnMouseOver
+{
+    return __openSubmenusOnMouseOver;
+}
+
++ (void)setOpenSubmenusOnMouseOver:(BOOL)flag
+{
+    __openSubmenusOnMouseOver = flag;
+}
+
++ (NSTimeInterval)mouseOverMenuOpeningInterval
+{
+    return __mouseOverMenuOpeningInterval;
+}
+
++ (void)setMouseOverMenuOpeningInterval:(NSTimeInterval)interval
+{
+    __mouseOverMenuOpeningInterval = interval;
+}
+
 @end

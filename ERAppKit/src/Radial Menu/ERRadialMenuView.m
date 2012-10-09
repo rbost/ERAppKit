@@ -9,8 +9,9 @@
 #import "ERRadialMenuView.h"
 
 #import "ERRadialMenuWindow.h"
+#import <ERAppKit/ERMenu.h>
 
-#define ERMENU_MOUSEOVER_INTERVAL 0.5
+#define ERMENU_MOUSEOVER_INTERVAL [ERMenu mouseOverMenuOpeningInterval]
 
 @interface ERRadialMenuView ()
 @property (readwrite,copy) NSArray *radialMenuItems; // we want the menu items to be assigned once, at the intialization
@@ -206,7 +207,9 @@
 {
     _selectedItem = selectedItem;
     
-    [_hitboxTimer reset];
+    if ([ERMenu openSubmenusOnMouseOver]) {
+        [_hitboxTimer reset];
+    }
 }
 
 - (void)selectItemUnderPoint:(NSPoint)location

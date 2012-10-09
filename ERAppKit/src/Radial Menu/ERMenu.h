@@ -177,4 +177,23 @@
  \param flag YES is it has to be filled, NO otherwise.
  */
 + (void)setFillCentralMenuItem:(BOOL)flag;
+
+/**
+ Returns whether submenus should be opened when the mouse is over a menu item.
+ */
++ (BOOL)openSubmenusOnMouseOver;
+/**
+ Sets whether submenus should be opened when the mouse is over a menu item.
+ */
++ (void)setOpenSubmenusOnMouseOver:(BOOL)flag;
+
+/**
+ Returns the time interval necessary to open a submenu when mouse is over.
+ */
++ (NSTimeInterval)mouseOverMenuOpeningInterval;
+/**
+ Sets the time interval necessary to open a submenu when mouse is over.
+ \remarks This methods  does nothing when openSubmenusOnMouseOver is set to NO
+ */
++ (void)setMouseOverMenuOpeningInterval:(NSTimeInterval)interval;
 @end
