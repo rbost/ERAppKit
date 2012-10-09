@@ -10,6 +10,8 @@
 
 #import "ERRadialMenuWindow.h"
 
+#define ERMENU_MOUSEOVER_INTERVAL 0.5
+
 @interface ERRadialMenuView ()
 @property (readwrite,copy) NSArray *radialMenuItems; // we want the menu items to be assigned once, at the intialization
 @property (assign) ERRadialMenuItem *selectedItem;
@@ -18,6 +20,8 @@
 
 - (void)_submenuResign;
 - (void)_closeCascadingMenus;
+
+- (void)_timerCallBack;
 
 @end
 
@@ -106,6 +110,9 @@
     
 
     [self setBoundsOrigin:NSMakePoint(-OUTER_RADIUS, -OUTER_RADIUS)];
+    
+    
+    _hitboxTimer = [[ERTimer alloc] initWithTimeInterval:ERMENU_MOUSEOVER_INTERVAL target:self selector:@selector(_timerCallBack) argument:nil];
     return self;
 }
 
@@ -164,6 +171,8 @@
     [self setSubmenu:nil];
     
     [_menu release];
+    [_hitboxTimer stop];
+    [_hitboxTimer release];
     
     [super dealloc];
 }
@@ -184,8 +193,75 @@
     [NSGraphicsContext restoreGraphicsState];
 }
 
-@synthesize radialMenuItems = _radialMenuItems, selectedItem = _selectedItem, menu = _menu;
+@synthesize radialMenuItems = _radialMenuItems, menu = _menu;
 @synthesize submenu = _submenu, supermenu = _supermenu;
+@dynamic selectedItem;
+
+- (ERRadialMenuItem *)selectedItem
+{
+    return _selectedItem;
+}
+
+- (void)setSelectedItem:(ERRadialMenuItem *)selectedItem
+{
+    _selectedItem = selectedItem;
+    
+    [_hitboxTimer reset];
+}
+
+- (void)selectItemUnderPoint:(NSPoint)location
+{
+    if([self selectedItem] && [[self selectedItem] hitTest:location]){
+        return; // do nothing, we are good
+    }else{
+        ERRadialMenuItem *selection = nil;
+        for (ERRadialMenuItem *menuItem in [self radialMenuItems]) {
+            if ([menuItem hitTest:location]) {
+                selection = menuItem;
+                [self setSelectedItem:menuItem];
+                break;
+            }
+        }
+        [self setSelectedItem:selection];
+
+        [self setNeedsDisplay:YES];
+        
+        if(![self selectedItem]){
+            [[self supermenu] resetItemSelection];
+        }
+    }
+}
+
+- (void)resetItemSelection
+{
+    NSPoint location = [[self window] mouseLocationOutsideOfEventStream];
+    location = [self convertPoint:location fromView:nil];
+    
+    [self selectItemUnderPoint:location];
+}
+
+- (void)_timerCallBack
+{
+    if(![self selectedItem] && [self supermenu]){
+        // mouse outside the menu, let's close it
+        [[self supermenu] closeSubmenu:self];
+    }else if([[[self selectedItem] menuItem] hasSubmenu]){
+        // open the submenu
+        ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[[[self selectedItem] menuItem] submenu] atLocation:[[self selectedItem] centerPoint] inView:self];
+        
+        [(ERRadialMenuView *)[menuWindow contentView] setSupermenu:self];
+        [self setSubmenu:[menuWindow contentView]];
+        
+        [menuWindow makeKeyAndOrderFront:self];
+        [menuWindow fadeIn:self];
+        [menuWindow setReleasedWhenClosed:YES];
+        [self cascadingSendBack:self];
+        
+        _selectedItem = nil;
+        [self setNeedsDisplay:YES];
+
+    }
+}
 
 - (NSInteger)numberOfItems
 {
@@ -204,12 +280,7 @@
     if([self selectedItem] && [[self selectedItem] hitTest:location]){
         return; // do nothing, we are good
     }else{
-        [self setSelectedItem:nil];
-        for (ERRadialMenuItem *menuItem in [self radialMenuItems]) {
-            if ([menuItem hitTest:location]) {
-                [self setSelectedItem:menuItem];
-            }
-        }
+        [self selectItemUnderPoint:location];
         [self setNeedsDisplay:YES];
     }
 }
@@ -218,17 +289,7 @@
 {
     NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     
-    if([self selectedItem] && [[self selectedItem] hitTest:location]){
-        return; // do nothing, we are good
-    }else{
-        [self setSelectedItem:nil];
-        for (ERRadialMenuItem *menuItem in [self radialMenuItems]) {
-            if ([menuItem hitTest:location]) {
-                [self setSelectedItem:menuItem];
-            }
-        }
-        [self setNeedsDisplay:YES];
-    }
+    [self selectItemUnderPoint:location];
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
@@ -236,18 +297,9 @@
 //    NSLog(@"mouse up");
     // get the selected menu item
     NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-    
-    if([self selectedItem] && [[self selectedItem] hitTest:location]){
-        // do nothing, we are good
-    }else{
-        [self setSelectedItem:nil];
-        for (ERRadialMenuItem *menuItem in [self radialMenuItems]) {
-            if ([menuItem hitTest:location]) {
-                [self setSelectedItem:menuItem];
-            }
-        }
-        [self setNeedsDisplay:YES];
-    }
+    [self selectItemUnderPoint:location];
+     
+    [self setNeedsDisplay:YES];
     
     if (![self selectedItem]) {
         return;
@@ -353,6 +405,7 @@
     [[sub window] close];
     [[self window] makeKeyWindow];
     [self cascadingSendFront:self];
+    [self resetItemSelection];
 }
 
 - (void)_closeCascadingMenus

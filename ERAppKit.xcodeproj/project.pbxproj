@@ -33,6 +33,8 @@
 		6C27B5E6161E1224002D1EF9 /* ERGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B5E4161E1224002D1EF9 /* ERGeometry.h */; };
 		6C27B5E7161E1224002D1EF9 /* ERGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B5E5161E1224002D1EF9 /* ERGeometry.m */; };
 		6C27B5EA161F8C9D002D1EF9 /* ERGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6CC94BA0162092A900FB1CD0 /* ERTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CC94B9E162092A900FB1CD0 /* ERTimer.h */; };
+		6CC94BA1162092A900FB1CD0 /* ERTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC94B9F162092A900FB1CD0 /* ERTimer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +96,8 @@
 		6C27B5E4161E1224002D1EF9 /* ERGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERGeometry.h; path = src/Tools/ERGeometry.h; sourceTree = "<group>"; };
 		6C27B5E5161E1224002D1EF9 /* ERGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERGeometry.m; path = src/Tools/ERGeometry.m; sourceTree = "<group>"; };
 		6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ERGlobals.h; path = src/ERGlobals.h; sourceTree = "<group>"; };
+		6CC94B9E162092A900FB1CD0 /* ERTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERTimer.h; path = src/Tools/ERTimer.h; sourceTree = "<group>"; };
+		6CC94B9F162092A900FB1CD0 /* ERTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERTimer.m; path = src/Tools/ERTimer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +240,8 @@
 			children = (
 				6C27B5E4161E1224002D1EF9 /* ERGeometry.h */,
 				6C27B5E5161E1224002D1EF9 /* ERGeometry.m */,
+				6CC94B9E162092A900FB1CD0 /* ERTimer.h */,
+				6CC94B9F162092A900FB1CD0 /* ERTimer.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -254,6 +260,7 @@
 				6C27B5AB161B91CD002D1EF9 /* ERRadialMenuWindow.h in Headers */,
 				6C27B5E6161E1224002D1EF9 /* ERGeometry.h in Headers */,
 				6C27B5EA161F8C9D002D1EF9 /* ERGlobals.h in Headers */,
+				6CC94BA0162092A900FB1CD0 /* ERTimer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +365,7 @@
 				6C27B5AA161B91CD002D1EF9 /* ERRadialMenuView.m in Sources */,
 				6C27B5AC161B91CD002D1EF9 /* ERRadialMenuWindow.m in Sources */,
 				6C27B5E7161E1224002D1EF9 /* ERGeometry.m in Sources */,
+				6CC94BA1162092A900FB1CD0 /* ERTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

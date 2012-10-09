@@ -11,6 +11,8 @@
 #import "ERRadialMenuItem.h"
 #import <ERAppKit/ERGlobals.h>
 
+#import "ERTimer.h"
+
 #define OUTER_RADIUS 100.
 #define INNER_RADIUS 30.
 
@@ -27,6 +29,8 @@
     
     ERRadialMenuView *_supermenu;
     ERRadialMenuView *_submenu;
+    
+    ERTimer *_hitboxTimer;
 }
 @property (readonly,copy) NSArray *radialMenuItems;
 @property (readonly) ERRadialMenuItem *selectedItem;
@@ -47,4 +51,6 @@
 - (void)cascadingSendToLevel:(CGFloat)alpha;
 
 - (void)windowResign;
+
+- (void)selectItemUnderPoint:(NSPoint)location;
 @end
