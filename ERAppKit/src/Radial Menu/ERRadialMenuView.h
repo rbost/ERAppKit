@@ -26,6 +26,7 @@
     
     @private
     ERMenuStyle _style;
+    CGFloat _direction;
     ERRadialMenuItem *_selectedItem;
     
     ERRadialMenuView *_supermenu;
@@ -39,8 +40,10 @@
 
 - (id)initWithMenu:(NSMenu *)menu;
 - (id)initWithMenu:(NSMenu *)menu style:(ERMenuStyle)style;
+- (id)initWithMenu:(NSMenu *)menu style:(ERMenuStyle)style direction:(CGFloat)direction;
 - (id)initWithCenteredMenu:(NSMenu *)menu;
 - (id)initWithMenu:(NSMenu *)menu emptyAngle:(CGFloat)emptyAngle;
+- (id)initWithMenu:(NSMenu *)menu emptyAngle:(CGFloat)emptyAngle direction:(CGFloat)emptyDirection;
 
 
 - (NSInteger)numberOfItems;

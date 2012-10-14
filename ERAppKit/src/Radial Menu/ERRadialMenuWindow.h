@@ -17,6 +17,7 @@
 }
 
 - (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view menuStyle:(ERMenuStyle)style;
+- (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view menuStyle:(ERMenuStyle)style direction:(CGFloat)direction;
 - (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view;
 - (void)fadeIn:(id)sender;
 - (void)fadeOut:(id)sender;

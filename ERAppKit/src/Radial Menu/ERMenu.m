@@ -37,6 +37,15 @@ static NSTimeInterval __mouseOverMenuOpeningInterval = 0.5f;
     [menuWindow fadeIn:self];
 }
 
++ (void)popUpContextMenu:(NSMenu *)menu withEvent:(NSEvent *)event forView:(NSView *)view menuStyle:(ERMenuStyle)style direction:(CGFloat)direction
+{
+    ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:menu atLocation:[event locationInWindow] inView:[[view window] contentView] menuStyle:style direction:direction];
+    
+    [menuWindow setReleasedWhenClosed:YES];
+    [menuWindow makeKeyAndOrderFront:self];
+    [menuWindow fadeIn:self];
+}
+
 + (void)popUpContextMenu:(NSMenu *)menu withEvent:(NSEvent *)event forView:(NSView *)view
 {
     [self popUpContextMenu:menu withEvent:event forView:view menuStyle:ERDefaultMenuStyle];
@@ -45,6 +54,15 @@ static NSTimeInterval __mouseOverMenuOpeningInterval = 0.5f;
 + (void)popUpContextMenu:(NSMenu *)menu atLocation:(NSPoint)point inView:(NSView *)view menuStyle:(ERMenuStyle)style
 {
     ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:menu atLocation:point inView:view menuStyle:style];
+    
+    [menuWindow setReleasedWhenClosed:YES];
+    [menuWindow makeKeyAndOrderFront:self];
+    [menuWindow fadeIn:self];
+}
+
++ (void)popUpContextMenu:(NSMenu *)menu atLocation:(NSPoint)point inView:(NSView *)view menuStyle:(ERMenuStyle)style direction:(CGFloat)direction
+{
+    ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:menu atLocation:point inView:view menuStyle:style direction:direction];
     
     [menuWindow setReleasedWhenClosed:YES];
     [menuWindow makeKeyAndOrderFront:self];

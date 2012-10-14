@@ -17,13 +17,23 @@
  Different styles can be set for radial menus.
  */
 @interface ERMenu : NSObject
-
 /**
- Displays radial contextual menu over a view for an event.
+ Displays radial contextual menu over a view for an event in a specified direction.
  \param menu The menu object to use for the contextual menu.
  \param event An NSEvent object representing the event.
  \param view The view object over which to display the contextual menu.
- \param style The style for the radial menu
+ \param style The style for the radial menu.
+ \param direction The direction in angle of the menu.
+ */
+
++ (void)popUpContextMenu:(NSMenu *)menu withEvent:(NSEvent *)event forView:(NSView *)view menuStyle:(ERMenuStyle)style direction:(CGFloat)direction;
+
+/**
+ Displays radial contextual menu over a view for an event in the default direction (90 degrees).
+ \param menu The menu object to use for the contextual menu.
+ \param event An NSEvent object representing the event.
+ \param view The view object over which to display the contextual menu.
+ \param style The style for the radial menu.
  */
 + (void)popUpContextMenu:(NSMenu *)menu withEvent:(NSEvent *)event forView:(NSView *)view menuStyle:(ERMenuStyle)style;
 
@@ -37,7 +47,17 @@
 
 
 /**
- Displays radial contextual menu over a view at a location.
+ Displays radial contextual menu over a view at a location and in a specified direction.
+ \param menu The menu object to use for the contextual menu.
+ \param point A point representing the center position of the contextual menu.
+ \param view The view object over which to display the contextual menu.
+ \param style The style for the radial menu.
+ \param direction The direction in angle of the menu.
+ */
++ (void)popUpContextMenu:(NSMenu *)menu atLocation:(NSPoint)point inView:(NSView *)view menuStyle:(ERMenuStyle)style direction:(CGFloat)direction;
+
+/**
+ Displays radial contextual menu over a view at a location in the default direction (90 degrees).
  \param menu The menu object to use for the contextual menu.
  \param point A point representing the center position of the contextual menu.
  \param view The view object over which to display the contextual menu.

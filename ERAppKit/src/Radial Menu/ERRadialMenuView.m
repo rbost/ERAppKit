@@ -66,6 +66,28 @@
     }
 }
 
+- (id)initWithMenu:(NSMenu *)menu style:(ERMenuStyle)style direction:(CGFloat)direction
+{
+    _style = style;
+    switch (style) {
+        case ERCenteredMenuStyle:
+            return [self initWithCenteredMenu:menu];
+            break;
+            
+        case ERUpperMenuStyle:
+            return [self initWithMenu:menu emptyAngle:180. direction:direction];
+            break;
+            
+        case EREmptyQuarterMenuStyle:
+            return [self initWithMenu:menu emptyAngle:90. direction:direction];
+            break;
+            
+        default:
+            return [self initWithCenteredMenu:menu];
+            break;
+    }
+}
+
 - (id)initWithCenteredMenu:(NSMenu *)menu
 {
     self = [self initWithFrame:NSMakeRect(0, 0, 2*OUTER_RADIUS, 2*OUTER_RADIUS)];
@@ -117,13 +139,17 @@
     _hitboxTimer = [[ERTimer alloc] initWithTimeInterval:ERMENU_MOUSEOVER_INTERVAL target:self selector:@selector(_timerCallBack) argument:nil];
     return self;
 }
-
-- (id)initWithMenu:(NSMenu *)menu emptyAngle:(CGFloat)emptyAngle;
+- (id)initWithMenu:(NSMenu *)menu emptyAngle:(CGFloat)emptyAngle
+{
+    return [self initWithMenu:menu emptyAngle:emptyAngle direction:-90.];
+}
+- (id)initWithMenu:(NSMenu *)menu emptyAngle:(CGFloat)emptyAngle direction:(CGFloat)emptyDirection;
 {
     self = [self initWithFrame:NSMakeRect(0, 0, 2*OUTER_RADIUS, 2*OUTER_RADIUS)];
     
     if(self){
         _menu = [menu retain];
+        _direction = emptyDirection;
         NSArray *menuItems = [menu itemArray];
         NSMutableArray *radialItems = [[NSMutableArray alloc] initWithCapacity:([menuItems count]+1)];
         
@@ -135,7 +161,11 @@
         [centerItem release];
         
         CGFloat itemAngle = (360.-emptyAngle)/[menuItems count];
-        CGFloat currentAngle = 270.-emptyAngle/2.; // = -90 + 360 + empty/2
+        
+        while (_direction <= 0.) {
+            _direction += 360.;
+        }
+        CGFloat currentAngle = _direction-emptyAngle/2.; // = -90 + 360 + empty/2
         CGFloat radianFactor = M_PI/180.;
         
         for (NSMenuItem *item in menuItems) {
@@ -206,6 +236,12 @@
 {
     return _style;
 }
+
+- (CGFloat)direction
+{
+    return _direction;
+}
+
 - (ERRadialMenuItem *)selectedItem
 {
     return _selectedItem;
@@ -266,7 +302,7 @@
         // open the submenu
         NSPoint location = [[self window] mouseLocationOutsideOfEventStream];
         location = [self convertPoint:location fromView:nil];
-        ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[[[self selectedItem] menuItem] submenu] atLocation:location inView:self menuStyle:[self style]];
+        ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[[[self selectedItem] menuItem] submenu] atLocation:location inView:self menuStyle:[self style] direction:[self direction]];
         
         [(ERRadialMenuView *)[menuWindow contentView] setSupermenu:self];
         [self setSubmenu:[menuWindow contentView]];
@@ -342,7 +378,7 @@
         
         if ([item hasSubmenu]) {
             // open a new menu for the submenu
-            ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[item submenu] atLocation:location inView:self menuStyle:[self style]];
+            ERRadialMenuWindow *menuWindow = [[ERRadialMenuWindow alloc] initWithMenu:[item submenu] atLocation:location inView:self menuStyle:[self style] direction:[self direction]];
             
             [(ERRadialMenuView *)[menuWindow contentView] setSupermenu:self];
             [self setSubmenu:[menuWindow contentView]];

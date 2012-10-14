@@ -45,7 +45,24 @@
     [self _initWindowWithMenuView:menuView atLocation:loc];
     
 	return self;
+}
 
+- (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view menuStyle:(ERMenuStyle)style direction:(CGFloat)direction
+{
+    // first of all, intialize the menu view which will be our content view
+    // it takes care about displaying the menu and calculating the necessary content frame we need
+    ERRadialMenuView *menuView = [[ERRadialMenuView alloc] initWithMenu:menu style:style direction:direction];
+    
+    // get the location on the screen
+    if(view){
+        loc = [view convertPoint:loc toView:nil];
+        NSRect convertRect; convertRect.origin = loc; convertRect.size = NSZeroSize;
+        loc = [[view window] convertRectToScreen:convertRect].origin;
+    }
+    
+    [self _initWindowWithMenuView:menuView atLocation:loc];
+    
+	return self;    
 }
 
 - (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view
