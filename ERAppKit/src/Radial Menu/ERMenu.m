@@ -265,7 +265,7 @@ static CGFloat __menuRadius = 100.;
 
 + (void)setCentralButtonRadius:(CGFloat)r
 {
-    __centralButtonRadius = r;
+    __centralButtonRadius = MIN(r, __menuRadius-10.);
 }
 
 + (CGFloat)menuRadius
@@ -275,6 +275,6 @@ static CGFloat __menuRadius = 100.;
 
 + (void)setMenuRadius:(CGFloat)r
 {
-    __menuRadius = r;
+    __menuRadius = MAX(r, __centralButtonRadius+10.);
 }
 @end

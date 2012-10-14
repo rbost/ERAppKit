@@ -224,7 +224,8 @@
 /**
  Sets the radius of the central button of radial menus.
  \param r The new radius.
- */
+ \remarks Sets the new radius to min(r,menuRadius-10).
+*/
 + (void)setCentralButtonRadius:(CGFloat)r;
 
 /**
@@ -234,6 +235,7 @@
 /**
  Sets the radius of radial menus.
  \param r The new radius.
+ \remarks Sets the new radius to max(r,centralButtonRadius+10).   
  */
 + (void)setMenuRadius:(CGFloat)r;
 @end
