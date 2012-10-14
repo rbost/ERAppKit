@@ -22,6 +22,8 @@
 - (NSAnimation *)currentAnimation;
 - (void)setCurrentAnimation:(NSAnimation *)anim;
 
+- (void)_initWindowWithMenuView:(ERRadialMenuView *)menuView atLocation:(NSPoint)loc;
+
 @end
 
 
@@ -32,7 +34,6 @@
     // first of all, intialize the menu view which will be our content view
     // it takes care about displaying the menu and calculating the necessary content frame we need
     ERRadialMenuView *menuView = [[ERRadialMenuView alloc] initWithMenu:menu style:style];
-    NSRect contentRect = NSZeroRect;
     
     // get the location on the screen
     if(view){
@@ -40,6 +41,21 @@
         NSRect convertRect; convertRect.origin = loc; convertRect.size = NSZeroSize;
         loc = [[view window] convertRectToScreen:convertRect].origin;
     }
+    
+    [self _initWindowWithMenuView:menuView atLocation:loc];
+    
+	return self;
+
+}
+
+- (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view
+{
+    return [self initWithMenu:menu atLocation:loc inView:view menuStyle:ERDefaultMenuStyle];
+}
+
+- (void)_initWindowWithMenuView:(ERRadialMenuView *)menuView atLocation:(NSPoint)loc
+{
+    NSRect contentRect = NSZeroRect;
     
     // set the size of the content rect
     contentRect.size = [menuView frame].size;
@@ -70,15 +86,8 @@
     
     // we accept mouse moved event to track mouse position on the menu
     [self setAcceptsMouseMovedEvents:YES];
-    
-	return self;
-
+   
 }
-- (id)initWithMenu:(NSMenu *)menu atLocation:(NSPoint)loc inView:(NSView *)view
-{
-    return [self initWithMenu:menu atLocation:loc inView:view menuStyle:ERDefaultMenuStyle];
-}
-
 - (void)dealloc
 {
     // stop the current animation 
