@@ -25,6 +25,8 @@ static BOOL __fillCentralMenuItem = YES;
 static BOOL __openSubmenusOnMouseOver = YES;
 static NSTimeInterval __mouseOverMenuOpeningInterval = 0.5f;
 
+static CGFloat __centralButtonRadius = 30.;
+static CGFloat __menuRadius = 100.;
 
 @implementation ERMenu
 
@@ -256,4 +258,23 @@ static NSTimeInterval __mouseOverMenuOpeningInterval = 0.5f;
     __mouseOverMenuOpeningInterval = interval;
 }
 
++ (CGFloat)centralButtonRadius
+{
+    return __centralButtonRadius;
+}
+
++ (void)setCentralButtonRadius:(CGFloat)r
+{
+    __centralButtonRadius = r;
+}
+
++ (CGFloat)menuRadius
+{
+    return __menuRadius;
+}
+
++ (void)setMenuRadius:(CGFloat)r
+{
+    __menuRadius = r;
+}
 @end

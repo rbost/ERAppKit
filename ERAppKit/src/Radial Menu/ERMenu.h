@@ -216,4 +216,24 @@
  \remarks This methods  does nothing when openSubmenusOnMouseOver is set to NO
  */
 + (void)setMouseOverMenuOpeningInterval:(NSTimeInterval)interval;
+
+/**
+ Returns the radius of the central button of radial menus.
+ */
++ (CGFloat)centralButtonRadius;
+/**
+ Sets the radius of the central button of radial menus.
+ \param r The new radius.
+ */
++ (void)setCentralButtonRadius:(CGFloat)r;
+
+/**
+ Returns the radius of radial menus.
+ */
++ (CGFloat)menuRadius;
+/**
+ Sets the radius of radial menus.
+ \param r The new radius.
+ */
++ (void)setMenuRadius:(CGFloat)r;
 @end

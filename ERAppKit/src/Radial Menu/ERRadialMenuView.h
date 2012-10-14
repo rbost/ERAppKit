@@ -13,8 +13,8 @@
 
 #import "ERTimer.h"
 
-#define OUTER_RADIUS 100.
-#define INNER_RADIUS 30.
+#define OUTER_RADIUS [ERMenu menuRadius]
+#define INNER_RADIUS [ERMenu centralButtonRadius]
 
 @class ERRadialMenuItem;
 
