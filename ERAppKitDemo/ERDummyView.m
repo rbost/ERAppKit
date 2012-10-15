@@ -8,7 +8,7 @@
 
 #import "ERDummyView.h"
 
-#import <ERAppKit/ERMenu.h>
+#import <ERAppKit/ERAppKit.h>
 
 @implementation ERDummyView
 
@@ -44,7 +44,23 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
 //    [delegate showDummyMenu:theEvent];
-    [ERMenu popUpContextMenu:[self menu] withEvent:theEvent forView:self menuStyle:EREmptyQuarterMenuStyle direction:135];
+    NSPoint centerPoint = ERCenterPointOfRect([self bounds]);
+    NSPoint loc = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    CGFloat direction = 0.;
+    if (loc.x <= centerPoint.x) {
+        if (loc.y <= centerPoint.y) {
+            direction = 45;
+        }else{
+            direction = 315;
+        }
+    }else{
+        if (loc.y <= centerPoint.y) {
+            direction = 135;
+        }else{
+            direction = 225;
+        }
+    }
+    [ERMenu popUpContextMenu:[self menu] withEvent:theEvent forView:self menuStyle:EREmptyQuarterMenuStyle direction:direction];
 }
 
 - (IBAction)setWhite:(id)sender

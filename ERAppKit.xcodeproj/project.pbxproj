@@ -30,9 +30,10 @@
 		6C27B5D2161B983B002D1EF9 /* ERAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C27B57B161B9158002D1EF9 /* ERAppKit.framework */; };
 		6C27B5D8161B9CD4002D1EF9 /* doxyfile in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B5D7161B9CD4002D1EF9 /* doxyfile */; };
 		6C27B5E3161BA36B002D1EF9 /* LICENCE in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B5E2161BA36B002D1EF9 /* LICENCE */; };
-		6C27B5E6161E1224002D1EF9 /* ERGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B5E4161E1224002D1EF9 /* ERGeometry.h */; };
+		6C27B5E6161E1224002D1EF9 /* ERGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B5E4161E1224002D1EF9 /* ERGeometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C27B5E7161E1224002D1EF9 /* ERGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B5E5161E1224002D1EF9 /* ERGeometry.m */; };
 		6C27B5EA161F8C9D002D1EF9 /* ERGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C4BCF99162B834C0082630C /* ERAppKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B58B161B9158002D1EF9 /* ERAppKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CC94BA0162092A900FB1CD0 /* ERTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CC94B9E162092A900FB1CD0 /* ERTimer.h */; };
 		6CC94BA1162092A900FB1CD0 /* ERTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC94B9F162092A900FB1CD0 /* ERTimer.m */; };
 /* End PBXBuildFile section */
@@ -261,6 +262,7 @@
 				6C27B5E6161E1224002D1EF9 /* ERGeometry.h in Headers */,
 				6C27B5EA161F8C9D002D1EF9 /* ERGlobals.h in Headers */,
 				6CC94BA0162092A900FB1CD0 /* ERTimer.h in Headers */,
+				6C4BCF99162B834C0082630C /* ERAppKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

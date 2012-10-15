@@ -12,6 +12,12 @@
 
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSMenu *menu;
+@property (assign) IBOutlet NSSlider *menuRadiusSlider;
+@property (assign) IBOutlet NSSlider *centralRadiusSlider;
+@property (assign) IBOutlet NSSlider *delaySlider;
+@property (assign) IBOutlet NSTextField *menuRadiusField;
+@property (assign) IBOutlet NSTextField *centralRadiusField;
+@property (assign) IBOutlet NSTextField *delayField;
 
 - (void)showDummyMenu:(NSEvent *)event;
 @end
