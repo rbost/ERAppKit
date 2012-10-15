@@ -97,13 +97,14 @@
         NSArray *menuItems = [menu itemArray];
         NSMutableArray *radialItems = [[NSMutableArray alloc] initWithCapacity:([menuItems count]+1)];
         
-        ERRadialMenuItem *centerItem = [[ERRadialMenuItem alloc] initWithMenuItem:nil hitBox:[NSBezierPath bezierPathWithOvalInRect:NSMakeRect(-INNER_RADIUS, -INNER_RADIUS, 2*INNER_RADIUS, 2*INNER_RADIUS)] isCentral:YES angle:0. inRadialMenuView:self];
-        
-        
-        [radialItems addObject:centerItem];
-        [self setSelectedItem:centerItem];
-        [centerItem release];
-        
+        if([ERMenu fillCentralMenuItem]){
+            ERRadialMenuItem *centerItem = [[ERRadialMenuItem alloc] initWithMenuItem:nil hitBox:[NSBezierPath bezierPathWithOvalInRect:NSMakeRect(-INNER_RADIUS, -INNER_RADIUS, 2*INNER_RADIUS, 2*INNER_RADIUS)] isCentral:YES angle:0. inRadialMenuView:self];
+            
+            
+            [radialItems addObject:centerItem];
+            [self setSelectedItem:centerItem];
+            [centerItem release];
+        }
         CGFloat itemAngle = 360./[menuItems count];
         CGFloat currentAngle = 90.;
         CGFloat radianFactor = M_PI/180.;
@@ -153,13 +154,15 @@
         NSArray *menuItems = [menu itemArray];
         NSMutableArray *radialItems = [[NSMutableArray alloc] initWithCapacity:([menuItems count]+1)];
         
-        ERRadialMenuItem *centerItem = [[ERRadialMenuItem alloc] initWithMenuItem:nil hitBox:[NSBezierPath bezierPathWithOvalInRect:NSMakeRect(-INNER_RADIUS, -INNER_RADIUS, 2*INNER_RADIUS, 2*INNER_RADIUS)] isCentral:YES angle:0. inRadialMenuView:self];
         
-        
-        [radialItems addObject:centerItem];
-        [self setSelectedItem:centerItem];
-        [centerItem release];
-        
+        if([ERMenu fillCentralMenuItem]){
+            ERRadialMenuItem *centerItem = [[ERRadialMenuItem alloc] initWithMenuItem:nil hitBox:[NSBezierPath bezierPathWithOvalInRect:NSMakeRect(-INNER_RADIUS, -INNER_RADIUS, 2*INNER_RADIUS, 2*INNER_RADIUS)] isCentral:YES angle:0. inRadialMenuView:self];
+            
+            
+            [radialItems addObject:centerItem];
+            [self setSelectedItem:centerItem];
+            [centerItem release];
+        }
         CGFloat itemAngle = (360.-emptyAngle)/[menuItems count];
         
         while (_direction <= 0.) {
