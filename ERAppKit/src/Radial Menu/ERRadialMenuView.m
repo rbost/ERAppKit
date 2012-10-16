@@ -232,8 +232,22 @@
 }
 
 @synthesize radialMenuItems = _radialMenuItems, menu = _menu;
-@synthesize submenu = _submenu, supermenu = _supermenu;
+@synthesize supermenu = _supermenu;
 @dynamic selectedItem;
+
+- (ERRadialMenuView *)submenu
+{
+    return _submenu;
+}
+
+- (void)setSubmenu:(ERRadialMenuView *)menu
+{
+    [_submenu setSupermenu:nil];
+    
+    [menu retain];
+    [_submenu release];
+    _submenu = menu;
+}
 
 - (ERMenuStyle)style
 {
