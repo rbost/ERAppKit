@@ -17,6 +17,10 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    [ERMenu setMouseOverMenuOpeningInterval:40];
+    [ERMenu setCentralButtonRadius:25.];
+    [ERMenu setMenuRadius:90.];
+    
     [delaySlider setFloatValue:[ERMenu mouseOverMenuOpeningInterval]*10];
     [delayField setFloatValue:[ERMenu mouseOverMenuOpeningInterval]*10];
     [centralRadiusSlider setFloatValue:[ERMenu centralButtonRadius]];
