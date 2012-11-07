@@ -152,6 +152,7 @@
     if(self){
         _menu = [menu retain];
         _direction = emptyDirection;
+        _angularWidth = 360 - emptyAngle;
         NSArray *menuItems = [menu itemArray];
         NSMutableArray *radialItems = [[NSMutableArray alloc] initWithCapacity:([menuItems count]+1)];
         
@@ -217,7 +218,7 @@
         CGFloat r = (INNER_RADIUS+outRadius)*.5;
         outRadius += 1.5*ER_SUBMENU_INNER_OFFSET;
 
-        for(int i = 1; i < [radialItems count]; i++){
+        for(int i = ([ERMenu fillCentralMenuItem] ? 1 : 0); i < [radialItems count]; i++){
             ERRadialMenuItem *rItem = [radialItems objectAtIndex:i];
             NSBezierPath *bp = [[NSBezierPath alloc] init];
             [bp appendBezierPathWithArcWithCenter:NSZeroPoint radius:INNER_RADIUS startAngle:(currentAngle) endAngle:(currentAngle-itemAngle) clockwise:YES];
@@ -239,7 +240,7 @@
             currentAngle -= itemAngle; // turn clockwise
         }
         
-        NSRect frame = [self frame];
+//        NSRect frame = [self frame];
         
         [self setFrameSize:NSMakeSize(2*outRadius, 2*outRadius)];
         
@@ -288,7 +289,7 @@
 
 @synthesize radialMenuItems = _radialMenuItems, menu = _menu;
 @synthesize supermenu = _supermenu;
-@synthesize radius = _radius;
+@synthesize radius = _radius, angularWidth = _angularWidth;
 @dynamic selectedItem;
 
 - (ERRadialMenuView *)submenu

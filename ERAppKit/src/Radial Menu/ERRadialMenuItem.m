@@ -107,7 +107,7 @@ NSPoint ERDrawingPointForAttributedStringInAngle(NSAttributedString *aStr, NSPoi
             [[ERMenu itemColor] set];
             [_hitBox fill];
         }else{
-            [[ERMenu itemGradient] drawFromCenter:NSZeroPoint radius:0 toCenter:NSZeroPoint radius:200 options:0];
+            [[ERMenu itemGradient] drawFromCenter:NSZeroPoint radius:0 toCenter:NSZeroPoint radius:[[self menuView] radius] options:0];
         }
     }
 
@@ -131,8 +131,8 @@ NSPoint ERDrawingPointForAttributedStringInAngle(NSAttributedString *aStr, NSPoi
     [attributedTitle release];
     
     if([[self menuItem] hasSubmenu]){
-        CGFloat angularWidth = 2*M_PI/[_menuView numberOfItems];
         CGFloat radianFactor = M_PI/180.;
+        CGFloat angularWidth = radianFactor*[[self menuView] angularWidth]/[_menuView numberOfItems];
         NSBezierPath *arrow = [NSBezierPath bezierPath];
         CGFloat r1 = [[self menuView] radius] - ER_SUBMENU_INNER_OFFSET;
         CGFloat r2 = [[self menuView] radius] - ER_SUBMENU_OUTTER_OFFSET;
@@ -168,7 +168,7 @@ NSPoint ERDrawingPointForAttributedStringInAngle(NSAttributedString *aStr, NSPoi
         [[ERMenu selectedItemColor] set];
         [_hitBox fill];
     }else{
-        [[ERMenu selectedItemGradient] drawFromCenter:NSZeroPoint radius:0 toCenter:NSZeroPoint radius:200 options:0]; 
+        [[ERMenu selectedItemGradient] drawFromCenter:NSZeroPoint radius:0 toCenter:NSZeroPoint radius:[[self menuView] radius] options:0];
     }
 
     [[ERMenu selectedItemStrokeColor] set];
@@ -192,8 +192,8 @@ NSPoint ERDrawingPointForAttributedStringInAngle(NSAttributedString *aStr, NSPoi
     [attributedTitle release];
 
     if([[self menuItem] hasSubmenu]){
-        CGFloat angularWidth = 2*M_PI/[_menuView numberOfItems];
         CGFloat radianFactor = M_PI/180.;
+        CGFloat angularWidth = radianFactor*[[self menuView] angularWidth]/[_menuView numberOfItems];
         NSBezierPath *arrow = [NSBezierPath bezierPath];
         CGFloat r1 = [[self menuView] radius] - ER_SUBMENU_INNER_OFFSET;
         CGFloat r2 = [[self menuView] radius] - ER_SUBMENU_OUTTER_OFFSET;
