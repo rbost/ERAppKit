@@ -10,6 +10,7 @@
 
 #import "ERRadialMenuWindow.h"
 #import <ERAppKit/ERMenu.h>
+#import <ERAppKit/ERGeometry.h>
 
 #define ERMENU_MOUSEOVER_INTERVAL [ERMenu mouseOverMenuOpeningInterval]
 
@@ -170,6 +171,7 @@
         }
         CGFloat currentAngle = _direction-emptyAngle/2.; // = -90 + 360 + empty/2
         CGFloat radianFactor = M_PI/180.;
+        CGFloat radiusSquared = OUTER_RADIUS*OUTER_RADIUS;
         
         for (NSMenuItem *item in menuItems) {
             NSBezierPath *bp = [[NSBezierPath alloc] init];
@@ -180,8 +182,27 @@
             ERRadialMenuItem *rItem = [[ERRadialMenuItem alloc] initWithMenuItem:item hitBox:bp isCentral:NO angle:currentAngle-itemAngle/2. inRadialMenuView:self];
             
             CGFloat r = (INNER_RADIUS+OUTER_RADIUS)*.5;
+            NSRect stringRect = NSZeroRect;
+            stringRect.size = [[rItem attributedTitle] size];
             
-            [rItem setCenterPoint:NSMakePoint(r*cos(radianFactor*(currentAngle-itemAngle/2)), r*sin(radianFactor*(currentAngle-itemAngle/2)))];
+            NSPoint firstCenter = NSMakePoint(r*cos((M_PI/180.)*(currentAngle-itemAngle/2.)), r*sin((M_PI/180.)*(currentAngle-itemAngle/2.)));
+            stringRect = ERSetCenterPointOfRect(stringRect,firstCenter);
+            
+            stringRect = ERFitRectInAngle(stringRect, NSZeroPoint, currentAngle-itemAngle/2., itemAngle);
+            
+            [rItem setCenterPoint:ERCenterPointOfRect(stringRect)];
+            [rItem setTitleDrawingPoint:stringRect.origin];
+            
+            radiusSquared = MAX(radiusSquared, MAX(     MAX(SQUARED_NORM(UPPER_LEFT_CORNER(stringRect)),SQUARED_NORM(UPPER_RIGHT_CORNER(stringRect))),
+                                                        MAX(SQUARED_NORM(LOWER_LEFT_CORNER(stringRect)),SQUARED_NORM(LOWER_RIGHT_CORNER(stringRect)))
+                                                   )
+                                );
+            
+//            
+//            
+//            [rItem setCenterPoint:NSMakePoint(r*cos(radianFactor*(currentAngle-itemAngle/2)), r*sin(radianFactor*(currentAngle-itemAngle/2)))];
+
+            
             [radialItems addObject:rItem];
             
             [rItem release];
@@ -190,16 +211,50 @@
             currentAngle -= itemAngle; // turn clockwise
         }
         
+        // do another iteration to adjust hitboxes
+        currentAngle = _direction-emptyAngle/2.;
+        CGFloat outRadius = sqrt(radiusSquared);
+        CGFloat r = (INNER_RADIUS+outRadius)*.5;
+        outRadius += 1.5*ER_SUBMENU_INNER_OFFSET;
+
+        for(int i = 1; i < [radialItems count]; i++){
+            ERRadialMenuItem *rItem = [radialItems objectAtIndex:i];
+            NSBezierPath *bp = [[NSBezierPath alloc] init];
+            [bp appendBezierPathWithArcWithCenter:NSZeroPoint radius:INNER_RADIUS startAngle:(currentAngle) endAngle:(currentAngle-itemAngle) clockwise:YES];
+            [bp appendBezierPathWithArcWithCenter:NSZeroPoint radius:outRadius startAngle:(currentAngle-itemAngle) endAngle:(currentAngle) clockwise:NO];
+            [bp closePath];
+            
+            [rItem setHitBox:bp];
+            
+            
+            CGFloat titleRadiusPosition = sqrt(SQUARED_NORM([rItem centerPoint]));
+            titleRadiusPosition = MAX(titleRadiusPosition, r);
+            
+            NSPoint cPoint = NSMakePoint(titleRadiusPosition*cos(radianFactor*(currentAngle-itemAngle/2)), titleRadiusPosition*sin(radianFactor*(currentAngle-itemAngle/2)));
+            NSSize size = [[rItem attributedTitle] size];
+            
+            [rItem setCenterPoint:cPoint];
+            [rItem setTitleDrawingPoint:NSMakePoint(cPoint.x - size.width/2., cPoint.y - size.height/2.)];
+
+            currentAngle -= itemAngle; // turn clockwise
+        }
+        
+        NSRect frame = [self frame];
+        
+        [self setFrameSize:NSMakeSize(2*outRadius, 2*outRadius)];
+        
         [self setRadialMenuItems:radialItems];
         [radialItems release];
+        
+        [self setBoundsOrigin:NSMakePoint(-outRadius, -outRadius)];
+        
+        _hitboxTimer = [[ERTimer alloc] initWithTimeInterval:ERMENU_MOUSEOVER_INTERVAL target:self selector:@selector(_timerCallBack) argument:nil];
+        
+        _radius = outRadius;
         
     }
     
     
-    [self setBoundsOrigin:NSMakePoint(-OUTER_RADIUS, -OUTER_RADIUS)];
-    
-    _hitboxTimer = [[ERTimer alloc] initWithTimeInterval:ERMENU_MOUSEOVER_INTERVAL target:self selector:@selector(_timerCallBack) argument:nil];
-
     return self;
 }
 
@@ -233,6 +288,7 @@
 
 @synthesize radialMenuItems = _radialMenuItems, menu = _menu;
 @synthesize supermenu = _supermenu;
+@synthesize radius = _radius;
 @dynamic selectedItem;
 
 - (ERRadialMenuView *)submenu

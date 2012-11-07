@@ -20,6 +20,8 @@
 
 NSPoint ERCenterPointOfRect(NSRect rect);
 
+NSRect ERSetCenterPointOfRect(NSRect rect, NSPoint newCenter);
+
 /**
  Translate rect so it is contained in container.
  \param rect The rect we want to translate.
@@ -38,3 +40,11 @@ NSRect ERPutRectInRect(NSRect rect,NSRect container);
  \remark If rect cannot fit, it is put such that rect.orgin == container.origin
  */
 NSRect ERPutRectInRectWithMargin(NSRect rect,NSRect container, CGFloat xMargin, CGFloat yMargin);
+
+
+#define UPPER_LEFT_CORNER(rect) NSMakePoint(NSMinX(rect),NSMaxY(rect))
+#define LOWER_LEFT_CORNER(rect) NSMakePoint(NSMinX(rect), NSMinY(rect))
+#define UPPER_RIGHT_CORNER(rect) NSMakePoint(NSMaxX(rect), NSMaxY(rect))
+#define LOWER_RIGHT_CORNER(rect) NSMakePoint(NSMaxX(rect), NSMinY(rect))
+
+#define SQUARED_NORM(p) p.x*p.x+p.y*p.y

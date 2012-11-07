@@ -27,6 +27,7 @@
     @private
     ERMenuStyle _style;
     CGFloat _direction;
+    CGFloat _radius;
     ERRadialMenuItem *_selectedItem;
     
     ERRadialMenuView *_supermenu;
@@ -37,6 +38,7 @@
 @property (readonly,copy) NSArray *radialMenuItems;
 @property (readonly) ERRadialMenuItem *selectedItem;
 @property (readonly) NSMenu *menu;
+@property (readonly) CGFloat radius;
 
 - (id)initWithMenu:(NSMenu *)menu;
 - (id)initWithMenu:(NSMenu *)menu style:(ERMenuStyle)style;

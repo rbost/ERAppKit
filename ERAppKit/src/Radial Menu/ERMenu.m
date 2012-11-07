@@ -192,7 +192,7 @@ static CGFloat __menuRadius = 100.;
     if(!__menuItemTitleAttributes){
         __menuItemTitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                                  [NSColor textColor], NSForegroundColorAttributeName,
-                                 [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
+                                 [NSFont controlContentFontOfSize:12.0], NSFontAttributeName,
                                  nil];        
     }
     
@@ -212,7 +212,7 @@ static CGFloat __menuRadius = 100.;
     if(!__selectedMenuItemTitleAttributes){
         __selectedMenuItemTitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                               [NSColor selectedMenuItemTextColor], NSForegroundColorAttributeName,
-                              [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
+                              [NSFont controlContentFontOfSize:12.0], NSFontAttributeName,
                               nil];
         
     }
