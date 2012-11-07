@@ -20,6 +20,20 @@
     [ERMenu setMouseOverMenuOpeningInterval:40];
     [ERMenu setCentralButtonRadius:25.];
     [ERMenu setMenuRadius:90.];
+    [ERMenu setItemStrokeColor:[NSColor clearColor]];
+    [ERMenu setSelectedItemStrokeColor:[NSColor clearColor]];
+    [ERMenu setItemColor:[NSColor colorWithCalibratedWhite:0.3 alpha:0.7]];
+    [ERMenu setSelectedItemGradient:[[[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.7 alpha:0.7]
+                                                                  endingColor:[NSColor colorWithCalibratedWhite:0.3 alpha:0.7] ] autorelease]];
+    
+    
+    [ERMenu setMenuItemTitleAttributes:[NSDictionary  dictionaryWithObjectsAndKeys:
+                                        [NSColor whiteColor], NSForegroundColorAttributeName,
+                                        [NSFont controlContentFontOfSize:12.0], NSFontAttributeName,
+                                        nil]];
+    [ERMenu setSubmenuArrowColor:[NSColor whiteColor]];
+    
+    
     
     [delaySlider setFloatValue:[ERMenu mouseOverMenuOpeningInterval]*10];
     [delayField setFloatValue:[ERMenu mouseOverMenuOpeningInterval]*10];
@@ -27,7 +41,6 @@
     [centralRadiusField setFloatValue:[ERMenu centralButtonRadius]];
     [menuRadiusField setFloatValue:[ERMenu menuRadius]];
     [menuRadiusSlider setFloatValue:[ERMenu menuRadius]];
-
 }
 
 - (void)showDummyMenu:(NSEvent *)event
