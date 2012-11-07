@@ -141,7 +141,7 @@ NSPoint ERDrawingPointForAttributedStringInAngle(NSAttributedString *aStr, NSPoi
         [arrow lineToPoint:NSMakePoint(r2*cos(radianFactor*_angle), r2*sin(radianFactor*_angle))];
         [arrow lineToPoint:NSMakePoint(r1*cos(radianFactor*_angle + 0.5*ER_SUBMENU_ARROW_FRACTION*angularWidth), r1*sin(radianFactor*_angle + 0.5*ER_SUBMENU_ARROW_FRACTION*angularWidth))];
         
-        [[NSColor colorWithCalibratedWhite:0.3 alpha:1.] set];
+        [[ERMenu submenuArrowColor] set];
         [arrow setLineWidth:2.5];
         [arrow setLineCapStyle:NSRoundLineCapStyle];
         [arrow stroke];
@@ -202,7 +202,7 @@ NSPoint ERDrawingPointForAttributedStringInAngle(NSAttributedString *aStr, NSPoi
         [arrow lineToPoint:NSMakePoint(r2*cos(radianFactor*_angle), r2*sin(radianFactor*_angle))];
         [arrow lineToPoint:NSMakePoint(r1*cos(radianFactor*_angle + 0.5*ER_SUBMENU_ARROW_FRACTION*angularWidth), r1*sin(radianFactor*_angle + 0.5*ER_SUBMENU_ARROW_FRACTION*angularWidth))];
         
-        [[NSColor selectedMenuItemTextColor] set];
+        [[ERMenu submenuArrowSelectedColor] set];
         [arrow setLineWidth:2.5];
         [arrow setLineCapStyle:NSRoundLineCapStyle];
         [arrow stroke];

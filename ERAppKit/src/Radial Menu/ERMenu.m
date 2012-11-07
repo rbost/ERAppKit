@@ -17,6 +17,9 @@ static NSGradient *__itemGradient = nil;
 static NSColor *__itemColor = nil;
 static NSColor *__itemStrokeColor = nil;
 
+static NSColor *__submenuArrowColor = nil;
+static NSColor *__submenuArrowSelectedColor = nil;
+
 static NSDictionary *__menuItemTitleAttributes = nil;
 static NSDictionary *__selectedMenuItemTitleAttributes = nil;
 
@@ -186,6 +189,39 @@ static CGFloat __menuRadius = 100.;
     [__itemStrokeColor release];
     __itemStrokeColor = color;
 }
+
++ (NSColor *)submenuArrowColor
+{
+    if(!__submenuArrowColor){
+        __submenuArrowColor = [[NSColor colorWithCalibratedWhite:0.3 alpha:1.0] copy];
+    }
+    
+    return __submenuArrowColor;
+}
+
++ (void)setSubmenuArrowColor:(NSColor *)color
+{
+    [color retain];
+    [__submenuArrowColor release];
+    __submenuArrowColor = color;
+}
+
++ (NSColor *)submenuArrowSelectedColor
+{
+    if(!__submenuArrowSelectedColor){
+        __submenuArrowSelectedColor = [[NSColor whiteColor] copy];
+    }
+    
+    return __submenuArrowSelectedColor;
+}
+
++ (void)setSubmenuArrowSelectedColor:(NSColor *)color
+{
+    [color retain];
+    [__submenuArrowSelectedColor release];
+    __submenuArrowSelectedColor = color;
+}
+
 
 + (NSDictionary *)menuItemTitleAttributes
 {

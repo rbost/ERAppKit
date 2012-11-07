@@ -86,20 +86,20 @@
  */
 + (NSGradient *)selectedItemGradient;
 /**
- Set the gradient to fill a selected menu item.
+ Sets the gradient used to fill a selected menu item.
  \param gradient The new gradient used to fill selected items.
  \remarks If gradient is not nil, this method set selectedItemColor to nil.
  */
 + (void)setSelectedItemGradient:(NSGradient *)gradient;
 
 /**
- Returns the color to fill a selected menu item.
+ Returns the color used to fill a selected menu item.
  \remarks If this method returns nil, then you should use selectedItemGradient.
  \remarks Return nil by default
  */
 + (NSColor *)selectedItemColor;
 /**
- Set the color to fill a selected menu item.
+ Sets the color used to fill a selected menu item.
  \param color The new color used to fill selected items.
  \remarks If color is not nil, this method set selectedItemGradient to nil.
  */
@@ -116,7 +116,27 @@
 + (void)setSelectedItemStrokeColor:(NSColor *)color;
 
 
+/**
+ Returns the color used to stroke the submenu arrow of a submenu item.
+ \remarks Return [NSColor colorWithCalibratedWhite:0.3 alpha:1.] by default
+ */
++ (NSColor *)submenuArrowColor;
+/**
+ Sets the color used to stroke the submenu arrow of a submenu item.
+ \param color The new color
+ */
++ (void)setSubmenuArrowColor:(NSColor *)color;
 
+/**
+ Returns the color used to stroke the submenu arrow of a submenu item when selected.
+ \remarks Return [NSColor whiteColor] by default
+ */
++ (NSColor *)submenuArrowSelectedColor;
+/**
+ Sets the color used to stroke the submenu arrow of a submenu item when selected.
+ \param color The new color
+ */
++ (void)setSubmenuArrowSelectedColor:(NSColor *)color;
 
 /**
  Returns the gradient to fill a menu item
