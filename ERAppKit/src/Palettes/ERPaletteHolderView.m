@@ -39,6 +39,8 @@ static CGFloat __tabMargin = 5.;
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
     [_leftPalettes release];
     [_rightPalettes release];
     [_upPalettes release];
@@ -77,6 +79,9 @@ static CGFloat __tabMargin = 5.;
     
     [tabArray addObject:palette];
     [palette release];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paletteDidClose:) name:ERPaletteDidCloseNotification object:palette];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paletteDidOpen:) name:ERPaletteDidOpenNotification object:palette];
     
     [[self window] addChildWindow:palette ordered:NSWindowAbove];
     
@@ -168,4 +173,43 @@ static CGFloat __tabMargin = 5.;
         x += [ERPaletteHolderView tabMargin];
     }
 }
+
+- (void)collapsePaletteIntersectingRect:(NSRect)frame
+{
+    for (ERPalettePanel *p in _leftPalettes) {
+        if (NSIntersectsRect([p frame], frame)) {
+            [p setState:ERPaletteClosed animate:YES];
+        }
+    }
+    for (ERPalettePanel *p in _rightPalettes) {
+        if (NSIntersectsRect([p frame], frame)) {
+            [p setState:ERPaletteClosed animate:YES];
+        }
+    }
+    for (ERPalettePanel *p in _upPalettes) {
+        if (NSIntersectsRect([p frame], frame)) {
+            [p setState:ERPaletteClosed animate:YES];
+        }
+    }
+    for (ERPalettePanel *p in _downPalettes) {
+        if (NSIntersectsRect([p frame], frame)) {
+            [p setState:ERPaletteClosed animate:YES];
+        }
+    }
+
+}
+#pragma mark Notifications
+
+- (void)paletteDidClose:(NSNotification *)note
+{
+    
+}
+
+- (void)paletteDidOpen:(NSNotification *)note
+{
+    NSRect newFrame = [(NSValue *)[[note userInfo] objectForKey:ERPaletteNewFrameKey] rectValue];
+    [self collapsePaletteIntersectingRect:newFrame];
+}
+
+
 @end

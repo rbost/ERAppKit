@@ -35,4 +35,12 @@ typedef enum{
 - (IBAction)toggleCollapse:(id)sender;
 - (NSView *)content;
 - (void)setContent:(NSView *)newContent;
+
+- (void)setState:(ERPaletteState)state animate:(BOOL)animate;
 @end
+
+
+extern NSString *ERPaletteDidCloseNotification;
+extern NSString *ERPaletteDidOpenNotification;
+
+extern NSString *ERPaletteNewFrameKey;

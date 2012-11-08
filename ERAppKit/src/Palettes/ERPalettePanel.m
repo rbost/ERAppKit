@@ -9,6 +9,12 @@
 #import "ERPalettePanel.h"
 
 #import <ERAppKit/ERPaletteContentView.h>
+#import <ERAppKit/NSWindow+ThreadedResize.h>
+
+
+NSString *ERPaletteDidCloseNotification = @"Palette did close";
+NSString *ERPaletteDidOpenNotification = @"Palette did open";
+NSString *ERPaletteNewFrameKey = @"New palette frame";
 
 @implementation ERPalettePanel
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
@@ -50,6 +56,10 @@
 
 - (void)setState:(ERPaletteState)state
 {
+    [self setState:state animate:NO];
+}
+- (void)setState:(ERPaletteState)state animate:(BOOL)animate
+{
     if (state == _state) {
         return;
     }
@@ -73,7 +83,13 @@
         
         newFrame = [self convertRectToScreen:newFrame];
         
-        [self setFrame:newFrame display:YES animate:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidCloseNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:newFrame] forKey:ERPaletteNewFrameKey]];
+
+        if (animate) {
+            [[self animator] setFrame:newFrame display:YES];
+        }else{
+            [self setFrame:newFrame display:YES];
+        }
     }else if (state == ERPaletteOpened) {
         NSRect newFrame;
         
@@ -87,9 +103,14 @@
         }else if ([self palettePosition] == ERPalettePanelPositionRight) {
             newFrame.origin.x -= newFrame.size.width - [ERPaletteContentView paletteTitleSize];
         }
-        
-        [self setFrame:newFrame display:YES animate:YES];
 
+        [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidOpenNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:newFrame] forKey:ERPaletteNewFrameKey]];
+
+        if (animate) {
+            [[self animator] setFrame:newFrame display:YES];
+        }else{
+            [self setFrame:newFrame display:YES];
+        }
     }
     
     _state = state;
@@ -99,9 +120,9 @@
 - (IBAction)toggleCollapse:(id)sender
 {
     if (_state == ERPaletteOpened) {
-        [self setState:ERPaletteClosed];
+        [self setState:ERPaletteClosed animate:YES];
     }else{
-        [self setState:ERPaletteOpened];
+        [self setState:ERPaletteOpened animate:YES];
     }    
 }
 
