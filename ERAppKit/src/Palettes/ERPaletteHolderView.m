@@ -9,6 +9,7 @@
 #import "ERPaletteHolderView.h"
 
 #import <ERAppKit/ERPaletteContentView.h>
+#import <ERAppKit/ERPaletteTabView.h>
 
 static CGFloat __tabMargin = 5.;
 
@@ -23,10 +24,21 @@ static CGFloat __tabMargin = 5.;
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-        _leftPalettes = [[NSMutableArray alloc] init];
-        _rightPalettes = [[NSMutableArray alloc] init];
-        _upPalettes = [[NSMutableArray alloc] init];
-        _downPalettes = [[NSMutableArray alloc] init];
+//        _leftPalettes = [[NSMutableArray alloc] init];
+//        _rightPalettes = [[NSMutableArray alloc] init];
+//        _upPalettes = [[NSMutableArray alloc] init];
+//        _downPalettes = [[NSMutableArray alloc] init];
+        
+        
+        _leftTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionLeft];
+        _rightTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionRight];
+        _upTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionUp];
+        _downTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionDown];
+        
+        [self addSubview:_leftTabs]; [_leftTabs release];
+        [self addSubview:_rightTabs]; [_rightTabs release];
+        [self addSubview:_upTabs]; [_upTabs release];
+        [self addSubview:_downTabs]; [_downTabs release];
     }
     
     return self;
@@ -41,165 +53,64 @@ static CGFloat __tabMargin = 5.;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    [_leftPalettes release];
-    [_rightPalettes release];
-    [_upPalettes release];
-    [_downPalettes release];
+//    [_leftPalettes release];
+//    [_rightPalettes release];
+//    [_upPalettes release];
+//    [_downPalettes release];
     
     [super dealloc];
 }
 
 - (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle atPosition:(ERPalettePanelPosition)pos
 {
-    ERPalettePanel *palette = [[ERPalettePanel alloc] initWithContent:contentView position:pos];
-    [palette setTitle:paletteTitle];
-    
-    [palette setState:ERPaletteClosed];
-    NSMutableArray *tabArray;
-    
     switch (pos) {
         case ERPalettePanelPositionRight:
-            tabArray = _rightPalettes;
+            [_rightTabs addPaletteWithContentView:contentView withTitle:paletteTitle];
             break;
             
         case ERPalettePanelPositionLeft:
-            tabArray = _leftPalettes;
+            [_leftTabs addPaletteWithContentView:contentView withTitle:paletteTitle];
             break;
             
         case ERPalettePanelPositionUp:
-            tabArray = _upPalettes;
+            [_upTabs addPaletteWithContentView:contentView withTitle:paletteTitle];
             break;
             
         case ERPalettePanelPositionDown:
-            tabArray = _downPalettes;
+            [_downTabs addPaletteWithContentView:contentView withTitle:paletteTitle];
             break;
             
         default:
-            tabArray = nil;
             break;
     }
     
-    [tabArray addObject:palette];
-    [palette release];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paletteDidClose:) name:ERPaletteDidCloseNotification object:palette];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paletteDidOpen:) name:ERPaletteDidOpenNotification object:palette];
-    
-    [[self window] addChildWindow:palette ordered:NSWindowAbove];
-    
-    switch (pos) {
-        case ERPalettePanelPositionRight:
-            [self updateRightTabsLocations];
-            break;
-            
-        case ERPalettePanelPositionLeft:
-            [self updateLeftTabsLocations];
-            break;
-            
-        case ERPalettePanelPositionUp:
-            [self updateUpTabsLocations];
-            break;
-            
-        case ERPalettePanelPositionDown:
-            [self updateDownTabsLocations];
-            break;
-            
-        default:
-            tabArray = nil;
-            break;
-    }
-
-}
-
-- (void)updateLeftTabsLocations
-{
-    CGFloat y = [self frame].size.height - [ERPaletteContentView paletteTitleSize];
-    
-    for (ERPalettePanel *palette in _leftPalettes) {
-        y -= [palette frame].size.height;
-        
-        NSPoint frameOrigin = NSMakePoint(0, y);
-        frameOrigin = [self convertPoint:frameOrigin toView:nil];
-        frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
-        [palette setFrameOrigin:frameOrigin];
-        
-        y -= [ERPaletteHolderView tabMargin];
-    }
-}
-
-- (void)updateRightTabsLocations
-{
-    CGFloat y = [self frame].size.height - [ERPaletteContentView paletteTitleSize];
-    
-    for (ERPalettePanel *palette in _rightPalettes) {
-        NSRect paletteFrame = [palette frame];
-        y -= paletteFrame.size.height;
-        
-        NSPoint frameOrigin = NSMakePoint([self frame].size.width - paletteFrame.size.width, y);
-        frameOrigin = [self convertPoint:frameOrigin toView:nil];
-        frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
-        [palette setFrameOrigin:frameOrigin];
-        
-        y -= [ERPaletteHolderView tabMargin];
-    }
-}
-
-- (void)updateDownTabsLocations
-{
-    CGFloat x = [ERPaletteContentView paletteTitleSize];
-    
-    for (ERPalettePanel *palette in _downPalettes) {
-        NSRect paletteFrame = [palette frame];
-        
-        NSPoint frameOrigin = NSMakePoint(x, 0);
-        frameOrigin = [self convertPoint:frameOrigin toView:nil];
-        frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
-        [palette setFrameOrigin:frameOrigin];
-        x += paletteFrame.size.width;
-        x += [ERPaletteHolderView tabMargin];
-    }
-}
-
-- (void)updateUpTabsLocations
-{
-    CGFloat x = [ERPaletteContentView paletteTitleSize];
-    
-    for (ERPalettePanel *palette in _upPalettes) {
-        NSRect paletteFrame = [palette frame];
-        
-        NSPoint frameOrigin = NSMakePoint(x, [self frame].size.height - paletteFrame.size.height);
-        frameOrigin = [self convertPoint:frameOrigin toView:nil];
-        frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
-        [palette setFrameOrigin:frameOrigin];
-        x += paletteFrame.size.width;
-        x += [ERPaletteHolderView tabMargin];
-    }
 }
 
 - (void)collapsePaletteIntersectingRect:(NSRect)frame
 {
-    for (ERPalettePanel *p in _leftPalettes) {
+    for (ERPalettePanel *p in [_leftTabs tabs]) {
         if (NSIntersectsRect([p frame], frame)) {
             [p setState:ERPaletteClosed animate:YES];
         }
     }
-    for (ERPalettePanel *p in _rightPalettes) {
+    for (ERPalettePanel *p in [_rightTabs tabs]) {
         if (NSIntersectsRect([p frame], frame)) {
             [p setState:ERPaletteClosed animate:YES];
         }
     }
-    for (ERPalettePanel *p in _upPalettes) {
+    for (ERPalettePanel *p in [_upTabs tabs]) {
         if (NSIntersectsRect([p frame], frame)) {
             [p setState:ERPaletteClosed animate:YES];
         }
     }
-    for (ERPalettePanel *p in _downPalettes) {
+    for (ERPalettePanel *p in [_downTabs tabs]) {
         if (NSIntersectsRect([p frame], frame)) {
             [p setState:ERPaletteClosed animate:YES];
         }
     }
 
 }
+
 #pragma mark Notifications
 
 - (void)paletteDidClose:(NSNotification *)note

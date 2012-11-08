@@ -9,13 +9,14 @@
 #import <Cocoa/Cocoa.h>
 
 #import <ERAppKit/ERPalettePanel.h>
+#import <ERAppKit/ERPaletteTabView.h>
 
 @interface ERPaletteHolderView : NSView
 {
-    NSMutableArray *_leftPalettes;
-    NSMutableArray *_rightPalettes;
-    NSMutableArray *_upPalettes;
-    NSMutableArray *_downPalettes;
+    ERPaletteTabView *_leftTabs;
+    ERPaletteTabView *_rightTabs;
+    ERPaletteTabView *_upTabs;
+    ERPaletteTabView *_downTabs;
 }
 
 - (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle atPosition:(ERPalettePanelPosition)pos;

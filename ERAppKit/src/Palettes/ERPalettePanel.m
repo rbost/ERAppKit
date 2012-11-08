@@ -24,7 +24,6 @@ NSString *ERPaletteNewFrameKey = @"New palette frame";
     ERPaletteContentView *contentView = [[ERPaletteContentView alloc] initWithFrame:NSMakeRect(0, 0, contentRect.size.width, contentRect.size.height)];
     [self setContentView:contentView];
     _state = ERPaletteOpenedInside;
-//    [self setMovableByWindowBackground:YES];
         
     return self;
 }
@@ -212,7 +211,7 @@ NSString *ERPaletteNewFrameKey = @"New palette frame";
     if (_state != ERPaletteClosed) {
         [self setState:ERPaletteClosed animate:YES];
     }else{
-        [self setState:ERPaletteOpenedOutside animate:YES];
+        [self setState:ERPaletteOpenedInside animate:YES];
     }    
 }
 
