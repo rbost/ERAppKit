@@ -17,7 +17,8 @@ typedef enum{
 
 typedef enum{
     ERPaletteClosed = 0,
-    ERPaletteOpened
+    ERPaletteOpenedInside,
+    ERPaletteOpenedOutside
 }ERPaletteState;
 
 @interface ERPalettePanel : NSPanel
