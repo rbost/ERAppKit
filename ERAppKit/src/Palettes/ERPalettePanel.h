@@ -38,6 +38,7 @@ typedef enum{
 - (void)setContent:(NSView *)newContent;
 
 - (void)setState:(ERPaletteState)state animate:(BOOL)animate;
+- (void)updateAutoresizingMask;
 @end
 
 

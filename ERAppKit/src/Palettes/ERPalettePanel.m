@@ -45,9 +45,55 @@ NSString *ERPaletteNewFrameKey = @"New palette frame";
     self = [self initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
 
     [self setContent:content];
+    
+    [self updateAutoresizingMask];
+    
     return self;
 }
-@synthesize palettePosition = _palettePosition;
+
+- (ERPalettePanelPosition)palettePosition
+{
+    return _palettePosition;
+}
+
+- (void)setPalettePosition:(ERPalettePanelPosition)palettePosition
+{
+    if (palettePosition == _palettePosition) {
+        return;
+    }
+    
+    _palettePosition = palettePosition;
+    // update the content autosizing mask with respect to the new position of the palette
+    [self updateAutoresizingMask];
+}
+
+- (void)updateAutoresizingMask
+{
+    NSUInteger mask;
+    
+    switch ([self palettePosition]) {
+        case ERPalettePanelPositionUp:
+            mask = NSViewMaxYMargin;
+            break;
+            
+        case ERPalettePanelPositionDown:
+            mask = NSViewMinYMargin;
+            break;
+            
+        case ERPalettePanelPositionLeft:
+            mask = NSViewMinXMargin;
+            break;
+            
+        case ERPalettePanelPositionRight:
+            mask = NSViewMaxXMargin;
+            break;
+            
+        default:
+            break;
+    }
+    
+    [[self content] setAutoresizingMask:mask];
+}
 
 - (ERPaletteState)state
 {
