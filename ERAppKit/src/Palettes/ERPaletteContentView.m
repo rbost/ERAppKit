@@ -37,6 +37,7 @@ static CGFloat __paletteTitleSize = 20.;
     [NSBezierPath fillRect:dirtyRect];
 
     [self drawTitleHeader];
+    [self drawTitleString];
 }
 
 - (void)drawTitleHeader
@@ -45,6 +46,42 @@ static CGFloat __paletteTitleSize = 20.;
     [NSBezierPath fillRect:[self headerRect]];
 }
 
+- (void)drawTitleString
+{
+    if (![[self window] title]) {
+        return;
+    }
+    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:[[self window] title] attributes:nil];
+    
+//    [attributedTitle drawAtPoint:[self headerRect].origin];
+    NSAffineTransform *t = [NSAffineTransform transform];
+    NSRect windowFrame = [[self window] frame];
+    NSRect headerRect = [self headerRect];
+    switch ([(ERPalettePanel *)[self window] palettePosition]) {
+        case ERPalettePanelPositionDown:
+            [t translateXBy:0 yBy:windowFrame.size.height-headerRect.size.height];
+            break;
+            
+        case ERPalettePanelPositionLeft:
+            [t translateXBy:windowFrame.size.width-headerRect.size.width yBy:headerRect.size.height];
+            [t rotateByDegrees:-90];
+            break;
+        case ERPalettePanelPositionUp:
+            break;
+        case ERPalettePanelPositionRight:
+            [t translateXBy:0 yBy:headerRect.size.height];
+            [t rotateByDegrees:-90];
+            break;
+        default:
+            break;
+    }
+
+    [NSGraphicsContext saveGraphicsState];
+    [t concat];
+    [attributedTitle drawAtPoint:NSZeroPoint];
+    
+    [NSGraphicsContext restoreGraphicsState];
+}
 - (NSRect)headerRect
 {
     NSRect headerRect = NSZeroRect;

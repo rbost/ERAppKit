@@ -31,8 +31,8 @@
 
     
     // for the palettes tests
-    [[self paletteHolder] addPaletteWithContentView:[self paletteContent1] atPosition:ERPalettePanelPositionLeft];
-    [[self paletteHolder] addPaletteWithContentView:[self paletteContent2] atPosition:ERPalettePanelPositionUp];
+    [[self paletteHolder] addPaletteWithContentView:[self paletteContent1] withTitle:@"Content 1" atPosition:ERPalettePanelPositionLeft];
+    [[self paletteHolder] addPaletteWithContentView:[self paletteContent2] withTitle:@"Content 2" atPosition:ERPalettePanelPositionRight];
 }
 
 - (void)showDummyMenu:(NSEvent *)event

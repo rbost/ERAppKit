@@ -18,5 +18,5 @@
     NSMutableArray *_downPalettes;
 }
 
-- (void)addPaletteWithContentView:(NSView *)contentView atPosition:(ERPalettePanelPosition)pos;
+- (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle atPosition:(ERPalettePanelPosition)pos;
 @end

@@ -49,9 +49,11 @@ static CGFloat __tabMargin = 5.;
     [super dealloc];
 }
 
-- (void)addPaletteWithContentView:(NSView *)contentView atPosition:(ERPalettePanelPosition)pos
+- (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle atPosition:(ERPalettePanelPosition)pos
 {
     ERPalettePanel *palette = [[ERPalettePanel alloc] initWithContent:contentView position:pos];
+    [palette setTitle:paletteTitle];
+    
     [palette setState:ERPaletteClosed];
     NSMutableArray *tabArray;
     
