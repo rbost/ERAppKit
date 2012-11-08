@@ -1,0 +1,143 @@
+//
+//  ERPalettePanel.m
+//  ERAppKit
+//
+//  Created by Raphael Bost on 07/11/12.
+//  Copyright (c) 2012 Evan Altman, Raphael Bost. All rights reserved.
+//
+
+#import "ERPalettePanel.h"
+
+#import <ERAppKit/ERPaletteContentView.h>
+
+@implementation ERPalettePanel
+- (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
+{
+    self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:bufferingType defer:deferCreation];
+
+    ERPaletteContentView *contentView = [[ERPaletteContentView alloc] initWithFrame:NSMakeRect(0, 0, contentRect.size.width, contentRect.size.height)];
+    [self setContentView:contentView];
+    _state = ERPaletteOpened;
+//    [self setMovableByWindowBackground:YES];
+        
+    return self;
+}
+
+- (id)initWithContent:(NSView *)content position:(ERPalettePanelPosition)pos
+{
+    _palettePosition = pos;
+    NSRect contentRect;
+    contentRect.size = [content frame].size;
+    contentRect.origin = NSMakePoint(400, 400);
+    
+    if ([self palettePosition] == ERPalettePanelPositionDown || [self palettePosition] == ERPalettePanelPositionUp) {
+        contentRect.size.height += [ERPaletteContentView paletteTitleSize];
+    }else{
+        contentRect.size.width += [ERPaletteContentView paletteTitleSize];
+    }
+
+    self = [self initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
+
+    [self setContent:content];
+    return self;
+}
+@synthesize palettePosition = _palettePosition;
+
+- (ERPaletteState)state
+{
+    return _palettePosition;
+}
+
+- (void)setState:(ERPaletteState)state
+{
+    if (state == _state) {
+        return;
+    }
+    
+    if (state == ERPaletteClosed) {
+        NSRect newFrame;
+        NSRect headerRect = [(ERPaletteContentView *)[self contentView] headerRect];
+        
+        newFrame.size = headerRect.size;
+        newFrame.origin = [[self contentView] convertPoint:headerRect.origin toView:nil]; // coordinates in the window base
+        
+        if ([self palettePosition] == ERPalettePanelPositionDown) {
+            newFrame.origin = NSZeroPoint;
+        }else if([self palettePosition] == ERPalettePanelPositionUp) {
+            newFrame.origin = NSMakePoint(0, [self frame].size.height - [ERPaletteContentView paletteTitleSize]);
+        }else if([self palettePosition] == ERPalettePanelPositionLeft) {
+            newFrame.origin = NSZeroPoint;
+        }else if([self palettePosition] == ERPalettePanelPositionRight) {
+            newFrame.origin = NSMakePoint([self frame].size.width - [ERPaletteContentView paletteTitleSize],0);
+        }
+        
+        newFrame = [self convertRectToScreen:newFrame];
+        
+        [self setFrame:newFrame display:YES animate:YES];
+    }else if (state == ERPaletteOpened) {
+        NSRect newFrame;
+        
+        newFrame.size = [self paletteSize];
+        newFrame.origin = [self frame].origin;
+        
+        if ([self palettePosition] == ERPalettePanelPositionDown) {
+        }else if([self palettePosition] == ERPalettePanelPositionUp) {
+            newFrame.origin.y -= newFrame.size.height - [ERPaletteContentView paletteTitleSize];
+        }else if ([self palettePosition] == ERPalettePanelPositionDown) {
+        }else if ([self palettePosition] == ERPalettePanelPositionRight) {
+            newFrame.origin.x -= newFrame.size.width - [ERPaletteContentView paletteTitleSize];
+        }
+        
+        [self setFrame:newFrame display:YES animate:YES];
+
+    }
+    
+    _state = state;
+}
+
+
+- (IBAction)toggleCollapse:(id)sender
+{
+    if (_state == ERPaletteOpened) {
+        [self setState:ERPaletteClosed];
+    }else{
+        [self setState:ERPaletteOpened];
+    }    
+}
+
+- (NSView *)content
+{
+    return _content;
+}
+
+- (void)setContent:(NSView *)newContent
+{
+    [newContent retain];
+    [_content removeFromSuperview];
+    
+    _content = newContent;
+    [[self contentView] addSubview:_content];
+    NSPoint frameOrigin = NSZeroPoint;
+    
+    if ([self palettePosition] == ERPalettePanelPositionUp) {
+        frameOrigin.y = [ERPaletteContentView paletteTitleSize];
+    }else if ([self palettePosition] == ERPalettePanelPositionRight) {
+        frameOrigin.x = [ERPaletteContentView paletteTitleSize];
+    }
+    
+    [_content setFrameOrigin:frameOrigin];
+}
+
+- (NSSize)paletteSize
+{
+    NSSize size = [[self content] frame].size;
+    
+    if ([self palettePosition] == ERPalettePanelPositionDown || [self palettePosition] == ERPalettePanelPositionUp) {
+        size.height += [ERPaletteContentView paletteTitleSize];
+    }else{
+        size.width += [ERPaletteContentView paletteTitleSize];
+    }
+    
+    return size;
+}
+@end

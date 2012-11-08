@@ -34,6 +34,12 @@
 		6C27B5E7161E1224002D1EF9 /* ERGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B5E5161E1224002D1EF9 /* ERGeometry.m */; };
 		6C27B5EA161F8C9D002D1EF9 /* ERGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C4BCF99162B834C0082630C /* ERAppKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B58B161B9158002D1EF9 /* ERAppKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C722C59164AF0C30011BA2F /* ERPalettePanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C57164AF0C30011BA2F /* ERPalettePanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C722C5A164AF0C30011BA2F /* ERPalettePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C58164AF0C30011BA2F /* ERPalettePanel.m */; };
+		6C722C5D164AF1870011BA2F /* ERPaletteContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */; };
+		6C722C5E164AF1870011BA2F /* ERPaletteContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */; };
+		6C722C61164B0FE50011BA2F /* ERPaletteHolderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C722C62164B0FE50011BA2F /* ERPaletteHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */; };
 		6CC94BA0162092A900FB1CD0 /* ERTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CC94B9E162092A900FB1CD0 /* ERTimer.h */; };
 		6CC94BA1162092A900FB1CD0 /* ERTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC94B9F162092A900FB1CD0 /* ERTimer.m */; };
 /* End PBXBuildFile section */
@@ -97,6 +103,12 @@
 		6C27B5E4161E1224002D1EF9 /* ERGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERGeometry.h; path = src/Tools/ERGeometry.h; sourceTree = "<group>"; };
 		6C27B5E5161E1224002D1EF9 /* ERGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERGeometry.m; path = src/Tools/ERGeometry.m; sourceTree = "<group>"; };
 		6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ERGlobals.h; path = src/ERGlobals.h; sourceTree = "<group>"; };
+		6C722C57164AF0C30011BA2F /* ERPalettePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPalettePanel.h; path = src/Palettes/ERPalettePanel.h; sourceTree = "<group>"; };
+		6C722C58164AF0C30011BA2F /* ERPalettePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPalettePanel.m; path = src/Palettes/ERPalettePanel.m; sourceTree = "<group>"; };
+		6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteContentView.h; path = src/Palettes/ERPaletteContentView.h; sourceTree = "<group>"; };
+		6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteContentView.m; path = src/Palettes/ERPaletteContentView.m; sourceTree = "<group>"; };
+		6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteHolderView.h; path = src/Palettes/ERPaletteHolderView.h; sourceTree = "<group>"; };
+		6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteHolderView.m; path = src/Palettes/ERPaletteHolderView.m; sourceTree = "<group>"; };
 		6CC94B9E162092A900FB1CD0 /* ERTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERTimer.h; path = src/Tools/ERTimer.h; sourceTree = "<group>"; };
 		6CC94B9F162092A900FB1CD0 /* ERTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERTimer.m; path = src/Tools/ERTimer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,6 +175,7 @@
 		6C27B584161B9158002D1EF9 /* ERAppKit */ = {
 			isa = PBXGroup;
 			children = (
+				6C722C55164AF04E0011BA2F /* Palettes */,
 				6C27B58B161B9158002D1EF9 /* ERAppKit.h */,
 				6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */,
 				6C27B597161B91CD002D1EF9 /* Animations */,
@@ -247,6 +260,19 @@
 			name = Tools;
 			sourceTree = "<group>";
 		};
+		6C722C55164AF04E0011BA2F /* Palettes */ = {
+			isa = PBXGroup;
+			children = (
+				6C722C57164AF0C30011BA2F /* ERPalettePanel.h */,
+				6C722C58164AF0C30011BA2F /* ERPalettePanel.m */,
+				6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */,
+				6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */,
+				6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */,
+				6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */,
+			);
+			name = Palettes;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -263,6 +289,9 @@
 				6C27B5EA161F8C9D002D1EF9 /* ERGlobals.h in Headers */,
 				6CC94BA0162092A900FB1CD0 /* ERTimer.h in Headers */,
 				6C4BCF99162B834C0082630C /* ERAppKit.h in Headers */,
+				6C722C59164AF0C30011BA2F /* ERPalettePanel.h in Headers */,
+				6C722C5D164AF1870011BA2F /* ERPaletteContentView.h in Headers */,
+				6C722C61164B0FE50011BA2F /* ERPaletteHolderView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +397,9 @@
 				6C27B5AC161B91CD002D1EF9 /* ERRadialMenuWindow.m in Sources */,
 				6C27B5E7161E1224002D1EF9 /* ERGeometry.m in Sources */,
 				6CC94BA1162092A900FB1CD0 /* ERTimer.m in Sources */,
+				6C722C5A164AF0C30011BA2F /* ERPalettePanel.m in Sources */,
+				6C722C5E164AF1870011BA2F /* ERPaletteContentView.m in Sources */,
+				6C722C62164B0FE50011BA2F /* ERPaletteHolderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

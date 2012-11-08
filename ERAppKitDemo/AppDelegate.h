@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import <ERAppKit/ERPaletteHolderView.h>
+
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
@@ -18,6 +20,10 @@
 @property (assign) IBOutlet NSTextField *menuRadiusField;
 @property (assign) IBOutlet NSTextField *centralRadiusField;
 @property (assign) IBOutlet NSTextField *delayField;
+@property (assign) IBOutlet NSView *paletteContent1;
+@property (assign) IBOutlet NSView *paletteContent2;
+
+@property (assign) IBOutlet ERPaletteHolderView *paletteHolder;
 
 - (void)showDummyMenu:(NSEvent *)event;
 @end

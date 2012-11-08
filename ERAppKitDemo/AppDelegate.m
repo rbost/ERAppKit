@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import <ERAppKit/ERMenu.h>
+#import <ERAppKit/ERPalettePanel.h>
 
 @implementation AppDelegate
 
@@ -28,6 +29,10 @@
     [menuRadiusField setFloatValue:[ERMenu menuRadius]];
     [menuRadiusSlider setFloatValue:[ERMenu menuRadius]];
 
+    
+    // for the palettes tests
+    [[self paletteHolder] addPaletteWithContentView:[self paletteContent1] atPosition:ERPalettePanelPositionLeft];
+    [[self paletteHolder] addPaletteWithContentView:[self paletteContent2] atPosition:ERPalettePanelPositionUp];
 }
 
 - (void)showDummyMenu:(NSEvent *)event
@@ -58,6 +63,6 @@
 
 - (IBAction)takeFillCentralMenuItemFrom:(id)sender
 {
-    [ERMenu setFillCentralMenuItem:[sender state]];
+    [ERMenu setFillCentralMenuItem:[(NSButton *)sender state]];
 }
 @end
