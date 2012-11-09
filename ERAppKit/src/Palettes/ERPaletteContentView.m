@@ -36,6 +36,8 @@ static CGFloat __paletteTitleSize = 20.;
     [[NSColor blackColor] set];
     [NSBezierPath fillRect:dirtyRect];
 
+//    [[NSColor blueColor] set];
+//    [NSBezierPath fillRect:[self headerRect]];
 //    [self drawTitleHeader];
 //    [self drawTitleString];
 
@@ -74,10 +76,11 @@ static CGFloat __paletteTitleSize = 20.;
     NSRect headerFrame = NSZeroRect;
     
     ERPalettePanelPosition pos = [(ERPalettePanel *)[self window] palettePosition];
+    ERPalettePanel *window = (ERPalettePanel *)[self window];
     if (pos == ERPalettePanelPositionUp || pos == ERPalettePanelPositionDown) {
-        headerFrame.size = NSMakeSize([self frame].size.width, [ERPaletteContentView paletteTitleSize]);
+        headerFrame.size = NSMakeSize([[window content] frame].size.width, [ERPaletteContentView paletteTitleSize]);
     }else{
-        headerFrame.size = NSMakeSize([ERPaletteContentView paletteTitleSize],[self frame].size.height);
+        headerFrame.size = NSMakeSize([[window content] frame].size.height,[ERPaletteContentView paletteTitleSize]);
     }
     NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:[[self window] title] attributes:nil];
 
@@ -93,20 +96,20 @@ static CGFloat __paletteTitleSize = 20.;
 - (NSRect)headerRect
 {
     NSRect headerRect = NSZeroRect;
-    
-    switch ([(ERPalettePanel *)[self window] palettePosition]) {
+    ERPalettePanel *window = (ERPalettePanel *)[self window];
+    switch ([window palettePosition]) {
         case ERPalettePanelPositionDown:
-            headerRect = NSMakeRect(0, [self bounds].size.height -__paletteTitleSize, [self bounds].size.width, __paletteTitleSize);
+            headerRect = NSMakeRect(0, [[self window] frame].size.height -__paletteTitleSize, [[window content] bounds].size.width, __paletteTitleSize);
             break;
             
         case ERPalettePanelPositionLeft:
-            headerRect = NSMakeRect([self bounds].size.width-__paletteTitleSize, 0, __paletteTitleSize, [self bounds].size.height);
+            headerRect = NSMakeRect([[self window] frame].size.width-__paletteTitleSize, 0, __paletteTitleSize, [[window content] bounds].size.height);
             break;
         case ERPalettePanelPositionUp:
-            headerRect = NSMakeRect(0, 0, [self bounds].size.width, __paletteTitleSize);
+            headerRect = NSMakeRect(0, 0, [[window content] bounds].size.width, __paletteTitleSize);
             break;
         case ERPalettePanelPositionRight:
-            headerRect = NSMakeRect(0, 0, __paletteTitleSize, [self bounds].size.height);
+            headerRect = NSMakeRect(0, 0, __paletteTitleSize, [[window content] bounds].size.height);
             break;
         default:
             break;
@@ -128,7 +131,25 @@ static CGFloat __paletteTitleSize = 20.;
 
     NSImage *image = [[NSImage alloc] initWithSize:headerSize];
     
+    NSAffineTransform *t = [NSAffineTransform transform];
+
+    NSRect headerRect = [self headerRect];
+    switch ([(ERPalettePanel *)[self window] palettePosition]) {
+        case ERPalettePanelPositionLeft:
+            [t translateXBy:0 yBy:headerRect.size.height];
+            [t rotateByDegrees:-90];
+            break;
+        case ERPalettePanelPositionRight:
+            [t translateXBy:0 yBy:headerRect.size.height];
+            [t rotateByDegrees:-90];
+            break;
+        default:
+            break;
+    }
+
     [image lockFocus];
+    [t concat];
+
     [self drawHeader];
     [image unlockFocus];
     
@@ -158,7 +179,7 @@ static CGFloat __paletteTitleSize = 20.;
             [pBoard declareTypes:[NSArray arrayWithObject:ERPalettePboardType] owner:[self window]];
             [pBoard setString:NSStringFromSize([self headerRect].size) forType:ERPalettePboardType];
             
-            [self dragImage:[self headerImage] at:NSZeroPoint offset:NSZeroSize event:theEvent pasteboard:pBoard source:[self window] slideBack:YES];
+            [self dragImage:[self headerImage] at:[self headerRect].origin offset:NSZeroSize event:theEvent pasteboard:pBoard source:[self window] slideBack:YES];
             _didDrag = YES;
         }
     }

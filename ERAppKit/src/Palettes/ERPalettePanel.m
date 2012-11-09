@@ -9,8 +9,8 @@
 #import "ERPalettePanel.h"
 
 #import <ERAppKit/ERPaletteContentView.h>
-#import <ERAppKit/NSWindow+ThreadedResize.h>
-
+#import <ERAppKit/ERPaletteTabView.h>
+#import <ERAppKit/ERPaletteHolderView.h>
 
 NSString *ERPaletteDidCloseNotification = @"Palette did close";
 NSString *ERPaletteDidOpenNotification = @"Palette did open";
@@ -24,10 +24,9 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
 
     ERPaletteContentView *contentView = [[ERPaletteContentView alloc] initWithFrame:NSMakeRect(0, 0, contentRect.size.width, contentRect.size.height)];
     [self setContentView:contentView];
-    _state = ERPaletteOpenedInside;
-    [self setBecomesKeyOnlyIfNeeded:YES];
-        
+    _state = ERPaletteClosed;
 //    [self setBecomesKeyOnlyIfNeeded:YES];
+    
     return self;
 }
 
@@ -48,6 +47,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
 
     [self setContent:content];
     
+    [self updateFrameSizeAndContentPlacement];
     [self updateAutoresizingMask];
     
     return self;
@@ -57,6 +57,11 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
 //    return YES;
 //}
 
+//- (void)setFrame:(NSRect)frameRect display:(BOOL)flag
+//{
+//    [super setFrame:frameRect display:flag];
+//    NSLog(@"set frame :%@",NSStringFromRect(frameRect));
+//}
 
 - (ERPalettePanelPosition)palettePosition
 {
@@ -71,7 +76,9 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     
     _palettePosition = palettePosition;
     // update the content autosizing mask with respect to the new position of the palette
+    [self updateFrameSizeAndContentPlacement];
     [self updateAutoresizingMask];
+    [[self contentView] setNeedsDisplay:YES];
 }
 
 - (void)updateAutoresizingMask
@@ -102,9 +109,39 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     [[self content] setAutoresizingMask:mask];
 }
 
+- (void)updateFrameSizeAndContentPlacement
+{
+//    NSLog(@"update position");
+//    NSSize contentSize = [[self content] frame].size;
+//    NSSize headerSize = [[self contentView] headerRect].size;
+    
+//    NSLog(NSStringFromSize(contentSize));
+//    NSLog(NSStringFromSize(headerSize));
+//    
+    NSRect frame = [self frame];
+    
+    frame.size = [self paletteSize];
+    [self setFrame:frame display:YES];
+
+    NSPoint frameOrigin = NSZeroPoint;
+    
+    if ([self palettePosition] == ERPalettePanelPositionUp) {
+        frameOrigin.y = [ERPaletteContentView paletteTitleSize];
+    }else if([self palettePosition] == ERPalettePanelPositionDown) {
+        frameOrigin.y = [self paletteSize].height - [ERPaletteContentView paletteTitleSize] - [[self content] frame].size.height;
+    }else if ([self palettePosition] == ERPalettePanelPositionRight) {
+        frameOrigin.x = [ERPaletteContentView paletteTitleSize];
+    }else if ([self palettePosition] == ERPalettePanelPositionLeft) {
+        frameOrigin.x = [self paletteSize].width - [ERPaletteContentView paletteTitleSize] - [[self content] frame].size.width;
+    }
+    
+    [_content setFrameOrigin:frameOrigin];
+
+}
+
 - (ERPaletteState)state
 {
-    return _palettePosition;
+    return _state;
 }
 
 - (void)setState:(ERPaletteState)state
@@ -169,7 +206,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     }else if (state == ERPaletteOpenedInside) {
         NSRect newFrame;
         
-        newFrame.size = [self paletteSize];
+        newFrame.size = [self openedPaletteSize];
         newFrame.origin = [self frame].origin;
         
         if ([self palettePosition] == ERPalettePanelPositionDown) {
@@ -190,7 +227,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     }else if (state == ERPaletteOpenedOutside) {
         NSRect newFrame;
         
-        newFrame.size = [self paletteSize];
+        newFrame.size = [self openedPaletteSize];
         newFrame.origin = [self frame].origin;
         
         if ([self palettePosition] == ERPalettePanelPositionDown) {
@@ -219,7 +256,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     if (_state != ERPaletteClosed) {
         [self setState:ERPaletteClosed animate:YES];
     }else{
-        [self setState:ERPaletteOpenedOutside animate:YES];
+        [self setState:ERPaletteOpenedInside animate:YES];
     }    
 }
 
@@ -246,7 +283,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     [_content setFrameOrigin:frameOrigin];
 }
 
-- (NSSize)paletteSize
+- (NSSize)openedPaletteSize
 {
     NSSize size = [[self content] frame].size;
     
@@ -258,6 +295,25 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     
     return size;
 }
+
+- (NSSize)closedPaletteSize
+{    
+    if ([self palettePosition] == ERPalettePanelPositionDown || [self palettePosition] == ERPalettePanelPositionUp) {
+        return NSMakeSize([[self content] frame].size.width, [ERPaletteContentView paletteTitleSize]);
+    }else{
+        return NSMakeSize([ERPaletteContentView paletteTitleSize], [[self content] frame].size.height);
+    }
+}
+
+- (NSSize)paletteSize
+{
+    if ([self state] == ERPaletteClosed) {
+        return [self closedPaletteSize];
+    }else{
+        return [self openedPaletteSize];
+    }
+}
+
 
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
 {
@@ -271,5 +327,12 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
             return NSDragOperationMove;
             break;
     }
+}
+
+@synthesize tabView = _tabView;
+
+- (ERPaletteHolderView *)holder
+{
+    return [[self tabView] holder];
 }
 @end

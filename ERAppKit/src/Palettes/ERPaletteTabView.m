@@ -57,6 +57,7 @@ static CGFloat __tabMargin = 5.;
 
 - (void)dealloc
 {
+    [_tabs makeObjectsPerformSelector:@selector(setTabView:) withObject:nil];
     [_tabs release];
     
     [super dealloc];
@@ -75,23 +76,43 @@ static CGFloat __tabMargin = 5.;
 
 @synthesize position = _position;
 @synthesize tabs = _tabs;
+@synthesize holder = _holder;
 
 - (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle
 {
     ERPalettePanel *palette = [[ERPalettePanel alloc] initWithContent:contentView position:[self position]];
     [palette setTitle:paletteTitle];
     
-    [palette setState:ERPaletteClosed];
-
-    [_tabs addObject:palette];
+    [palette setState:ERPaletteClosed animate:NO];
+    
+    [self addPalette:palette];
     [palette release];
+}
+
+- (void)addPalette:(ERPalettePanel *)palette
+{
+    [_tabs addObject:palette];
+    [palette setTabView:self];
+    [palette setPalettePosition:[self position]];
     
     [[NSNotificationCenter defaultCenter] addObserver:_holder selector:@selector(paletteDidClose:) name:ERPaletteDidCloseNotification object:palette];
     [[NSNotificationCenter defaultCenter] addObserver:_holder selector:@selector(paletteDidOpen:) name:ERPaletteDidOpenNotification object:palette];
     
+    // this also order the panel out
     [[self window] addChildWindow:palette ordered:NSWindowAbove];
     
     [self updateTabsLocations];
+}
+
+- (void)removePalette:(ERPalettePanel *)palette
+{
+    if ([_tabs containsObject:palette]) {
+        [_tabs removeObject:palette];
+        [[NSNotificationCenter defaultCenter] removeObserver:_holder name:ERPaletteDidCloseNotification object:palette];
+        [[NSNotificationCenter defaultCenter] removeObserver:_holder name:ERPaletteDidOpenNotification object:palette];
+        [[self window] removeChildWindow:palette];
+        [self updateTabsLocations];
+    }
 }
 
 - (void)updateTabsLocations
@@ -125,10 +146,16 @@ static CGFloat __tabMargin = 5.;
     CGFloat y = [self frame].size.height - [ERPaletteContentView paletteTitleSize];
     
     for (ERPalettePanel *palette in _tabs) {
-        y -= [palette frame].size.height;
+        NSRect paletteFrame = [palette frame];
+        y -= paletteFrame.size.height;
         
         NSPoint frameOrigin = NSMakePoint(0, y);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
+        
+        if ([palette state] == ERPaletteOpenedOutside) {
+            frameOrigin.x -= [[palette content] frame].size.width;
+        }
+        
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
         [palette setFrameOrigin:frameOrigin];
         
@@ -144,8 +171,13 @@ static CGFloat __tabMargin = 5.;
         NSRect paletteFrame = [palette frame];
         y -= paletteFrame.size.height;
         
-        NSPoint frameOrigin = NSMakePoint([self frame].size.width - paletteFrame.size.width, y);
+        NSPoint frameOrigin = NSMakePoint(0, y);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
+        
+        if ([palette state] == ERPaletteOpenedInside) {
+            frameOrigin.x -= [[palette content] frame].size.width;
+        }
+
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
         [palette setFrameOrigin:frameOrigin];
         
@@ -162,6 +194,11 @@ static CGFloat __tabMargin = 5.;
         
         NSPoint frameOrigin = NSMakePoint(x, 0);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
+
+        if ([palette state] == ERPaletteOpenedOutside) {
+            frameOrigin.y -= [[palette content] frame].size.height;
+        }
+
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
         [palette setFrameOrigin:frameOrigin];
         x += paletteFrame.size.width;
@@ -176,8 +213,13 @@ static CGFloat __tabMargin = 5.;
     for (ERPalettePanel *palette in _tabs) {
         NSRect paletteFrame = [palette frame];
         
-        NSPoint frameOrigin = NSMakePoint(x, [self frame].size.height - paletteFrame.size.height);
+        NSPoint frameOrigin = NSMakePoint(x, 0);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
+
+        if ([palette state] == ERPaletteOpenedInside) {
+            frameOrigin.y -= [[palette content] frame].size.height;
+        }
+
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
         [palette setFrameOrigin:frameOrigin];
         x += paletteFrame.size.width;
@@ -185,18 +227,38 @@ static CGFloat __tabMargin = 5.;
     }
 }
 
-- (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
     
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
-        _highlight = YES;
-        [self setNeedsDisplay:YES];
+        ERPalettePanel *palette = [sender draggingSource];
         
-        return NSDragOperationMove;
+        if ([palette holder] == [self holder]) { // drag authorized only inside the same holder view
+            _highlight = YES;
+            [self setNeedsDisplay:YES];
+            
+            return NSDragOperationMove;
+        }
     }
     return NSDragOperationNone;
 }
 
+/*- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
+{
+    
+    if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
+        ERPalettePanel *palette = [sender draggingSource];
+        
+        if ([palette holder] == [self holder]) { // drag authorized only inside the same holder view
+            _highlight = YES;
+            [self setNeedsDisplay:YES];
+            
+            return NSDragOperationMove;
+        }
+    }
+    return NSDragOperationNone;
+}
+*/
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
     _highlight = NO;
@@ -207,6 +269,21 @@ static CGFloat __tabMargin = 5.;
 {
     _highlight = NO;
     [self setNeedsDisplay:YES];
+
+    if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
+        ERPalettePanel *palette = [sender draggingSource];
+        
+        if ([palette holder] == [self holder] && [palette tabView] != self) { // drag authorized only inside the same holder view and the tab is not already here
+            ERPaletteTabView *oldTabView = [palette tabView];
+            
+            [palette retain];
+            [oldTabView removePalette:palette];
+            [self addPalette:palette];
+            [palette updateFrameSizeAndContentPlacement];
+            [[palette contentView] setNeedsDisplay:YES];
+            return YES;
+        }
+    }
 
     return NO;
 }

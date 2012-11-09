@@ -24,6 +24,7 @@
 }
 @property (readonly) NSArray *tabs;
 @property (readonly) ERPalettePanelPosition position;
+@property (readonly) ERPaletteHolderView *holder;
 + (CGFloat)tabMargin;
 - (id)initWithHolder:(ERPaletteHolderView *)holder position:(ERPalettePanelPosition)position;
 - (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle;

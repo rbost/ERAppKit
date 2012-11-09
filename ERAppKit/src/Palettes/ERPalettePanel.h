@@ -21,15 +21,20 @@ typedef enum{
     ERPaletteOpenedOutside
 }ERPaletteState;
 
+@class ERPaletteTabView, ERPaletteHolderView;
+
 @interface ERPalettePanel : NSPanel
 {
     ERPalettePanelPosition _palettePosition;
     ERPaletteState _state;
     
     NSView *_content;
+    ERPaletteTabView *_tabView;
 }
 @property (assign) ERPalettePanelPosition palettePosition;
 @property (assign) ERPaletteState state;
+@property (assign) ERPaletteTabView *tabView;
+@property (readonly) ERPaletteHolderView *holder;
 
 - (id)initWithContent:(NSView *)content position:(ERPalettePanelPosition)pos;
 
