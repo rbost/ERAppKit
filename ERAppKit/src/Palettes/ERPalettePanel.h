@@ -17,9 +17,13 @@ typedef enum{
 
 typedef enum{
     ERPaletteClosed = 0,
-    ERPaletteOpenedInside,
-    ERPaletteOpenedOutside
+    ERPaletteOpened
 }ERPaletteState;
+
+typedef enum {
+    ERPaletteInsideOpeningDirection = 10,
+    ERPaletteOutsideOpeningDirection
+}ERPaletteOpeningDirection;
 
 @class ERPaletteTabView, ERPaletteHolderView;
 
@@ -27,12 +31,14 @@ typedef enum{
 {
     ERPalettePanelPosition _palettePosition;
     ERPaletteState _state;
+    ERPaletteOpeningDirection _openingDirection;
     
     NSView *_content;
     ERPaletteTabView *_tabView;
 }
 @property (assign) ERPalettePanelPosition palettePosition;
 @property (assign) ERPaletteState state;
+@property (assign) ERPaletteOpeningDirection openingDirection;
 @property (assign) ERPaletteTabView *tabView;
 @property (readonly) ERPaletteHolderView *holder;
 
@@ -44,6 +50,9 @@ typedef enum{
 
 - (void)setState:(ERPaletteState)state animate:(BOOL)animate;
 - (void)updateAutoresizingMask;
+- (void)updateFrameSizeAndContentPlacement;
+
+- (ERPalettePanelPosition)effectiveHeaderPosition;
 @end
 
 

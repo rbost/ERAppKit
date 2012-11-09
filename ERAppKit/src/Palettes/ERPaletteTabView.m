@@ -152,7 +152,7 @@ static CGFloat __tabMargin = 5.;
         NSPoint frameOrigin = NSMakePoint(0, y);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
         
-        if ([palette state] == ERPaletteOpenedOutside) {
+        if ([palette state] == ERPaletteOpened && [palette openingDirection] == ERPaletteOutsideOpeningDirection) {
             frameOrigin.x -= [[palette content] frame].size.width;
         }
         
@@ -174,7 +174,7 @@ static CGFloat __tabMargin = 5.;
         NSPoint frameOrigin = NSMakePoint(0, y);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
         
-        if ([palette state] == ERPaletteOpenedInside) {
+        if ([palette state] == ERPaletteOpened && [palette openingDirection] == ERPaletteInsideOpeningDirection) {
             frameOrigin.x -= [[palette content] frame].size.width;
         }
 
@@ -195,7 +195,7 @@ static CGFloat __tabMargin = 5.;
         NSPoint frameOrigin = NSMakePoint(x, 0);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
 
-        if ([palette state] == ERPaletteOpenedOutside) {
+        if ([palette state] == ERPaletteOpened && [palette openingDirection] == ERPaletteOutsideOpeningDirection) {
             frameOrigin.y -= [[palette content] frame].size.height;
         }
 
@@ -216,7 +216,7 @@ static CGFloat __tabMargin = 5.;
         NSPoint frameOrigin = NSMakePoint(x, 0);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
 
-        if ([palette state] == ERPaletteOpenedInside) {
+        if ([palette state] == ERPaletteOpened && [palette openingDirection] == ERPaletteInsideOpeningDirection) {
             frameOrigin.y -= [[palette content] frame].size.height;
         }
 
@@ -243,22 +243,6 @@ static CGFloat __tabMargin = 5.;
     return NSDragOperationNone;
 }
 
-/*- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
-{
-    
-    if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
-        ERPalettePanel *palette = [sender draggingSource];
-        
-        if ([palette holder] == [self holder]) { // drag authorized only inside the same holder view
-            _highlight = YES;
-            [self setNeedsDisplay:YES];
-            
-            return NSDragOperationMove;
-        }
-    }
-    return NSDragOperationNone;
-}
-*/
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
     _highlight = NO;

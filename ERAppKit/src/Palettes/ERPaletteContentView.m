@@ -33,18 +33,13 @@ static CGFloat __paletteTitleSize = 20.;
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
-    [[NSColor blackColor] set];
-    [NSBezierPath fillRect:dirtyRect];
-
-//    [[NSColor blueColor] set];
-//    [NSBezierPath fillRect:[self headerRect]];
-//    [self drawTitleHeader];
-//    [self drawTitleString];
+//    [[NSColor blackColor] set];
+//    [NSBezierPath fillRect:dirtyRect];
 
     NSAffineTransform *t = [NSAffineTransform transform];
     NSRect windowFrame = [[self window] frame];
     NSRect headerRect = [self headerRect];
-    switch ([(ERPalettePanel *)[self window] palettePosition]) {
+    switch ([(ERPalettePanel *)[self window] effectiveHeaderPosition]) {
         case ERPalettePanelPositionDown:
             [t translateXBy:0 yBy:windowFrame.size.height-headerRect.size.height];
             break;
@@ -76,6 +71,7 @@ static CGFloat __paletteTitleSize = 20.;
     NSRect headerFrame = NSZeroRect;
     
     ERPalettePanelPosition pos = [(ERPalettePanel *)[self window] palettePosition];
+    pos = [(ERPalettePanel *)[self window] effectiveHeaderPosition];
     ERPalettePanel *window = (ERPalettePanel *)[self window];
     if (pos == ERPalettePanelPositionUp || pos == ERPalettePanelPositionDown) {
         headerFrame.size = NSMakeSize([[window content] frame].size.width, [ERPaletteContentView paletteTitleSize]);
@@ -97,13 +93,14 @@ static CGFloat __paletteTitleSize = 20.;
 {
     NSRect headerRect = NSZeroRect;
     ERPalettePanel *window = (ERPalettePanel *)[self window];
-    switch ([window palettePosition]) {
+
+    switch ([window effectiveHeaderPosition]) {
         case ERPalettePanelPositionDown:
-            headerRect = NSMakeRect(0, [[self window] frame].size.height -__paletteTitleSize, [[window content] bounds].size.width, __paletteTitleSize);
+            headerRect = NSMakeRect(0, [window frame].size.height -__paletteTitleSize, [[window content] bounds].size.width, __paletteTitleSize);
             break;
             
         case ERPalettePanelPositionLeft:
-            headerRect = NSMakeRect([[self window] frame].size.width-__paletteTitleSize, 0, __paletteTitleSize, [[window content] bounds].size.height);
+            headerRect = NSMakeRect([window frame].size.width-__paletteTitleSize, 0, __paletteTitleSize, [[window content] bounds].size.height);
             break;
         case ERPalettePanelPositionUp:
             headerRect = NSMakeRect(0, 0, [[window content] bounds].size.width, __paletteTitleSize);
@@ -160,26 +157,27 @@ static CGFloat __paletteTitleSize = 20.;
 - (void)mouseDown:(NSEvent *)theEvent
 {
     if (NSPointInRect([self convertPoint:[theEvent locationInWindow] fromView:nil], [self headerRect])) {
-        _draggingStartPoint = [NSEvent mouseLocation];//[self convertPoint:[theEvent locationInWindow] fromView:nil];
+        _draggingStartPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     }
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
     if (_draggingStartPoint.x != NSNotFound) {
-        NSPoint screenLocation = [NSEvent mouseLocation];//[self convertPoint:[theEvent locationInWindow] fromView:nil];
-//        NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+        NSPoint screenLocation = [self convertPoint:[theEvent locationInWindow] fromView:nil];
         
-        NSPoint delta = _oldFrameOrigin;
+        NSPoint delta = _draggingStartPoint;
         delta.x -= screenLocation.x ;
         delta.y -= screenLocation.y ;
      
         if (sqrt(delta.x*delta.x + delta.y*delta.y) > 10) {
+
             NSPasteboard *pBoard = [NSPasteboard pasteboardWithName:NSDragPboard];
             [pBoard declareTypes:[NSArray arrayWithObject:ERPalettePboardType] owner:[self window]];
             [pBoard setString:NSStringFromSize([self headerRect].size) forType:ERPalettePboardType];
             
-            [self dragImage:[self headerImage] at:[self headerRect].origin offset:NSZeroSize event:theEvent pasteboard:pBoard source:[self window] slideBack:YES];
+            NSPoint headerRectOrigin = [self headerRect].origin;
+            [self dragImage:[self headerImage] at:NSMakePoint(headerRectOrigin.x - delta.x, headerRectOrigin.y - delta.y) offset:NSZeroSize event:theEvent pasteboard:pBoard source:[self window] slideBack:YES];
             _didDrag = YES;
         }
     }

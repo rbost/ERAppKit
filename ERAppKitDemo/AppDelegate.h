@@ -22,6 +22,10 @@
 @property (assign) IBOutlet NSTextField *delayField;
 @property (assign) IBOutlet NSView *paletteContent1;
 @property (assign) IBOutlet NSView *paletteContent2;
+@property (assign) IBOutlet NSView *paletteContent3;
+@property (assign) IBOutlet NSView *paletteContent4;
+@property (assign) IBOutlet NSView *paletteContent5;
+@property (assign) IBOutlet NSView *paletteContent6;
 
 @property (assign) IBOutlet ERPaletteHolderView *paletteHolder;
 
