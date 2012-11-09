@@ -27,6 +27,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     _state = ERPaletteOpenedInside;
     [self setBecomesKeyOnlyIfNeeded:YES];
         
+//    [self setBecomesKeyOnlyIfNeeded:YES];
     return self;
 }
 
@@ -52,9 +53,10 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     return self;
 }
 
-- (BOOL)canBecomeKeyWindow {
-    return YES;
-}
+//- (BOOL)canBecomeKeyWindow {
+//    return YES;
+//}
+
 
 - (ERPalettePanelPosition)palettePosition
 {
