@@ -25,6 +25,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     ERPaletteContentView *contentView = [[ERPaletteContentView alloc] initWithFrame:NSMakeRect(0, 0, contentRect.size.width, contentRect.size.height)];
     [self setContentView:contentView];
     _state = ERPaletteOpenedInside;
+    [self setBecomesKeyOnlyIfNeeded:YES];
         
     return self;
 }
@@ -49,6 +50,10 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     [self updateAutoresizingMask];
     
     return self;
+}
+
+- (BOOL)canBecomeKeyWindow {
+    return YES;
 }
 
 - (ERPalettePanelPosition)palettePosition
