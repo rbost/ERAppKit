@@ -50,6 +50,8 @@ static CGFloat __tabMargin = 5.;
     _position = position;
     _holder = holder;
     
+    [self registerForDraggedTypes:[NSArray arrayWithObject:ERPalettePboardType]];
+    
     return self;
 }
 
@@ -65,6 +67,9 @@ static CGFloat __tabMargin = 5.;
     // Drawing code here.
     
     [[NSColor redColor] set];
+    if (_highlight) {
+        [[NSColor blueColor] set];
+    }
     [NSBezierPath fillRect:dirtyRect];
 }
 
@@ -180,4 +185,29 @@ static CGFloat __tabMargin = 5.;
     }
 }
 
+- (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
+{
+    
+    if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
+        _highlight = YES;
+        [self setNeedsDisplay:YES];
+        
+        return NSDragOperationMove;
+    }
+    return NSDragOperationNone;
+}
+
+- (void)draggingExited:(id <NSDraggingInfo>)sender
+{
+    _highlight = NO;
+    [self setNeedsDisplay:YES];
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
+{
+    _highlight = NO;
+    [self setNeedsDisplay:YES];
+
+    return NO;
+}
 @end

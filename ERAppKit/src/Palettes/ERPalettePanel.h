@@ -46,3 +46,5 @@ extern NSString *ERPaletteDidCloseNotification;
 extern NSString *ERPaletteDidOpenNotification;
 
 extern NSString *ERPaletteNewFrameKey;
+
+extern NSString *ERPalettePboardType;

@@ -36,24 +36,9 @@ static CGFloat __paletteTitleSize = 20.;
     [[NSColor blackColor] set];
     [NSBezierPath fillRect:dirtyRect];
 
-    [self drawTitleHeader];
-    [self drawTitleString];
-}
+//    [self drawTitleHeader];
+//    [self drawTitleString];
 
-- (void)drawTitleHeader
-{
-    [[NSColor greenColor] set];
-    [NSBezierPath fillRect:[self headerRect]];
-}
-
-- (void)drawTitleString
-{
-    if (![[self window] title]) {
-        return;
-    }
-    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:[[self window] title] attributes:nil];
-    
-//    [attributedTitle drawAtPoint:[self headerRect].origin];
     NSAffineTransform *t = [NSAffineTransform transform];
     NSRect windowFrame = [[self window] frame];
     NSRect headerRect = [self headerRect];
@@ -75,13 +60,36 @@ static CGFloat __paletteTitleSize = 20.;
         default:
             break;
     }
-
+    
     [NSGraphicsContext saveGraphicsState];
     [t concat];
-    [attributedTitle drawAtPoint:NSZeroPoint];
+    [self drawHeader];
     
     [NSGraphicsContext restoreGraphicsState];
+
 }
+
+- (void)drawHeader
+{
+    NSRect headerFrame = NSZeroRect;
+    
+    ERPalettePanelPosition pos = [(ERPalettePanel *)[self window] palettePosition];
+    if (pos == ERPalettePanelPositionUp || pos == ERPalettePanelPositionDown) {
+        headerFrame.size = NSMakeSize([self frame].size.width, [ERPaletteContentView paletteTitleSize]);
+    }else{
+        headerFrame.size = NSMakeSize([ERPaletteContentView paletteTitleSize],[self frame].size.height);
+    }
+    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:[[self window] title] attributes:nil];
+
+    [NSGraphicsContext saveGraphicsState];
+    
+    [[NSColor greenColor] set];
+    [NSBezierPath fillRect:headerFrame];
+    [attributedTitle drawAtPoint:NSZeroPoint];
+
+    [NSGraphicsContext restoreGraphicsState];
+}
+
 - (NSRect)headerRect
 {
     NSRect headerRect = NSZeroRect;
@@ -107,25 +115,52 @@ static CGFloat __paletteTitleSize = 20.;
     return headerRect;
 }
 
+- (NSImage *)headerImage
+{
+    NSSize headerSize = NSZeroSize;
+    
+    ERPalettePanelPosition pos = [(ERPalettePanel *)[self window] palettePosition];
+    if (pos == ERPalettePanelPositionUp || pos == ERPalettePanelPositionDown) {
+        headerSize = NSMakeSize([self frame].size.width, [ERPaletteContentView paletteTitleSize]);
+    }else{
+        headerSize = NSMakeSize([ERPaletteContentView paletteTitleSize],[self frame].size.height);
+    }
+
+    NSImage *image = [[NSImage alloc] initWithSize:headerSize];
+    
+    [image lockFocus];
+    [self drawHeader];
+    [image unlockFocus];
+    
+    
+    return [image autorelease];
+}
+
 - (void)mouseDown:(NSEvent *)theEvent
 {
     if (NSPointInRect([self convertPoint:[theEvent locationInWindow] fromView:nil], [self headerRect])) {
-//        _draggingStartPoint = [NSEvent mouseLocation];//[self convertPoint:[theEvent locationInWindow] fromView:nil];
-//        _oldFrameOrigin = [[self window] frame].origin;
+        _draggingStartPoint = [NSEvent mouseLocation];//[self convertPoint:[theEvent locationInWindow] fromView:nil];
     }
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
     if (_draggingStartPoint.x != NSNotFound) {
-        NSPoint location = [NSEvent mouseLocation];//[self convertPoint:[theEvent locationInWindow] fromView:nil];
-    
-        NSPoint origin = _oldFrameOrigin;
-        origin.x += location.x - _draggingStartPoint.x;
-        origin.y += location.y - _draggingStartPoint.y;
+        NSPoint screenLocation = [NSEvent mouseLocation];//[self convertPoint:[theEvent locationInWindow] fromView:nil];
+//        NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+        
+        NSPoint delta = _oldFrameOrigin;
+        delta.x -= screenLocation.x ;
+        delta.y -= screenLocation.y ;
      
-        [[self window] setFrameOrigin:origin];
-        _didDrag = YES;
+        if (sqrt(delta.x*delta.x + delta.y*delta.y) > 10) {
+            NSPasteboard *pBoard = [NSPasteboard pasteboardWithName:NSDragPboard];
+            [pBoard declareTypes:[NSArray arrayWithObject:ERPalettePboardType] owner:[self window]];
+            [pBoard setString:NSStringFromSize([self headerRect].size) forType:ERPalettePboardType];
+            
+            [self dragImage:[self headerImage] at:NSZeroPoint offset:NSZeroSize event:theEvent pasteboard:pBoard source:[self window] slideBack:YES];
+            _didDrag = YES;
+        }
     }
 }
 

@@ -15,6 +15,7 @@
 NSString *ERPaletteDidCloseNotification = @"Palette did close";
 NSString *ERPaletteDidOpenNotification = @"Palette did open";
 NSString *ERPaletteNewFrameKey = @"New palette frame";
+NSString *ERPalettePboardType = @"Palette Pasteboard Type";
 
 @implementation ERPalettePanel
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
@@ -211,7 +212,7 @@ NSString *ERPaletteNewFrameKey = @"New palette frame";
     if (_state != ERPaletteClosed) {
         [self setState:ERPaletteClosed animate:YES];
     }else{
-        [self setState:ERPaletteOpenedInside animate:YES];
+        [self setState:ERPaletteOpenedOutside animate:YES];
     }    
 }
 
@@ -249,5 +250,19 @@ NSString *ERPaletteNewFrameKey = @"New palette frame";
     }
     
     return size;
+}
+
+- (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
+{
+    switch(context) {
+        case NSDraggingContextOutsideApplication:
+            return NSDragOperationNone;
+            break;
+            
+        case NSDraggingContextWithinApplication:
+        default:
+            return NSDragOperationMove;
+            break;
+    }
 }
 @end

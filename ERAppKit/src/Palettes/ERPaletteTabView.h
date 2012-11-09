@@ -15,6 +15,8 @@
 
 @interface ERPaletteTabView : NSView
 {
+    BOOL _highlight;
+    
     @protected
     NSMutableArray *_tabs;
     ERPaletteHolderView *_holder;
