@@ -53,6 +53,8 @@ typedef enum {
 - (void)updateFrameSizeAndContentPlacement;
 
 - (ERPalettePanelPosition)effectiveHeaderPosition;
+
+- (NSRect)headerRect;
 @end
 
 

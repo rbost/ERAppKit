@@ -20,10 +20,11 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
 @implementation ERPalettePanel
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
 {
-    self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:bufferingType defer:deferCreation];
+    self = [super initWithContentRect:contentRect styleMask:(NSUtilityWindowMask) backing:bufferingType defer:deferCreation];
 
     ERPaletteContentView *contentView = [[ERPaletteContentView alloc] initWithFrame:NSMakeRect(0, 0, contentRect.size.width, contentRect.size.height)];
     [self setContentView:contentView];
+
     _state = ERPaletteClosed;
     _openingDirection = ERPaletteInsideOpeningDirection;
 //    [self setBecomesKeyOnlyIfNeeded:YES];
@@ -54,10 +55,17 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     return self;
 }
 
-//- (BOOL)canBecomeKeyWindow {
-//    return YES;
-//}
+- (BOOL)canBecomeKeyWindow {
+    return YES;
+}
 
+- (void)sendEvent:(NSEvent *)event
+{
+    // make ourself key so the header can be dragged immediately
+    [self makeKeyWindow];
+
+    [super sendEvent:event];
+}
 - (ERPalettePanelPosition)palettePosition
 {
     return _palettePosition;
@@ -314,6 +322,11 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     }else{
         return [self openedPaletteSize];
     }
+}
+
+- (NSRect)headerRect
+{
+    return [(ERPaletteContentView *)[self contentView] headerRect];
 }
 
 

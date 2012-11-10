@@ -17,4 +17,5 @@
 }
 + (CGFloat)paletteTitleSize;
 - (NSRect)headerRect;
+- (NSImage *)headerImage;
 @end
