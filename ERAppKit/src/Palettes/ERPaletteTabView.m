@@ -18,6 +18,18 @@ static CGFloat __tabMargin = 5.;
     return __tabMargin;
 }
 
++ (void)moveTab:(ERPalettePanel *)palette fromView:(ERPaletteTabView *)origin toView:(ERPaletteTabView *)destination
+{
+    [palette retain];
+    
+    [origin removePalette:palette];
+    [destination addPalette:palette];
+    [palette updateFrameSizeAndContentPlacement];
+    [[palette contentView] setNeedsDisplay:YES];
+    
+    [palette release];
+}
+
 - (id)initWithHolder:(ERPaletteHolderView *)holder position:(ERPalettePanelPosition)position
 {
     NSRect frame;
@@ -279,12 +291,8 @@ static CGFloat __tabMargin = 5.;
         
         if ([palette holder] == [self holder] && [palette tabView] != self) { // drag authorized only inside the same holder view and the tab is not already here
             ERPaletteTabView *oldTabView = [palette tabView];
-            
-            [palette retain];
-            [oldTabView removePalette:palette];
-            [self addPalette:palette];
-            [palette updateFrameSizeAndContentPlacement];
-            [[palette contentView] setNeedsDisplay:YES];
+
+            [ERPaletteTabView moveTab:palette fromView:oldTabView toView:self];
             return YES;
         }
     }
@@ -362,11 +370,6 @@ static CGFloat __tabMargin = 5.;
     [self setNeedsDisplay:YES];
     
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
-        //        NSPoint location = [[palette contentView] convertPoint:[sender draggingLocation] toView:nil];
-        //        location = [palette convertBaseToScreen:location];
-        //        location = [[self window] convertScreenToBase:location];
-        //        location = [self convertPoint:location fromView:nil];
-        
         ERPalettePanel *draggedPalette = [sender draggingSource];
         
         if ([draggedPalette holder] == [self holder]) { // drag authorized only inside the same holder view
@@ -374,12 +377,7 @@ static CGFloat __tabMargin = 5.;
                 
                 ERPaletteTabView *oldTabView = [draggedPalette tabView];
                 
-                [draggedPalette retain];
-                [oldTabView removePalette:draggedPalette];
-                [self addPalette:draggedPalette];
-                [draggedPalette updateFrameSizeAndContentPlacement];
-                [[draggedPalette contentView] setNeedsDisplay:YES];
-                
+                [ERPaletteTabView moveTab:draggedPalette fromView:oldTabView toView:self];
                 return YES;
             }else{
                 return NO;

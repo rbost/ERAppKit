@@ -200,12 +200,7 @@ static CGFloat __paletteTitleSize = 20.;
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
-//        ERPalettePanel *palette = [sender draggingSource];
-//        
-//        if (palette != [self window] && NSPointInRect([sender draggingLocation], [self headerRect])) { // we are not dragging on ourself
-//            return [[(ERPalettePanel *)[self window] tabView] draggingEntered:sender];
-//        }
-        return [[(ERPalettePanel *)[self window] tabView] draggingEntered:sender inPalette:[self window]];
+        return [[(ERPalettePanel *)[self window] tabView] draggingEntered:sender inPalette:(ERPalettePanel *)[self window]];
     }
     return NSDragOperationNone;
 }
@@ -213,38 +208,21 @@ static CGFloat __paletteTitleSize = 20.;
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
-//        ERPalettePanel *palette = [sender draggingSource];
-//        
-//        if (palette != [self window] && NSPointInRect([sender draggingLocation], [self headerRect])) { // we are not dragging on ourself
-//            return [[(ERPalettePanel *)[self window] tabView] draggingUpdated:sender];
-//        }else{
-//            [[(ERPalettePanel *)[self window] tabView] draggingExited:sender];
-//        }
-        return [[(ERPalettePanel *)[self window] tabView] draggingUpdated:sender inPalette:[self window]];
+        return [[(ERPalettePanel *)[self window] tabView] draggingUpdated:sender inPalette:(ERPalettePanel *)[self window]];
     }
     return NSDragOperationNone;
 }
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
-//        ERPalettePanel *palette = [sender draggingSource];
-//        
-//        if (palette != [self window]) { // we are not dragging on ourself but we are on our header
-//            [[(ERPalettePanel *)[self window] tabView] draggingExited:sender];
-//        }
-        [[(ERPalettePanel *)[self window] tabView] draggingExited:sender inPalette:[self window]];
+        [[(ERPalettePanel *)[self window] tabView] draggingExited:sender inPalette:(ERPalettePanel *)[self window]];
     }
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
-//        ERPalettePanel *palette = [sender draggingSource];
-//        
-//        if (palette != [self window] && NSPointInRect([sender draggingLocation], [self headerRect])) { // we are not dragging on ourself but we are on our header
-//            return [[(ERPalettePanel *)[self window] tabView] performDragOperation:sender];
-//        }
-        return [[(ERPalettePanel *)[self window] tabView] performDragOperation:sender inPalette:[self window]];
+        return [[(ERPalettePanel *)[self window] tabView] performDragOperation:sender inPalette:(ERPalettePanel *)[self window]];
     }
 
     return NO;
