@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import <ERAppKit/ERPaletteTabButton.h>
+
 typedef enum{
     ERPalettePanelPositionUp = 0,
     ERPalettePanelPositionRight,
@@ -35,6 +37,9 @@ typedef enum {
     
     NSView *_content;
     ERPaletteTabView *_tabView;
+    
+    ERPaletteTabButton *_button1;
+    ERPaletteTabButton *_button2;
 }
 @property (assign) ERPalettePanelPosition palettePosition;
 @property (assign) ERPaletteState state;

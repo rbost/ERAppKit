@@ -87,9 +87,25 @@ static CGFloat __paletteTitleSize = 20.;
     
     [[NSColor greenColor] set];
     [NSBezierPath fillRect:headerFrame];
-    [attributedTitle drawAtPoint:NSZeroPoint];
+    
+    NSSize titleSize = [attributedTitle size];
+    [attributedTitle drawAtPoint:NSMakePoint(10, ([ERPaletteContentView paletteTitleSize] - titleSize.height)/2.)];
 
     [NSGraphicsContext restoreGraphicsState];
+}
+
+- (void)drawDragZone
+{
+    NSBezierPath *bars = [NSBezierPath bezierPath];
+    [bars moveToPoint:NSMakePoint(5, 5)];
+    [bars lineToPoint:NSMakePoint(5, [ERPaletteContentView paletteTitleSize]-5)];
+    [bars moveToPoint:NSMakePoint(10, 5)];
+    [bars lineToPoint:NSMakePoint(10, [ERPaletteContentView paletteTitleSize]-5)];
+    [bars moveToPoint:NSMakePoint(15, 5)];
+    [bars lineToPoint:NSMakePoint(15, [ERPaletteContentView paletteTitleSize]-5)];
+    
+    [[NSColor blackColor] set];
+    [bars stroke];    
 }
 
 - (NSRect)headerRect

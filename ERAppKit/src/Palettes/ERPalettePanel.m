@@ -26,9 +26,16 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     [self setContentView:contentView];
 
     _state = ERPaletteClosed;
-    _openingDirection = ERPaletteInsideOpeningDirection;
+    _openingDirection = ERPaletteOutsideOpeningDirection;
 //    [self setBecomesKeyOnlyIfNeeded:YES];
     
+    NSRect hRect = [self headerRect];
+    _button1 = [[ERPaletteTabButton alloc] initWithFrame:NSMakeRect(hRect.origin.x, hRect.origin.y, 10, 10)];
+    _button2 = [[ERPaletteTabButton alloc] initWithFrame:NSMakeRect(hRect.origin.x + 20, hRect.origin.y, 10, 10)];
+    
+    [[self contentView] addSubview:_button1]; [_button1 release];
+    [[self contentView] addSubview:_button2]; [_button2 release];
+
     return self;
 }
 
@@ -147,6 +154,17 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     
     [_content setFrameOrigin:frameOrigin];
 
+    NSRect hFrame = [self headerRect];
+    NSPoint corner = hFrame.origin;
+    
+    if (pos == ERPalettePanelPositionDown || pos == ERPalettePanelPositionUp) {
+        corner.x += hFrame.size.width - 30 ;
+    }else{
+    }
+    NSPoint buttonLocation = NSMakePoint(corner.x, corner.y + 5);
+    
+    [_button1 setFrameOrigin:buttonLocation];
+    [_button2 setFrameOrigin:NSMakePoint(buttonLocation.x+15, buttonLocation.y)];
 }
 
 - (ERPaletteState)state

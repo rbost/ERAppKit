@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C2289A81650221C000E33D3 /* ERPaletteTabButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C2289A61650221C000E33D3 /* ERPaletteTabButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C2289A91650221C000E33D3 /* ERPaletteTabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2289A71650221C000E33D3 /* ERPaletteTabButton.m */; };
 		6C27B57F161B9158002D1EF9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C27B57E161B9158002D1EF9 /* Cocoa.framework */; };
 		6C27B589161B9158002D1EF9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B587161B9158002D1EF9 /* InfoPlist.strings */; };
 		6C27B5A3161B91CD002D1EF9 /* ERFadingAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B598161B91CD002D1EF9 /* ERFadingAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -70,6 +72,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6C2289A61650221C000E33D3 /* ERPaletteTabButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteTabButton.h; path = src/Palettes/ERPaletteTabButton.h; sourceTree = "<group>"; };
+		6C2289A71650221C000E33D3 /* ERPaletteTabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteTabButton.m; path = src/Palettes/ERPaletteTabButton.m; sourceTree = "<group>"; };
 		6C27B57B161B9158002D1EF9 /* ERAppKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ERAppKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C27B57E161B9158002D1EF9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		6C27B581161B9158002D1EF9 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -275,6 +279,8 @@
 				6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */,
 				6CE48139164C48C6001001C8 /* ERPaletteTabView.h */,
 				6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */,
+				6C2289A61650221C000E33D3 /* ERPaletteTabButton.h */,
+				6C2289A71650221C000E33D3 /* ERPaletteTabButton.m */,
 			);
 			name = Palettes;
 			sourceTree = "<group>";
@@ -299,6 +305,7 @@
 				6C722C5D164AF1870011BA2F /* ERPaletteContentView.h in Headers */,
 				6C722C61164B0FE50011BA2F /* ERPaletteHolderView.h in Headers */,
 				6CE4813B164C48C6001001C8 /* ERPaletteTabView.h in Headers */,
+				6C2289A81650221C000E33D3 /* ERPaletteTabButton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +415,7 @@
 				6C722C5E164AF1870011BA2F /* ERPaletteContentView.m in Sources */,
 				6C722C62164B0FE50011BA2F /* ERPaletteHolderView.m in Sources */,
 				6CE4813C164C48C6001001C8 /* ERPaletteTabView.m in Sources */,
+				6C2289A91650221C000E33D3 /* ERPaletteTabButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
