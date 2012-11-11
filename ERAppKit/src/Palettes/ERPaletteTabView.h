@@ -21,6 +21,10 @@
     NSMutableArray *_tabs;
     ERPaletteHolderView *_holder;
     ERPalettePanelPosition _position;
+    
+    
+    NSRect _draggingPositionMarker;
+    int _draggingPosition;
 }
 @property (readonly) NSArray *tabs;
 @property (readonly) ERPalettePanelPosition position;

@@ -24,12 +24,7 @@ static CGFloat __tabMargin = 5.;
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-//        _leftPalettes = [[NSMutableArray alloc] init];
-//        _rightPalettes = [[NSMutableArray alloc] init];
-//        _upPalettes = [[NSMutableArray alloc] init];
-//        _downPalettes = [[NSMutableArray alloc] init];
-        
-        
+
         _leftTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionLeft];
         _rightTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionRight];
         _upTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionUp];
@@ -53,11 +48,6 @@ static CGFloat __tabMargin = 5.;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-//    [_leftPalettes release];
-//    [_rightPalettes release];
-//    [_upPalettes release];
-//    [_downPalettes release];
-    
     [super dealloc];
 }
 
