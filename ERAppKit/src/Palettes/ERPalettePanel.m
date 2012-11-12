@@ -12,6 +12,8 @@
 #import <ERAppKit/ERPaletteTabView.h>
 #import <ERAppKit/ERPaletteHolderView.h>
 
+#import "ERPaletteTitleView.h"
+
 NSString *ERPaletteDidCloseNotification = @"Palette did close";
 NSString *ERPaletteDidOpenNotification = @"Palette did open";
 NSString *ERPaletteNewFrameKey = @"New palette frame";
@@ -30,12 +32,14 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
 //    [self setBecomesKeyOnlyIfNeeded:YES];
     
     NSRect hRect = [self headerRect];
-    _button1 = [[ERPaletteTabButton alloc] initWithFrame:NSMakeRect(hRect.origin.x, hRect.origin.y, 10, 10)];
-    _button2 = [[ERPaletteTabButton alloc] initWithFrame:NSMakeRect(hRect.origin.x + 20, hRect.origin.y, 10, 10)];
+//    _button1 = [[ERPaletteTabButton alloc] initWithFrame:NSMakeRect(hRect.origin.x, hRect.origin.y, 10, 10)];
+//    _button2 = [[ERPaletteTabButton alloc] initWithFrame:NSMakeRect(hRect.origin.x + 20, hRect.origin.y, 10, 10)];
     
-    [[self contentView] addSubview:_button1]; [_button1 release];
-    [[self contentView] addSubview:_button2]; [_button2 release];
+//    [[self contentView] addSubview:_button1]; [_button1 release];
+//    [[self contentView] addSubview:_button2]; [_button2 release];
 
+    
+//    _titleView = [[ERPaletteTitleView alloc] initWithFrame:NSMakeRect(0, 0, 50, 50)];
     return self;
 }
 
@@ -56,6 +60,11 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
 
     [self setContent:content];
     
+    _titleView = [[ERPaletteTitleView alloc] initWithFrame:[[self contentView] headerRect]];
+    [[self contentView] addSubview:_titleView];
+    [_titleView release];
+    
+
     [self updateFrameSizeAndContentPlacement];
     [self updateAutoresizingMask];
     
@@ -118,18 +127,41 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
             break;
             
         case ERPalettePanelPositionLeft:
-            mask = NSViewMinXMargin;
+            mask = NSViewMinXMargin|NSViewMaxYMargin;
             break;
             
         case ERPalettePanelPositionRight:
-            mask = NSViewMaxXMargin;
+            mask = NSViewMaxXMargin|NSViewMaxYMargin;
             break;
             
         default:
             break;
     }
-    
     [[self content] setAutoresizingMask:mask];
+
+    switch ([self effectiveHeaderPosition]) {
+        case ERPalettePanelPositionUp:
+            mask = NSViewMaxYMargin;
+            break;
+            
+        case ERPalettePanelPositionDown:
+            mask = NSViewMinYMargin;
+            break;
+            
+        case ERPalettePanelPositionLeft:
+            mask = NSViewMinXMargin|NSViewMinYMargin;
+            break;
+            
+        case ERPalettePanelPositionRight:
+            mask = NSViewMaxXMargin|NSViewMinYMargin;
+            break;
+            
+        default:
+            break;
+    }
+
+    [_titleView setAutoresizingMask:mask];
+    
 }
 
 - (void)updateFrameSizeAndContentPlacement
@@ -143,9 +175,9 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     ERPalettePanelPosition pos = [self effectiveHeaderPosition];
     
     if (pos == ERPalettePanelPositionUp) {
-        frameOrigin.y = [ERPaletteContentView paletteTitleSize];
+        frameOrigin.y = 2*[ERPaletteContentView paletteTitleSize];
     }else if(pos == ERPalettePanelPositionDown) {
-        frameOrigin.y = [self paletteSize].height - [ERPaletteContentView paletteTitleSize] - [[self content] frame].size.height;
+        frameOrigin.y = [self paletteSize].height - 2*[ERPaletteContentView paletteTitleSize] - [[self content] frame].size.height;
     }else if (pos == ERPalettePanelPositionRight) {
         frameOrigin.x = [ERPaletteContentView paletteTitleSize];
     }else if (pos == ERPalettePanelPositionLeft) {
@@ -153,7 +185,21 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     }
     
     [_content setFrameOrigin:frameOrigin];
+    
+    NSRect tabRect = [[self contentView] tabRect];
+    if (pos == ERPalettePanelPositionUp) {
+        frameOrigin = NSMakePoint(NSMinX(tabRect), NSMaxY(tabRect));
+    }else if(pos == ERPalettePanelPositionDown) {
+        frameOrigin = NSMakePoint(NSMinX(tabRect), NSMinY(tabRect)-[_titleView frame].size.height);
+    }else if (pos == ERPalettePanelPositionRight) {
+        frameOrigin = NSMakePoint(NSMaxX(tabRect), NSMinY(tabRect));
+    }else if (pos == ERPalettePanelPositionLeft) {
+        frameOrigin = NSMakePoint(NSMinX(tabRect)-[_titleView frame].size.width, NSMinY(tabRect));
+    }
 
+    [_titleView setFrameOrigin:frameOrigin];
+    
+    
     NSRect hFrame = [self headerRect];
     NSPoint corner = hFrame.origin;
     
@@ -183,98 +229,58 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     }
     
     if (state == ERPaletteClosed) {
-        NSRect newFrame;
-        NSRect headerRect = [(ERPaletteContentView *)[self contentView] headerRect];
+        NSRect tabFrame = [(ERPaletteContentView *)[self contentView] tabRect];
+        tabFrame = [[self contentView] convertRect:tabFrame toView:nil];
+        tabFrame = [self convertRectToScreen:tabFrame];
         
-        newFrame.size = headerRect.size;
-        newFrame.origin = [[self contentView] convertPoint:headerRect.origin toView:nil]; // coordinates in the window base
         
-        if ([self openingDirection] == ERPaletteInsideOpeningDirection) {
-            if ([self palettePosition] == ERPalettePanelPositionDown) {
-                newFrame.origin = NSZeroPoint;
-            }else if([self palettePosition] == ERPalettePanelPositionUp) {
-                newFrame.origin = NSMakePoint(0, [self frame].size.height - [ERPaletteContentView paletteTitleSize]);
-            }else if([self palettePosition] == ERPalettePanelPositionLeft) {
-                newFrame.origin = NSZeroPoint;
-            }else if([self palettePosition] == ERPalettePanelPositionRight) {
-                newFrame.origin = NSMakePoint([self frame].size.width - [ERPaletteContentView paletteTitleSize],0);
-            }
-            
-            newFrame = [self convertRectToScreen:newFrame];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidCloseNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:newFrame] forKey:ERPaletteNewFrameKey]];
-            
-            if (animate) {
-                [[self animator] setFrame:newFrame display:YES];
-            }else{
-                [self setFrame:newFrame display:YES];
-            }
-
-        }else if ([self openingDirection] == ERPaletteOutsideOpeningDirection){
-            if ([self palettePosition] == ERPalettePanelPositionDown) {
-                newFrame.origin = NSMakePoint(0, [self frame].size.height - [ERPaletteContentView paletteTitleSize]);
-            }else if([self palettePosition] == ERPalettePanelPositionUp) {
-                newFrame.origin = NSZeroPoint;
-            }else if([self palettePosition] == ERPalettePanelPositionLeft) {
-                newFrame.origin = NSMakePoint([self frame].size.width - [ERPaletteContentView paletteTitleSize],0);
-            }else if([self palettePosition] == ERPalettePanelPositionRight) {
-                newFrame.origin = NSZeroPoint;
-            }
-            
-            newFrame = [self convertRectToScreen:newFrame];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidCloseNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:newFrame] forKey:ERPaletteNewFrameKey]];
-            
-            if (animate) {
-                [[self animator] setFrame:newFrame display:YES];
-            }else{
-                [self setFrame:newFrame display:YES];
-            }
+        if (animate) {
+            [[self animator] setFrame:tabFrame display:YES];
+        }else{
+            [self setFrame:tabFrame display:YES];
         }
-    }else if (state == ERPaletteOpened && [self openingDirection] == ERPaletteInsideOpeningDirection) {
-        NSRect newFrame;
         
+    }else{
+        NSSize contentSize = [[self content] frame].size;
+        NSRect newFrame,tabFrame;
         newFrame.size = [self openedPaletteSize];
-        newFrame.origin = [self frame].origin;
         
-        if ([self palettePosition] == ERPalettePanelPositionDown) {
-        }else if([self palettePosition] == ERPalettePanelPositionUp) {
-            newFrame.origin.y -= newFrame.size.height - [ERPaletteContentView paletteTitleSize];
-        }else if ([self palettePosition] == ERPalettePanelPositionLeft) {
-        }else if ([self palettePosition] == ERPalettePanelPositionRight) {
-            newFrame.origin.x -= newFrame.size.width - [ERPaletteContentView paletteTitleSize];
-        }
+        tabFrame = [[self contentView] tabRect];
+        newFrame.origin = tabFrame.origin;
+        
+        ERPalettePanelPosition pos = [self effectiveHeaderPosition];
+        
+        switch (pos) {
+            case ERPalettePanelPositionLeft:
+                newFrame.origin.x -= contentSize.width;
+                newFrame.origin.y -= contentSize.height;
+                break;
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidOpenNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:newFrame] forKey:ERPaletteNewFrameKey]];
+            case ERPalettePanelPositionRight:
+                newFrame.origin.y -= contentSize.height;
+                break;
+
+            case ERPalettePanelPositionUp:
+                break;
+
+            case ERPalettePanelPositionDown:
+                newFrame.origin.y -= contentSize.height + [[self contentView] headerRect].size.height;
+                break;
+
+            default:
+                break;
+        }
+        newFrame = [[self contentView] convertRect:newFrame toView:nil];
+        newFrame = [self convertRectToScreen:newFrame];
 
         if (animate) {
             [[self animator] setFrame:newFrame display:YES];
         }else{
             [self setFrame:newFrame display:YES];
         }
-    }else if (state == ERPaletteOpened && [self openingDirection] == ERPaletteOutsideOpeningDirection) {
-        NSRect newFrame;
         
-        newFrame.size = [self openedPaletteSize];
-        newFrame.origin = [self frame].origin;
-        
-        if ([self palettePosition] == ERPalettePanelPositionDown) {
-            newFrame.origin.y -= newFrame.size.height - [ERPaletteContentView paletteTitleSize];
-        }else if([self palettePosition] == ERPalettePanelPositionUp) {
-        }else if ([self palettePosition] == ERPalettePanelPositionLeft) {
-            newFrame.origin.x -= newFrame.size.width - [ERPaletteContentView paletteTitleSize];
-        }else if ([self palettePosition] == ERPalettePanelPositionRight) {
-        }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidOpenNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:newFrame] forKey:ERPaletteNewFrameKey]];
-        
-        if (animate) {
-            [[self animator] setFrame:newFrame display:YES];
-        }else{
-            [self setFrame:newFrame display:YES];
-        }
+
     }
-    
     _state = state;
 }
 
@@ -311,10 +317,19 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     [_content setFrameOrigin:frameOrigin];
 }
 
+- (NSSize)paletteContentSize
+{
+    NSSize size = [[self content] frame].size;
+    size.height += [ERPaletteContentView paletteTitleSize];
+
+    return size;
+}
+
 - (NSSize)openedPaletteSize
 {
     NSSize size = [[self content] frame].size;
-    
+    size.height += [ERPaletteContentView paletteTitleSize];
+
     if ([self palettePosition] == ERPalettePanelPositionDown || [self palettePosition] == ERPalettePanelPositionUp) {
         size.height += [ERPaletteContentView paletteTitleSize];
     }else{
@@ -326,11 +341,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
 
 - (NSSize)closedPaletteSize
 {    
-    if ([self palettePosition] == ERPalettePanelPositionDown || [self palettePosition] == ERPalettePanelPositionUp) {
-        return NSMakeSize([[self content] frame].size.width, [ERPaletteContentView paletteTitleSize]);
-    }else{
-        return NSMakeSize([ERPaletteContentView paletteTitleSize], [[self content] frame].size.height);
-    }
+    return NSMakeSize([ERPaletteContentView paletteTitleSize], [ERPaletteContentView paletteTitleSize]);
 }
 
 - (NSSize)paletteSize

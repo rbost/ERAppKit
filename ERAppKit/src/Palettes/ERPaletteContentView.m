@@ -36,26 +36,24 @@ static CGFloat __paletteTitleSize = 20.;
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
-//    [[NSColor blackColor] set];
-//    [NSBezierPath fillRect:dirtyRect];
 
     NSAffineTransform *t = [NSAffineTransform transform];
     NSRect windowFrame = [[self window] frame];
     NSRect headerRect = [self headerRect];
     switch ([(ERPalettePanel *)[self window] effectiveHeaderPosition]) {
         case ERPalettePanelPositionDown:
-            [t translateXBy:0 yBy:windowFrame.size.height-headerRect.size.height];
+            [t translateXBy:0 yBy:windowFrame.size.height-[ERPaletteContentView paletteTitleSize]];
             break;
             
         case ERPalettePanelPositionLeft:
-            [t translateXBy:windowFrame.size.width-headerRect.size.width yBy:headerRect.size.height];
-            [t rotateByDegrees:-90];
+            [t translateXBy:windowFrame.size.width-[ERPaletteContentView paletteTitleSize] yBy:windowFrame.size.height-[ERPaletteContentView paletteTitleSize]];
+//            [t rotateByDegrees:-90];
             break;
         case ERPalettePanelPositionUp:
             break;
         case ERPalettePanelPositionRight:
-            [t translateXBy:0 yBy:headerRect.size.height];
-            [t rotateByDegrees:-90];
+            [t translateXBy:0 yBy:windowFrame.size.height-[ERPaletteContentView paletteTitleSize]];
+//            [t rotateByDegrees:-90];
             break;
         default:
             break;
@@ -63,9 +61,12 @@ static CGFloat __paletteTitleSize = 20.;
     
     [NSGraphicsContext saveGraphicsState];
     [t concat];
-    [self drawHeader];
+//    [self drawHeader];
+    [self drawTab];
     
     [NSGraphicsContext restoreGraphicsState];
+    [[NSColor yellowColor] set];
+//    [NSBezierPath fillRect:[self headerRect]];
 
 }
 
@@ -94,6 +95,18 @@ static CGFloat __paletteTitleSize = 20.;
     [NSGraphicsContext restoreGraphicsState];
 }
 
+- (void)drawTab
+{
+    NSRect tabFrame = NSMakeRect(0, 0, [ERPaletteContentView paletteTitleSize], [ERPaletteContentView paletteTitleSize]);
+    [NSGraphicsContext saveGraphicsState];
+    
+    [[NSColor purpleColor] set];
+    [NSBezierPath fillRect:tabFrame];
+    
+    [NSGraphicsContext restoreGraphicsState];
+
+}
+
 - (void)drawDragZone
 {
     NSBezierPath *bars = [NSBezierPath bezierPath];
@@ -112,24 +125,28 @@ static CGFloat __paletteTitleSize = 20.;
 {
     NSRect headerRect = NSZeroRect;
     ERPalettePanel *window = (ERPalettePanel *)[self window];
+    NSView *content = [window content];
 
     switch ([window effectiveHeaderPosition]) {
         case ERPalettePanelPositionDown:
-            headerRect = NSMakeRect(0, [window frame].size.height -__paletteTitleSize, [[window content] bounds].size.width, __paletteTitleSize);
+            headerRect.origin = NSMakePoint(0, [content frame].size.height);
             break;
             
         case ERPalettePanelPositionLeft:
-            headerRect = NSMakeRect([window frame].size.width-__paletteTitleSize, 0, __paletteTitleSize, [[window content] bounds].size.height);
+            headerRect.origin = NSMakePoint(0, [content frame].size.height);
             break;
         case ERPalettePanelPositionUp:
-            headerRect = NSMakeRect(0, 0, [[window content] bounds].size.width, __paletteTitleSize);
+            headerRect.origin = NSMakePoint(0,__paletteTitleSize);
             break;
         case ERPalettePanelPositionRight:
-            headerRect = NSMakeRect(0, 0, __paletteTitleSize, [[window content] bounds].size.height);
+            headerRect.origin = NSMakePoint(__paletteTitleSize, [content frame].size.height);
+
             break;
         default:
             break;
     }
+//    NSRect bounds = [self bounds];
+    headerRect.size = NSMakeSize([[window content] bounds].size.width, [ERPaletteContentView paletteTitleSize]);
     
     return headerRect;
 }
@@ -173,6 +190,34 @@ static CGFloat __paletteTitleSize = 20.;
     return [image autorelease];
 }
 
+- (NSRect)tabRect
+{
+    NSRect tabRect = NSZeroRect;
+    ERPalettePanel *window = (ERPalettePanel *)[self window];
+    
+    switch ([window effectiveHeaderPosition]) {
+        case ERPalettePanelPositionDown:
+            tabRect.origin = NSMakePoint( 0, [window frame].size.height- __paletteTitleSize);
+            break;
+            
+        case ERPalettePanelPositionLeft:
+            tabRect.origin = NSMakePoint( [window frame].size.width- __paletteTitleSize ,[window frame].size.height -__paletteTitleSize);
+            break;
+        case ERPalettePanelPositionUp:
+            tabRect.origin = NSZeroPoint;
+            break;
+        case ERPalettePanelPositionRight:
+            tabRect.origin = NSMakePoint( 0,[window frame].size.height -__paletteTitleSize);
+            break;
+        default:
+            break;
+    }
+    //    NSRect bounds = [self bounds];
+
+    tabRect.size = NSMakeSize([ERPaletteContentView paletteTitleSize], [ERPaletteContentView paletteTitleSize]);
+    return tabRect;
+
+}
 - (void)mouseDown:(NSEvent *)theEvent
 {
     if (NSPointInRect([self convertPoint:[theEvent locationInWindow] fromView:nil], [self headerRect])) {
@@ -204,7 +249,7 @@ static CGFloat __paletteTitleSize = 20.;
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-    if ([theEvent clickCount] == 2 && NSPointInRect([self convertPoint:[theEvent locationInWindow] fromView:nil], [self headerRect])) {
+    if ([theEvent clickCount] == 2 && NSPointInRect([self convertPoint:[theEvent locationInWindow] fromView:nil], [self tabRect])) {
         [(ERPalettePanel *)[self window] toggleCollapse:self];
     }
     _draggingStartPoint = NSMakePoint(NSNotFound, NSNotFound);

@@ -28,6 +28,7 @@ typedef enum {
 }ERPaletteOpeningDirection;
 
 @class ERPaletteTabView, ERPaletteHolderView;
+@class ERPaletteTitleView;
 
 @interface ERPalettePanel : NSPanel
 {
@@ -37,6 +38,8 @@ typedef enum {
     
     NSView *_content;
     ERPaletteTabView *_tabView;
+    
+    ERPaletteTitleView *_titleView;
     
     ERPaletteTabButton *_button1;
     ERPaletteTabButton *_button2;
