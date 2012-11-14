@@ -28,7 +28,7 @@ typedef enum {
 }ERPaletteOpeningDirection;
 
 @class ERPaletteTabView, ERPaletteHolderView;
-@class ERPaletteTitleView;
+@class ERPaletteTitleView, ERPaletteTab;
 
 @interface ERPalettePanel : NSPanel
 {
@@ -40,6 +40,7 @@ typedef enum {
     ERPaletteTabView *_tabView;
     
     ERPaletteTitleView *_titleView;
+    ERPaletteTab *_tabButton;
     
     ERPaletteTabButton *_button1;
     ERPaletteTabButton *_button2;
@@ -63,6 +64,12 @@ typedef enum {
 - (ERPalettePanelPosition)effectiveHeaderPosition;
 
 - (NSRect)headerRect;
+
+- (NSSize)paletteContentSize;
+- (NSSize)openedPaletteSize;
+- (NSSize)closedPaletteSize;
+- (NSSize)paletteSize;
+
 @end
 
 

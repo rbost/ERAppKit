@@ -13,6 +13,7 @@
 #import <ERAppKit/ERPaletteHolderView.h>
 
 #import "ERPaletteTitleView.h"
+#import "ERPaletteTab.h"
 
 NSString *ERPaletteDidCloseNotification = @"Palette did close";
 NSString *ERPaletteDidOpenNotification = @"Palette did open";
@@ -28,18 +29,8 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     [self setContentView:contentView];
 
     _state = ERPaletteClosed;
-    _openingDirection = ERPaletteOutsideOpeningDirection;
-//    [self setBecomesKeyOnlyIfNeeded:YES];
-    
-    NSRect hRect = [self headerRect];
-//    _button1 = [[ERPaletteTabButton alloc] initWithFrame:NSMakeRect(hRect.origin.x, hRect.origin.y, 10, 10)];
-//    _button2 = [[ERPaletteTabButton alloc] initWithFrame:NSMakeRect(hRect.origin.x + 20, hRect.origin.y, 10, 10)];
-    
-//    [[self contentView] addSubview:_button1]; [_button1 release];
-//    [[self contentView] addSubview:_button2]; [_button2 release];
+    _openingDirection = ERPaletteInsideOpeningDirection;
 
-    
-//    _titleView = [[ERPaletteTitleView alloc] initWithFrame:NSMakeRect(0, 0, 50, 50)];
     return self;
 }
 
@@ -64,6 +55,10 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     [[self contentView] addSubview:_titleView];
     [_titleView release];
     
+    _tabButton = [[ERPaletteTab alloc] initWithFrame:[[self contentView] tabRect]];
+    [[self contentView] addSubview:_tabButton];
+    [_tabButton release];
+    [_tabButton setPalette:self];
 
     [self updateFrameSizeAndContentPlacement];
     [self updateAutoresizingMask];
@@ -159,8 +154,31 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
         default:
             break;
     }
-
+    
     [_titleView setAutoresizingMask:mask];
+    
+//    switch ([self effectiveHeaderPosition]) {
+//        case ERPalettePanelPositionUp:
+//            mask = NSViewMaxYMargin;
+//            break;
+//            
+//        case ERPalettePanelPositionDown:
+//            mask = NSViewMinYMargin;
+//            break;
+//            
+//        case ERPalettePanelPositionLeft:
+//            mask = NSViewMinXMargin|NSViewMinYMargin;
+//            break;
+//            
+//        case ERPalettePanelPositionRight:
+//            mask = NSViewMaxXMargin|NSViewMinYMargin;
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//    
+    [_tabButton setAutoresizingMask:mask];
     
 }
 
@@ -198,7 +216,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     }
 
     [_titleView setFrameOrigin:frameOrigin];
-    
+    [_tabButton setFrameOrigin:[[self contentView] tabRect].origin];
     
     NSRect hFrame = [self headerRect];
     NSPoint corner = hFrame.origin;
@@ -233,13 +251,12 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
         tabFrame = [[self contentView] convertRect:tabFrame toView:nil];
         tabFrame = [self convertRectToScreen:tabFrame];
         
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidCloseNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:tabFrame] forKey:ERPaletteNewFrameKey]];
         if (animate) {
             [[self animator] setFrame:tabFrame display:YES];
         }else{
             [self setFrame:tabFrame display:YES];
         }
-        
     }else{
         NSSize contentSize = [[self content] frame].size;
         NSRect newFrame,tabFrame;
@@ -273,6 +290,8 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
         newFrame = [[self contentView] convertRect:newFrame toView:nil];
         newFrame = [self convertRectToScreen:newFrame];
 
+        [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidOpenNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:newFrame] forKey:ERPaletteNewFrameKey]];
+        
         if (animate) {
             [[self animator] setFrame:newFrame display:YES];
         }else{
@@ -323,6 +342,19 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     size.height += [ERPaletteContentView paletteTitleSize];
 
     return size;
+}
+
+- (NSRect)paletteContentFrame
+{
+    NSRect frame;
+    
+    NSPoint headerOrigin = [_titleView frame].origin;
+    NSPoint contentOrigin = [_content frame].origin;
+    
+    frame.origin = NSMakePoint(MIN(headerOrigin.x, contentOrigin.x), MIN(headerOrigin.y, contentOrigin.y));
+    frame.size = [self paletteContentSize];
+    
+    return frame;
 }
 
 - (NSSize)openedPaletteSize

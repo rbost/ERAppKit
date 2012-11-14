@@ -86,6 +86,9 @@ static CGFloat __tabMargin = 5.;
     [_tabs makeObjectsPerformSelector:@selector(setTabView:) withObject:nil];
     [_tabs release];
     
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [super dealloc];
 }
 
@@ -128,7 +131,10 @@ static CGFloat __tabMargin = 5.;
     
     [[NSNotificationCenter defaultCenter] addObserver:_holder selector:@selector(paletteDidClose:) name:ERPaletteDidCloseNotification object:palette];
     [[NSNotificationCenter defaultCenter] addObserver:_holder selector:@selector(paletteDidOpen:) name:ERPaletteDidOpenNotification object:palette];
-    
+  
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paletteStateDidChange:) name:ERPaletteDidCloseNotification object:palette];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paletteStateDidChange:) name:ERPaletteDidOpenNotification object:palette];
+
     // this also order the panel out
     [[self window] addChildWindow:palette ordered:NSWindowAbove];
     
@@ -143,6 +149,9 @@ static CGFloat __tabMargin = 5.;
     
     [[NSNotificationCenter defaultCenter] addObserver:_holder selector:@selector(paletteDidClose:) name:ERPaletteDidCloseNotification object:palette];
     [[NSNotificationCenter defaultCenter] addObserver:_holder selector:@selector(paletteDidOpen:) name:ERPaletteDidOpenNotification object:palette];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paletteStateDidChange:) name:ERPaletteDidCloseNotification object:palette];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paletteStateDidChange:) name:ERPaletteDidOpenNotification object:palette];
     
     // this also order the panel out
     [[self window] addChildWindow:palette ordered:NSWindowAbove];
@@ -188,9 +197,19 @@ static CGFloat __tabMargin = 5.;
         [_tabs removeObject:palette];
         [[NSNotificationCenter defaultCenter] removeObserver:_holder name:ERPaletteDidCloseNotification object:palette];
         [[NSNotificationCenter defaultCenter] removeObserver:_holder name:ERPaletteDidOpenNotification object:palette];
+
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:ERPaletteDidCloseNotification object:palette];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:ERPaletteDidOpenNotification object:palette];
+
         [[self window] removeChildWindow:palette];
         [self updateTabsLocations];
     }
+}
+
+- (void)paletteStateDidChange:(NSNotification *)note
+{
+//    NSLog(@"palette state changed");
+//    [self updateTabsLocations];
 }
 
 - (void)updateTabsLocations
@@ -274,7 +293,7 @@ static CGFloat __tabMargin = 5.;
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
 
         if ([palette state] == ERPaletteOpened && [palette openingDirection] == ERPaletteOutsideOpeningDirection) {
-            frameOrigin.y -= [[palette content] frame].size.height;
+            frameOrigin.y -= [[palette content] frame].size.height + [ERPaletteContentView paletteTitleSize];
         }
 
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
@@ -295,7 +314,7 @@ static CGFloat __tabMargin = 5.;
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
 
         if ([palette state] == ERPaletteOpened && [palette openingDirection] == ERPaletteInsideOpeningDirection) {
-            frameOrigin.y -= [[palette content] frame].size.height;
+            frameOrigin.y -= [[palette content] frame].size.height + [ERPaletteContentView paletteTitleSize];
         }
 
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
@@ -442,9 +461,9 @@ static CGFloat __tabMargin = 5.;
         ERPalettePanel *draggedPalette = [sender draggingSource];
         
         if ([draggedPalette holder] == [self holder]) { // drag authorized only inside the same holder view
-            if (draggedPalette != palette && NSPointInRect([sender draggingLocation], [palette headerRect])) { // we are not the palette on itself, but we are on the header
+            if (draggedPalette != palette) { // we are not the palette on itself, but we are on the header
                 _highlight = YES;
-                _draggingPosition = [_tabs indexOfObject:palette];
+                _draggingPosition = (int)[_tabs indexOfObject:palette];
                 _draggingPositionMarker = [self markerForTabPosition:_draggingPosition];
 
                 [self setNeedsDisplay:YES];
@@ -463,9 +482,9 @@ static CGFloat __tabMargin = 5.;
         ERPalettePanel *draggedPalette = [sender draggingSource];
         
         if ([draggedPalette holder] == [self holder]) { // drag authorized only inside the same holder view
-            if (draggedPalette != palette && NSPointInRect([sender draggingLocation], [palette headerRect])) { // we are not the palette on itself, but we are on the header
+            if (draggedPalette != palette) { // we are not the palette on itself, but we are on the header
                 _highlight = YES;
-                _draggingPosition = [_tabs indexOfObject:palette];
+                _draggingPosition = (int)[_tabs indexOfObject:palette];
                 _draggingPositionMarker = [self markerForTabPosition:_draggingPosition];
                 [self setNeedsDisplay:YES];
                 
@@ -524,7 +543,7 @@ static CGFloat __tabMargin = 5.;
         ERPalettePanel *draggedPalette = [sender draggingSource];
         
         if ([draggedPalette holder] == [self holder]) { // drag authorized only inside the same holder view
-            if (draggedPalette != palette && NSPointInRect([sender draggingLocation], [palette headerRect])) { // we are not the palette on itself, but we are on the header
+            if (draggedPalette != palette) { // we are not the palette on itself, but we are on the header
                 
                 ERPaletteTabView *oldTabView = [draggedPalette tabView];
                 

@@ -10,13 +10,10 @@
 
 @interface ERPaletteContentView : NSView
 {
-    @private
-    NSPoint _draggingStartPoint;
-    NSPoint _oldFrameOrigin;
-    BOOL _didDrag;
+
 }
 + (CGFloat)paletteTitleSize;
 - (NSRect)headerRect;
 - (NSRect)tabRect;
-- (NSImage *)headerImage;
+//- (NSImage *)headerImage;
 @end
