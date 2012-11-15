@@ -30,7 +30,7 @@
 {
     // Drawing code here.
     [[NSColor orangeColor] set];
-    [[NSBezierPath bezierPathWithOvalInRect:[self bounds]] fill];
+    [[NSBezierPath bezierPathWithOvalInRect:NSInsetRect([self bounds], 3, 3)] fill];
 }
 
 - (NSImage *)draggingImage

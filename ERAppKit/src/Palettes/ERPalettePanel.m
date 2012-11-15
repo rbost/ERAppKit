@@ -63,6 +63,10 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     [self updateFrameSizeAndContentPlacement];
     [self updateAutoresizingMask];
     
+    [self setBackgroundColor:[NSColor clearColor]];
+    [self setOpaque:NO];
+    [self setHasShadow:YES];
+    
     return self;
 }
 
@@ -122,11 +126,11 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
             break;
             
         case ERPalettePanelPositionLeft:
-            mask = NSViewMinXMargin|NSViewMaxYMargin;
+            mask = NSViewMinXMargin|NSViewMinYMargin;
             break;
             
         case ERPalettePanelPositionRight:
-            mask = NSViewMaxXMargin|NSViewMaxYMargin;
+            mask = NSViewMaxXMargin|NSViewMinYMargin;
             break;
             
         default:
@@ -156,30 +160,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     }
     
     [_titleView setAutoresizingMask:mask];
-    
-//    switch ([self effectiveHeaderPosition]) {
-//        case ERPalettePanelPositionUp:
-//            mask = NSViewMaxYMargin;
-//            break;
-//            
-//        case ERPalettePanelPositionDown:
-//            mask = NSViewMinYMargin;
-//            break;
-//            
-//        case ERPalettePanelPositionLeft:
-//            mask = NSViewMinXMargin|NSViewMinYMargin;
-//            break;
-//            
-//        case ERPalettePanelPositionRight:
-//            mask = NSViewMaxXMargin|NSViewMinYMargin;
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    
     [_tabButton setAutoresizingMask:mask];
-    
 }
 
 - (void)updateFrameSizeAndContentPlacement
@@ -198,8 +179,12 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
         frameOrigin.y = [self paletteSize].height - 2*[ERPaletteContentView paletteTitleSize] - [[self content] frame].size.height;
     }else if (pos == ERPalettePanelPositionRight) {
         frameOrigin.x = [ERPaletteContentView paletteTitleSize];
+        frameOrigin.y = [self paletteSize].height - [ERPaletteContentView paletteTitleSize] - [[self content] frame].size.height;
+
     }else if (pos == ERPalettePanelPositionLeft) {
         frameOrigin.x = [self paletteSize].width - [ERPaletteContentView paletteTitleSize] - [[self content] frame].size.width;
+        frameOrigin.y = [self paletteSize].height - [ERPaletteContentView paletteTitleSize] - [[self content] frame].size.height;
+
     }
     
     [_content setFrameOrigin:frameOrigin];
@@ -300,6 +285,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
         
 
     }
+    
     _state = state;
 }
 

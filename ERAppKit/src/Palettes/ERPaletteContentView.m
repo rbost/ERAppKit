@@ -30,6 +30,15 @@ static CGFloat __paletteTitleSize = 20.;
     return self;
 }
 
+- (void)drawRect:(NSRect)dirtyRect
+{
+    [[NSColor colorWithCalibratedWhite:0.3 alpha:1.0] set];
+    
+    NSRect filledRect = NSIntersectionRect([self frame],[self contentRect]);
+
+    [[NSBezierPath bezierPathWithRoundedRect:filledRect xRadius:5. yRadius:5.] fill];
+}
+
 - (NSRect)headerRect
 {
     NSRect headerRect = NSZeroRect;
@@ -87,4 +96,8 @@ static CGFloat __paletteTitleSize = 20.;
 
 }
 
+- (NSRect)contentRect
+{
+    return [[(ERPalettePanel *)[self window] content] frame];
+}
 @end

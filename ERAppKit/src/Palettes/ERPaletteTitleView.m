@@ -23,10 +23,11 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
-    [[NSColor whiteColor] set];
-    [NSBezierPath fillRect:dirtyRect];
+    [[NSColor colorWithCalibratedWhite:0.5 alpha:0.5] set];
+
+    [[NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:[self bounds].size.height/2. yRadius:[self bounds].size.height/2.] fill];
     
-    [@"Header" drawAtPoint:NSZeroPoint withAttributes:nil];
+    [@"Header" drawAtPoint:NSMakePoint(10, 0) withAttributes:nil];
 }
 
 @end
