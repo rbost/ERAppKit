@@ -30,6 +30,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
 
     _state = ERPaletteClosed;
     _openingDirection = ERPaletteInsideOpeningDirection;
+    _preferedOpeningDirection = ERPaletteInsideOpeningDirection;
 
     return self;
 }
@@ -99,7 +100,6 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     [[self contentView] setNeedsDisplay:YES];
 }
 
-
 - (ERPalettePanelPosition)effectiveHeaderPosition
 {
     ERPalettePanelPosition pos = [self palettePosition];
@@ -110,7 +110,69 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
 }
 
 
-@synthesize openingDirection = _openingDirection;
+//@synthesize openingDirection = _openingDirection;
+
+- (ERPaletteOpeningDirection)openingDirection
+{
+    return _openingDirection;
+}
+
+- (void)setOpeningDirection:(ERPaletteOpeningDirection)openingDirection
+{
+    _openingDirection = openingDirection;
+    [self updateFrameSizeAndContentPlacement];
+    [self updateAutoresizingMask];
+}
+
+- (NSRect)contentFrameForOpeningDirection:(ERPaletteOpeningDirection)dir
+{
+    ERPalettePanelPosition pos = [self palettePosition];
+    if (dir == ERPaletteInsideOpeningDirection) {
+        pos = (pos + 2)%4;
+    }
+    NSRect frame;
+    
+    frame.origin = [_tabButton frame].origin;
+    frame.size = [self paletteContentSize];
+    
+    switch (pos) {
+        case ERPalettePanelPositionUp:
+            frame.origin.y += [ERPaletteContentView paletteTitleSize];
+            break;
+        case ERPalettePanelPositionDown:
+            frame.origin.y -= frame.size.height;
+            break;
+        case ERPalettePanelPositionRight:
+            frame.origin.x += [ERPaletteContentView paletteTitleSize];
+            frame.origin.y -= [[self content] frame].size.height;
+            break;
+        case ERPalettePanelPositionLeft:
+            frame.origin.x -= [[self content] frame].size.width;
+            frame.origin.y -= [[self content] frame].size.height;
+            break;
+            
+        default:
+            break;
+    }
+    
+    return [self convertRectToScreen:frame];
+}
+
+@synthesize preferedOpeningDirection = _preferedOpeningDirection;
+
+- (ERPaletteOpeningDirection)bestOpeningDirection
+{
+    ERPaletteOpeningDirection dir = [self preferedOpeningDirection];
+    if ([[self holder] isFrameEmptyFromPalettes:[self contentFrameForOpeningDirection:dir] except:self]) {
+        return dir;
+    }
+    dir = (dir == ERPaletteInsideOpeningDirection)? ERPaletteOutsideOpeningDirection : ERPaletteInsideOpeningDirection;
+    if ([[self holder] isFrameEmptyFromPalettes:[self contentFrameForOpeningDirection:dir] except:self]) {
+        return dir;
+    }
+    
+    return [self preferedOpeningDirection];
+}
 
 - (void)updateAutoresizingMask
 {
@@ -275,7 +337,10 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
         newFrame = [[self contentView] convertRect:newFrame toView:nil];
         newFrame = [self convertRectToScreen:newFrame];
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidOpenNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:newFrame] forKey:ERPaletteNewFrameKey]];
+//        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSValue valueWithRect:newFrame],ERPaletteNewFrameKey,
+//                                  nil]
+        NSRect contentFrame = [self contentFrameForOpeningDirection:[self openingDirection]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidOpenNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:contentFrame] forKey:ERPaletteNewFrameKey]];
         
         if (animate) {
             [[self animator] setFrame:newFrame display:YES];
@@ -289,14 +354,24 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     _state = state;
 }
 
+- (IBAction)collapse:(id)sender
+{
+    [self setState:ERPaletteClosed animate:YES];
+}
+
+- (IBAction)openInBestDirection:(id)sender
+{
+    [self setOpeningDirection:[self bestOpeningDirection]];
+    [self setState:ERPaletteOpened animate:YES];
+}
 
 - (IBAction)toggleCollapse:(id)sender
 {
     if (_state != ERPaletteClosed) {
-        [self setState:ERPaletteClosed animate:YES];
+        [self collapse:sender];
     }else{
-        [self setState:ERPaletteOpened animate:YES];
-    }    
+        [self openInBestDirection:sender];
+    }
 }
 
 - (NSView *)content
@@ -320,6 +395,15 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     }
     
     [_content setFrameOrigin:frameOrigin];
+}
+
+- (NSRect)contentFrame
+{
+    if ([self state] == ERPaletteClosed) {
+        return NSZeroRect;
+    }
+    
+    return [self convertRectToScreen:[_content frame]];
 }
 
 - (NSSize)paletteContentSize

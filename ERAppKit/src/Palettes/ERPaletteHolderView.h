@@ -20,4 +20,6 @@
 }
 
 - (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle atPosition:(ERPalettePanelPosition)pos;
+
+- (BOOL)isFrameEmptyFromPalettes:(NSRect)frame except:(NSWindow *)window;
 @end

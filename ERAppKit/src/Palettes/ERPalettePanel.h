@@ -35,6 +35,7 @@ typedef enum {
     ERPalettePanelPosition _palettePosition;
     ERPaletteState _state;
     ERPaletteOpeningDirection _openingDirection;
+    ERPaletteOpeningDirection _preferedOpeningDirection;
     
     NSView *_content;
     ERPaletteTabView *_tabView;
@@ -48,14 +49,18 @@ typedef enum {
 @property (assign) ERPalettePanelPosition palettePosition;
 @property (assign) ERPaletteState state;
 @property (assign) ERPaletteOpeningDirection openingDirection;
+@property (assign) ERPaletteOpeningDirection preferedOpeningDirection;
 @property (assign) ERPaletteTabView *tabView;
 @property (readonly) ERPaletteHolderView *holder;
 
 - (id)initWithContent:(NSView *)content position:(ERPalettePanelPosition)pos;
 
+- (IBAction)collapse:(id)sender;
+- (IBAction)openInBestDirection:(id)sender;
 - (IBAction)toggleCollapse:(id)sender;
 - (NSView *)content;
 - (void)setContent:(NSView *)newContent;
+- (NSRect)contentFrame;
 
 - (void)setState:(ERPaletteState)state animate:(BOOL)animate;
 - (void)updateAutoresizingMask;

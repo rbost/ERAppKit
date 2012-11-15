@@ -101,6 +101,59 @@ static CGFloat __tabMargin = 5.;
 
 }
 
+- (void)collapsePaletteIntersectingRect:(NSRect)frame except:(NSWindow *)window
+{
+    for (ERPalettePanel *p in [_leftTabs tabs]) {
+        if (p != window && NSIntersectsRect([p frame], frame)) {
+            [p setState:ERPaletteClosed animate:YES];
+        }
+    }
+    for (ERPalettePanel *p in [_rightTabs tabs]) {
+        if (p != window && NSIntersectsRect([p frame], frame)) {
+            [p setState:ERPaletteClosed animate:YES];
+        }
+    }
+    for (ERPalettePanel *p in [_upTabs tabs]) {
+        if (p != window && NSIntersectsRect([p frame], frame)) {
+            [p setState:ERPaletteClosed animate:YES];
+        }
+    }
+    for (ERPalettePanel *p in [_downTabs tabs]) {
+        if (p != window && NSIntersectsRect([p frame], frame)) {
+            [p setState:ERPaletteClosed animate:YES];
+        }
+    }
+    
+}
+
+- (BOOL)isFrameEmptyFromPalettes:(NSRect)frame except:(NSWindow *)window
+{
+    for (ERPalettePanel *p in [_leftTabs tabs]) {
+        if (p != window && NSIntersectsRect([p contentFrame], frame)) {
+//            NSLog(NSStringFromRect([p contentFrame]));
+//            NSLog(NSStringFromRect(frame));
+            
+            return NO;
+        }
+    }
+    for (ERPalettePanel *p in [_rightTabs tabs]) {
+        if (p != window && NSIntersectsRect([p contentFrame], frame)) {
+            return NO;
+        }
+    }
+    for (ERPalettePanel *p in [_upTabs tabs]) {
+        if (p != window && NSIntersectsRect([p contentFrame], frame)) {
+            return NO;
+        }
+    }
+    for (ERPalettePanel *p in [_downTabs tabs]) {
+        if (p != window && NSIntersectsRect([p contentFrame], frame)) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
 #pragma mark Notifications
 
 - (void)paletteDidClose:(NSNotification *)note
@@ -110,8 +163,12 @@ static CGFloat __tabMargin = 5.;
 
 - (void)paletteDidOpen:(NSNotification *)note
 {
-    NSRect newFrame = [(NSValue *)[[note userInfo] objectForKey:ERPaletteNewFrameKey] rectValue];
-    [self collapsePaletteIntersectingRect:newFrame];
+    NSRect newFrame ;
+//    newFrame = [[note object] contentFrame];
+//    newFrame = [[note object] convertRectToScreen:newFrame];
+
+    newFrame = [(NSValue *)[[note userInfo] objectForKey:ERPaletteNewFrameKey] rectValue];
+    [self collapsePaletteIntersectingRect:newFrame except:[note object]];
 }
 
 
