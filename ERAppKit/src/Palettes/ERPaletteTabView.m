@@ -34,9 +34,19 @@ static CGFloat __tabMargin = 5.;
 {
     [palette retain];
     
+    BOOL wasOpen = ([palette state] == ERPaletteOpened);
+    
+    if (wasOpen) {
+        [palette setState:ERPaletteClosed animate:NO];
+    }
+    
     [origin removePalette:palette];
     [destination insertPalette:palette  atIndex:index];
-    [palette updateFrameSizeAndContentPlacement];
+    
+    if (wasOpen) {
+        [palette openInBestDirection:nil];
+    }
+//    [palette updateFrameSizeAndContentPlacement];
     [[palette contentView] setNeedsDisplay:YES];
     
     [palette release];
@@ -309,22 +319,24 @@ static CGFloat __tabMargin = 5.;
         CGFloat xAccumulator = [ERPaletteContentView paletteTitleSize];
         int i;
         for (i = 0; i < [_tabs count]; i++) {
+            xAccumulator += [ERPaletteContentView paletteTitleSize];
             if (location.x < xAccumulator) {
                 break;
             }else{
-                xAccumulator += [[_tabs objectAtIndex:i] frame].size.width + [ERPaletteTabView tabMargin];
+                xAccumulator += [ERPaletteTabView tabMargin];
             }
         }
         return i;
     }else{
-        CGFloat yAccumulator = [ERPaletteContentView paletteTitleSize];
+        CGFloat yAccumulator = NSMaxY([self bounds]) - [ERPaletteContentView paletteTitleSize];
         int i;
         
         for (i = 0; i < [_tabs count]; i++) {
-            if (location.y < yAccumulator) {
+            yAccumulator -= [ERPaletteContentView paletteTitleSize];
+            if (location.y > yAccumulator) {
                 break;
             }else{
-                yAccumulator += [[_tabs objectAtIndex:i] frame].size.height + [ERPaletteTabView tabMargin];
+                yAccumulator -= [ERPaletteTabView tabMargin];
             }
         }
         return i;
@@ -386,7 +398,7 @@ static CGFloat __tabMargin = 5.;
         
         if ([palette holder] == [self holder]) { // drag authorized only inside the same holder view
             _highlight = YES;
-            _draggingPosition = [self tabPositionForMouseLocation:[sender draggingLocation]];
+            _draggingPosition = [self tabPositionForMouseLocation:[self convertPoint:[sender draggingLocation] fromView:nil]];
             _draggingPositionMarker = [self markerForTabPosition:_draggingPosition];
             [self setNeedsDisplay:YES];
             
