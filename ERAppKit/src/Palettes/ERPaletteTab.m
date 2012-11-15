@@ -29,7 +29,12 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
-    [[NSColor orangeColor] set];
+    if ([[self palette] state] == ERPaletteClosed) {
+        [[NSColor colorWithCalibratedWhite:0.3 alpha:0.9] set];
+    }else{
+        [[NSColor colorWithCalibratedWhite:0.4 alpha:0.9] set];
+    }
+    
     [[NSBezierPath bezierPathWithOvalInRect:NSInsetRect([self bounds], 3, 3)] fill];
 }
 

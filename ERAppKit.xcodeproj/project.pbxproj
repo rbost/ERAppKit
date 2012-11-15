@@ -42,6 +42,8 @@
 		6C722C5E164AF1870011BA2F /* ERPaletteContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */; };
 		6C722C61164B0FE50011BA2F /* ERPaletteHolderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C722C62164B0FE50011BA2F /* ERPaletteHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */; };
+		6C96860716558369005168C4 /* ERPaletteButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C96860516558368005168C4 /* ERPaletteButton.h */; };
+		6C96860816558369005168C4 /* ERPaletteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C96860616558369005168C4 /* ERPaletteButton.m */; };
 		6CBD5C5A1650BA750035C6F7 /* ERPaletteTitleView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CBD5C581650BA750035C6F7 /* ERPaletteTitleView.h */; };
 		6CBD5C5B1650BA750035C6F7 /* ERPaletteTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD5C591650BA750035C6F7 /* ERPaletteTitleView.m */; };
 		6CBD5C5F1650CE3F0035C6F7 /* ERPaletteTab.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CBD5C5D1650CE3F0035C6F7 /* ERPaletteTab.h */; };
@@ -119,6 +121,8 @@
 		6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteContentView.m; path = src/Palettes/ERPaletteContentView.m; sourceTree = "<group>"; };
 		6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteHolderView.h; path = src/Palettes/ERPaletteHolderView.h; sourceTree = "<group>"; };
 		6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteHolderView.m; path = src/Palettes/ERPaletteHolderView.m; sourceTree = "<group>"; };
+		6C96860516558368005168C4 /* ERPaletteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteButton.h; path = src/Palettes/ERPaletteButton.h; sourceTree = "<group>"; };
+		6C96860616558369005168C4 /* ERPaletteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteButton.m; path = src/Palettes/ERPaletteButton.m; sourceTree = "<group>"; };
 		6CBD5C581650BA750035C6F7 /* ERPaletteTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteTitleView.h; path = src/Palettes/ERPaletteTitleView.h; sourceTree = "<group>"; };
 		6CBD5C591650BA750035C6F7 /* ERPaletteTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteTitleView.m; path = src/Palettes/ERPaletteTitleView.m; sourceTree = "<group>"; };
 		6CBD5C5D1650CE3F0035C6F7 /* ERPaletteTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteTab.h; path = src/Palettes/ERPaletteTab.h; sourceTree = "<group>"; };
@@ -293,6 +297,8 @@
 				6C2289A71650221C000E33D3 /* ERPaletteTabButton.m */,
 				6CBD5C5D1650CE3F0035C6F7 /* ERPaletteTab.h */,
 				6CBD5C5E1650CE3F0035C6F7 /* ERPaletteTab.m */,
+				6C96860516558368005168C4 /* ERPaletteButton.h */,
+				6C96860616558369005168C4 /* ERPaletteButton.m */,
 			);
 			name = Palettes;
 			sourceTree = "<group>";
@@ -320,6 +326,7 @@
 				6C2289A81650221C000E33D3 /* ERPaletteTabButton.h in Headers */,
 				6CBD5C5A1650BA750035C6F7 /* ERPaletteTitleView.h in Headers */,
 				6CBD5C5F1650CE3F0035C6F7 /* ERPaletteTab.h in Headers */,
+				6C96860716558369005168C4 /* ERPaletteButton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +439,7 @@
 				6C2289A91650221C000E33D3 /* ERPaletteTabButton.m in Sources */,
 				6CBD5C5B1650BA750035C6F7 /* ERPaletteTitleView.m in Sources */,
 				6CBD5C601650CE3F0035C6F7 /* ERPaletteTab.m in Sources */,
+				6C96860816558369005168C4 /* ERPaletteButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

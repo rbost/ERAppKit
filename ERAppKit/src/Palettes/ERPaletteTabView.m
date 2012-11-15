@@ -106,14 +106,14 @@ static CGFloat __tabMargin = 5.;
 {
     // Drawing code here.
     
-    [[NSColor redColor] set];
+    [[NSColor colorWithCalibratedWhite:0.7 alpha:1.0] set];
     if (_highlight) {
-        [[NSColor blueColor] set];
+        [[NSColor colorWithCalibratedWhite:0.8 alpha:1.0] set];
     }
     [NSBezierPath fillRect:dirtyRect];
     
     if (_draggingPosition != -1) {
-        [[NSColor yellowColor] set];
+        [[NSColor whiteColor] set];
         [NSBezierPath fillRect:_draggingPositionMarker];
     }
 }

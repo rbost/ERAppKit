@@ -32,11 +32,14 @@ static CGFloat __paletteTitleSize = 20.;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    [[NSColor colorWithCalibratedWhite:0.3 alpha:1.0] set];
     
     NSRect filledRect = NSIntersectionRect([self frame],[self contentRect]);
 
-    [[NSBezierPath bezierPathWithRoundedRect:filledRect xRadius:5. yRadius:5.] fill];
+    NSBezierPath *bckGrd = [NSBezierPath bezierPathWithRoundedRect:filledRect xRadius:5. yRadius:5.];
+    [[NSColor colorWithCalibratedWhite:0.2 alpha:0.9] set];
+    [bckGrd fill];
+    [[NSColor colorWithCalibratedWhite:0.5 alpha:0.9] set];
+    [bckGrd stroke];
 }
 
 - (NSRect)headerRect
