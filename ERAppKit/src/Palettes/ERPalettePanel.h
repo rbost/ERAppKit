@@ -60,7 +60,9 @@ typedef enum {
 - (IBAction)toggleCollapse:(id)sender;
 - (NSView *)content;
 - (void)setContent:(NSView *)newContent;
-- (NSRect)contentFrame;
+- (NSRect)contentScreenFrame;
+
+- (void)setTabOrigin:(NSPoint)tabOrigin;
 
 - (void)setState:(ERPaletteState)state animate:(BOOL)animate;
 - (void)updateAutoresizingMask;

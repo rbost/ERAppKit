@@ -237,24 +237,18 @@ static CGFloat __tabMargin = 5.;
  
 }
 
-
 - (void)_updateLeftTabsLocations
 {
     CGFloat y = [self frame].size.height - [ERPaletteContentView paletteTitleSize];
     
     for (ERPalettePanel *palette in _tabs) {
-        NSRect paletteFrame = [palette frame];
-        y -= paletteFrame.size.height;
+        y -= [ERPaletteContentView paletteTitleSize];
         
         NSPoint frameOrigin = NSMakePoint(0, y);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
         
-        if ([palette state] == ERPaletteOpened && [palette openingDirection] == ERPaletteOutsideOpeningDirection) {
-            frameOrigin.x -= [[palette content] frame].size.width;
-        }
-        
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
-        [palette setFrameOrigin:frameOrigin];
+        [palette setTabOrigin:frameOrigin];
         
         y -= [ERPaletteTabView tabMargin];
     }
@@ -265,18 +259,13 @@ static CGFloat __tabMargin = 5.;
     CGFloat y = [self frame].size.height - [ERPaletteContentView paletteTitleSize];
     
     for (ERPalettePanel *palette in _tabs) {
-        NSRect paletteFrame = [palette frame];
-        y -= paletteFrame.size.height;
+        y -= [ERPaletteContentView paletteTitleSize];
         
         NSPoint frameOrigin = NSMakePoint(0, y);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
         
-        if ([palette state] == ERPaletteOpened && [palette openingDirection] == ERPaletteInsideOpeningDirection) {
-            frameOrigin.x -= [[palette content] frame].size.width;
-        }
-
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
-        [palette setFrameOrigin:frameOrigin];
+        [palette setTabOrigin:frameOrigin];
         
         y -= [ERPaletteTabView tabMargin];
     }
@@ -287,18 +276,13 @@ static CGFloat __tabMargin = 5.;
     CGFloat x = [ERPaletteContentView paletteTitleSize];
     
     for (ERPalettePanel *palette in _tabs) {
-        NSRect paletteFrame = [palette frame];
         
         NSPoint frameOrigin = NSMakePoint(x, 0);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
 
-        if ([palette state] == ERPaletteOpened && [palette openingDirection] == ERPaletteOutsideOpeningDirection) {
-            frameOrigin.y -= [[palette content] frame].size.height + [ERPaletteContentView paletteTitleSize];
-        }
-
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
-        [palette setFrameOrigin:frameOrigin];
-        x += paletteFrame.size.width;
+        [palette setTabOrigin:frameOrigin];
+        x += [ERPaletteContentView paletteTitleSize];
         x += [ERPaletteTabView tabMargin];
     }
 }
@@ -308,18 +292,13 @@ static CGFloat __tabMargin = 5.;
     CGFloat x = [ERPaletteContentView paletteTitleSize];
     
     for (ERPalettePanel *palette in _tabs) {
-        NSRect paletteFrame = [palette frame];
         
         NSPoint frameOrigin = NSMakePoint(x, 0);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
-
-        if ([palette state] == ERPaletteOpened && [palette openingDirection] == ERPaletteInsideOpeningDirection) {
-            frameOrigin.y -= [[palette content] frame].size.height + [ERPaletteContentView paletteTitleSize];
-        }
-
+        
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
-        [palette setFrameOrigin:frameOrigin];
-        x += paletteFrame.size.width;
+        [palette setTabOrigin:frameOrigin];
+        x += [ERPaletteContentView paletteTitleSize];
         x += [ERPaletteTabView tabMargin];
     }
 }
@@ -361,14 +340,14 @@ static CGFloat __tabMargin = 5.;
         CGFloat xAccumulator = [ERPaletteContentView paletteTitleSize] - [ERPaletteTabView tabMargin];
         
         for (int i = 0; i < [_tabs count] && i < position; i++) {
-            xAccumulator += [[_tabs objectAtIndex:i] frame].size.width + [ERPaletteTabView tabMargin];
+            xAccumulator += [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
         }
         return NSMakeRect(xAccumulator, 0, [ERPaletteTabView tabMargin], [self frame].size.height);
     }else{
         CGFloat yAccumulator = [self bounds].size.height - [ERPaletteContentView paletteTitleSize];
         
         for (int i = 0; i < [_tabs count] && i < position; i++) {
-            yAccumulator -= [[_tabs objectAtIndex:i] frame].size.height + [ERPaletteTabView tabMargin];
+            yAccumulator -= [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
         }
         return NSMakeRect(0, yAccumulator, [self frame].size.width, [ERPaletteTabView tabMargin]);
     }

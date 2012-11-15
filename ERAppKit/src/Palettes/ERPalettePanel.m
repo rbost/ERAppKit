@@ -397,13 +397,13 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     [_content setFrameOrigin:frameOrigin];
 }
 
-- (NSRect)contentFrame
+- (NSRect)contentScreenFrame
 {
     if ([self state] == ERPaletteClosed) {
         return NSZeroRect;
     }
     
-    return [self convertRectToScreen:[_content frame]];
+    return [self convertRectToScreen:[self paletteContentFrame]];
 }
 
 - (NSSize)paletteContentSize
@@ -460,6 +460,39 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     return [(ERPaletteContentView *)[self contentView] headerRect];
 }
 
+- (void)setTabOrigin:(NSPoint)tabOrigin
+{
+    // compute the frame origin according to the new tab origin
+    
+    NSPoint newOrigin = tabOrigin;
+    
+    if ([self state] == ERPaletteOpened) {
+        switch ([self effectiveHeaderPosition]) {
+            case ERPalettePanelPositionDown:
+                newOrigin.y -= [self paletteContentSize].height;
+                break;
+            case ERPalettePanelPositionUp:
+                break;
+                
+            case ERPalettePanelPositionLeft:
+                newOrigin.y -= [[self content] frame].size.height;
+                newOrigin.x -= [self paletteContentSize].width;
+                break;
+                
+            case ERPalettePanelPositionRight:
+                newOrigin.y -= [[self content] frame].size.height;
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    NSRect newFrame = [self frame];
+    newFrame.origin = newOrigin;
+    
+    [self setFrame:newFrame display:YES];
+}
 
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
 {

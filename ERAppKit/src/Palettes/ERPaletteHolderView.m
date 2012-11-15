@@ -129,7 +129,7 @@ static CGFloat __tabMargin = 5.;
 - (BOOL)isFrameEmptyFromPalettes:(NSRect)frame except:(NSWindow *)window
 {
     for (ERPalettePanel *p in [_leftTabs tabs]) {
-        if (p != window && NSIntersectsRect([p contentFrame], frame)) {
+        if (p != window && NSIntersectsRect([p contentScreenFrame], frame)) {
 //            NSLog(NSStringFromRect([p contentFrame]));
 //            NSLog(NSStringFromRect(frame));
             
@@ -137,17 +137,17 @@ static CGFloat __tabMargin = 5.;
         }
     }
     for (ERPalettePanel *p in [_rightTabs tabs]) {
-        if (p != window && NSIntersectsRect([p contentFrame], frame)) {
+        if (p != window && NSIntersectsRect([p contentScreenFrame], frame)) {
             return NO;
         }
     }
     for (ERPalettePanel *p in [_upTabs tabs]) {
-        if (p != window && NSIntersectsRect([p contentFrame], frame)) {
+        if (p != window && NSIntersectsRect([p contentScreenFrame], frame)) {
             return NO;
         }
     }
     for (ERPalettePanel *p in [_downTabs tabs]) {
-        if (p != window && NSIntersectsRect([p contentFrame], frame)) {
+        if (p != window && NSIntersectsRect([p contentScreenFrame], frame)) {
             return NO;
         }
     }
@@ -164,8 +164,6 @@ static CGFloat __tabMargin = 5.;
 - (void)paletteDidOpen:(NSNotification *)note
 {
     NSRect newFrame ;
-//    newFrame = [[note object] contentFrame];
-//    newFrame = [[note object] convertRectToScreen:newFrame];
 
     newFrame = [(NSValue *)[[note userInfo] objectForKey:ERPaletteNewFrameKey] rectValue];
     [self collapsePaletteIntersectingRect:newFrame except:[note object]];
