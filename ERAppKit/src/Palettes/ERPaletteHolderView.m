@@ -30,10 +30,12 @@ static CGFloat __tabMargin = 5.;
         _upTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionUp];
         _downTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionDown];
         
-        [self addSubview:_leftTabs]; [_leftTabs release];
-        [self addSubview:_rightTabs]; [_rightTabs release];
-        [self addSubview:_upTabs]; [_upTabs release];
-        [self addSubview:_downTabs]; [_downTabs release];
+        [self setAutoresizesSubviews:YES];
+        
+        [self addSubview:_leftTabs]; [_leftTabs release]; [_leftTabs setAutoresizingMask:(NSViewHeightSizable|NSViewMaxXMargin)];
+        [self addSubview:_rightTabs]; [_rightTabs release]; [_rightTabs setAutoresizingMask:(NSViewHeightSizable|NSViewMinXMargin)];
+        [self addSubview:_upTabs]; [_upTabs release]; [_upTabs setAutoresizingMask:(NSViewWidthSizable|NSViewMinYMargin)];
+        [self addSubview:_downTabs]; [_downTabs release]; [_downTabs setAutoresizingMask:(NSViewWidthSizable|NSViewMaxYMargin)];
     }
     
     return self;
@@ -168,6 +170,5 @@ static CGFloat __tabMargin = 5.;
     newFrame = [(NSValue *)[[note userInfo] objectForKey:ERPaletteNewFrameKey] rectValue];
     [self collapsePaletteIntersectingRect:newFrame except:[note object]];
 }
-
 
 @end

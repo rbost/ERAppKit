@@ -222,6 +222,12 @@ static CGFloat __tabMargin = 5.;
 //    [self updateTabsLocations];
 }
 
+- (void)resizeWithOldSuperviewSize:(NSSize)oldBoundsSize
+{
+    [super resizeWithOldSuperviewSize:oldBoundsSize];
+    [self updateTabsLocations];
+}
+
 - (void)updateTabsLocations
 {
     switch ([self position]) {
