@@ -9,6 +9,8 @@
 #import "ERPaletteTitleView.h"
 
 #import "ERPaletteButton.h"
+#import <ERAppKit/ERPalettePanel.h>
+
 @implementation ERPaletteTitleView
 
 - (id)initWithFrame:(NSRect)frame
@@ -46,10 +48,55 @@
 }
 
 
+- (NSImage *)draggingImage
+{
+    NSImage *image = [[NSImage alloc] initWithSize:[self frame].size];
+    [image lockFocus];
+    [self drawRect:[self bounds]];
+    [image unlockFocus];
+    
+    return [image autorelease];
+}
+
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+    _draggingStartPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent
+{
+    if (_draggingStartPoint.x != NSNotFound) {
+        NSPoint screenLocation = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+        NSPoint delta = _draggingStartPoint;
+        delta.x -= screenLocation.x ;
+        delta.y -= screenLocation.y ;
+        
+        if (sqrt(delta.x*delta.x + delta.y*delta.y) > 10) {
+            
+            NSPasteboard *pBoard = [NSPasteboard pasteboardWithName:NSDragPboard];
+            [pBoard declareTypes:[NSArray arrayWithObject:ERPalettePboardType] owner:[self window]];
+            [pBoard setString:NSStringFromSize([self frame].size) forType:ERPalettePboardType];
+            
+            NSPoint imageLocation = screenLocation;
+            NSSize imageSize = [self bounds].size;
+            
+            imageLocation.x -= _draggingStartPoint.x;
+            imageLocation.y -= _draggingStartPoint.y;
+            
+            [self dragImage:[self draggingImage] at:imageLocation offset:NSZeroSize event:theEvent pasteboard:pBoard source:[self window] slideBack:YES];
+        }
+    }
+}
+
 - (void)mouseUp:(NSEvent *)theEvent
 {
     if ([theEvent clickCount] == 2) {
         [[self window] toggleCollapse:self];
     }
+    _draggingStartPoint = NSMakePoint(NSNotFound, NSNotFound);
+    
 }
+
+
 @end

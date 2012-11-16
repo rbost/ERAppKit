@@ -81,7 +81,7 @@
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-    if ([theEvent clickCount] == 2) {
+    if ([theEvent clickCount] == 1) {
         [[self palette] toggleCollapse:self];
     }
 //    _draggingStartPoint = NSMakePoint(NSNotFound, NSNotFound);

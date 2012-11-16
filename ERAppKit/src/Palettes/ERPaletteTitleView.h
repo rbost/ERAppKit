@@ -9,5 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface ERPaletteTitleView : NSView
-
+{
+    NSPoint _draggingStartPoint;
+}
 @end
