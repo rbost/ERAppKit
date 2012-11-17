@@ -55,6 +55,8 @@ typedef enum {
 @property (assign) ERPaletteTabView *tabView;
 @property (readonly) ERPaletteHolderView *holder;
 
+@property (assign) CGFloat locationInTabView;
+
 - (id)initWithContent:(NSView *)content position:(ERPalettePanelPosition)pos;
 
 - (IBAction)collapse:(id)sender;
@@ -81,6 +83,8 @@ typedef enum {
 
 - (BOOL)isAttached;
 
+
+- (NSComparisonResult)compareLocationInTabView:(ERPalettePanel *)palette;
 @end
 
 

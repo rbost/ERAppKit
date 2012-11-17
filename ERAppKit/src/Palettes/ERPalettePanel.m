@@ -554,4 +554,18 @@ NSString *ERPalettePboardType = @"erappkit.palettePboardType";
 {
     return ([self tabView] != nil);
 }
+
+@synthesize locationInTabView;
+- (NSComparisonResult)compareLocationInTabView:(ERPalettePanel *)palette
+{
+    CGFloat diff = [self locationInTabView] - [palette locationInTabView];
+    if (diff < 0 ) {
+        return NSOrderedAscending;
+    }else if(diff > 0) {
+        return NSOrderedDescending;
+    }else{
+        return NSOrderedSame;
+    }
+}
+
 @end

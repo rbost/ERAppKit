@@ -24,7 +24,6 @@
     
     
     NSRect _draggingPositionMarker;
-    int _draggingPosition;
 }
 @property (readonly) NSArray *tabs;
 @property (readonly) ERPalettePanelPosition position;
@@ -33,8 +32,7 @@
 - (id)initWithHolder:(ERPaletteHolderView *)holder position:(ERPalettePanelPosition)position;
 - (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle;
 - (void)addPalette:(ERPalettePanel *)palette;
-- (void)insertPalette:(ERPalettePanel *)palette atIndex:(NSUInteger)index;
-- (void)movePalette:(ERPalettePanel *)palette toIndex:(NSUInteger)index;
+- (void)insertPalette:(ERPalettePanel *)palette atLocation:(CGFloat)loc;
 - (void)removePalette:(ERPalettePanel *)palette;
 
 - (void)updateTabsLocations;

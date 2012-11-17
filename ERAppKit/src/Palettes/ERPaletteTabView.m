@@ -30,7 +30,7 @@ static CGFloat __tabMargin = 5.;
     [palette release];
 }
 
-+ (void)moveTab:(ERPalettePanel *)palette fromView:(ERPaletteTabView *)origin toView:(ERPaletteTabView *)destination atIndex:(NSUInteger)index
++ (void)moveTab:(ERPalettePanel *)palette fromView:(ERPaletteTabView *)origin toView:(ERPaletteTabView *)destination atLocation:(CGFloat)loc
 {
     [palette retain];
     
@@ -41,12 +41,12 @@ static CGFloat __tabMargin = 5.;
     }
     
     [origin removePalette:palette];
-    [destination insertPalette:palette  atIndex:index];
+    [destination insertPalette:palette  atLocation:loc];
     
     if (wasOpen) {
         [palette openInBestDirection:nil];
     }
-//    [palette updateFrameSizeAndContentPlacement];
+    //    [palette updateFrameSizeAndContentPlacement];
     [[palette contentView] setNeedsDisplay:YES];
     
     [palette release];
@@ -84,8 +84,6 @@ static CGFloat __tabMargin = 5.;
     _position = position;
     _holder = holder;
     
-    _draggingPosition = -1;
-    
     [self registerForDraggedTypes:[NSArray arrayWithObject:ERPalettePboardType]];
     
     return self;
@@ -112,14 +110,19 @@ static CGFloat __tabMargin = 5.;
     }
     [NSBezierPath fillRect:dirtyRect];
     
-    if (_draggingPosition != -1) {
+    if (_highlight) {
         [[NSColor whiteColor] set];
         [NSBezierPath fillRect:_draggingPositionMarker];
     }
 }
 
 @synthesize position = _position;
-@synthesize tabs = _tabs;
+
+- (NSArray *)tabs
+{
+    return _tabs;
+}
+
 @synthesize holder = _holder;
 
 - (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle
@@ -135,8 +138,18 @@ static CGFloat __tabMargin = 5.;
 
 - (void)addPalette:(ERPalettePanel *)palette
 {
+    CGFloat location;
+    
+    if ([_tabs count] > 0) {
+        
+        location = [[_tabs lastObject] locationInTabView]; // get the last element
+        location += [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
+    }else{
+        location = 0;
+    }
+    
     [_tabs addObject:palette];
-    [palette setTabView:self];
+    [palette setTabView:self]; [palette setLocationInTabView:location];
     [palette setPalettePosition:[self position]];
     
     [[NSNotificationCenter defaultCenter] addObserver:_holder selector:@selector(paletteDidClose:) name:ERPaletteDidCloseNotification object:palette];
@@ -151,10 +164,17 @@ static CGFloat __tabMargin = 5.;
     [self updateTabsLocations];
 }
 
-- (void)insertPalette:(ERPalettePanel *)palette atIndex:(NSUInteger)index
+- (void)insertPalette:(ERPalettePanel *)palette atLocation:(CGFloat)loc
 {
+    int index;
+    
+    for (index = 0; index < [_tabs count]; index++) {
+        if ([[_tabs objectAtIndex:index] locationInTabView] > loc) {
+            break;
+        }
+    }
     [_tabs insertObject:palette atIndex:index];
-    [palette setTabView:self];
+    [palette setTabView:self]; [palette setLocationInTabView:loc];
     [palette setPalettePosition:[self position]];
     
     [[NSNotificationCenter defaultCenter] addObserver:_holder selector:@selector(paletteDidClose:) name:ERPaletteDidCloseNotification object:palette];
@@ -169,38 +189,6 @@ static CGFloat __tabMargin = 5.;
     [self updateTabsLocations];
 }
 
-- (void)movePalette:(ERPalettePanel *)palette toIndex:(NSUInteger)index
-{
-    // index is the desired position of the palette in the old tab array
-    NSUInteger oldIndex = [_tabs indexOfObject:palette];
-    
-    if (oldIndex == NSNotFound) {
-        NSLog(@"%@ is not is the tabs array",palette);
-        return;
-    }
-    
-    if (oldIndex > index) {
-        // this is easy, we can just remove and add the palette
-        
-        [palette retain];
-        [_tabs removeObjectAtIndex:oldIndex];
-        [_tabs insertObject:palette atIndex:index];
-        [palette release];
-        
-        [self updateTabsLocations];
-    }
-    
-    if (oldIndex < index) {
-        // when we will remove the palette from the array, the indexes will be set off by 1
-        [palette retain];
-        [_tabs removeObjectAtIndex:oldIndex];
-        [_tabs insertObject:palette atIndex:index-1];
-        [palette release];
-        
-        [self updateTabsLocations];
-    }
-
-}
 - (void)removePalette:(ERPalettePanel *)palette
 {
     if ([_tabs containsObject:palette]) {
@@ -230,8 +218,30 @@ static CGFloat __tabMargin = 5.;
     [self updateTabsLocations];
 }
 
+- (void)sortPalettes
+{
+    [_tabs sortUsingSelector:@selector(compareLocationInTabView:)];
+}
+
 - (void)updateTabsLocations
 {
+    if ([_tabs count] == 0) {
+        return;
+    }
+    [self sortPalettes];
+    
+    [[_tabs objectAtIndex:0] setLocationInTabView:MAX(0, [[_tabs objectAtIndex:0] locationInTabView])];
+    for (int i = 0; i < ([_tabs count] - 1); i++) {
+        ERPalettePanel *current = [_tabs objectAtIndex:i];
+        ERPalettePanel *next = [_tabs objectAtIndex:i+1];
+        
+        CGFloat minLoc = [current locationInTabView] + [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
+        if (minLoc > [next locationInTabView]) {
+            [next setLocationInTabView:minLoc];
+        }
+    }
+    
+    
     switch ([self position]) {
         case ERPalettePanelPositionRight:
             [self _updateRightTabsLocations];
@@ -257,67 +267,63 @@ static CGFloat __tabMargin = 5.;
 
 - (void)_updateLeftTabsLocations
 {
-    CGFloat y = [self frame].size.height - [ERPaletteContentView paletteTitleSize];
+    CGFloat maxY = [self frame].size.height - [ERPaletteContentView paletteTitleSize];
+    CGFloat y;
     
     for (ERPalettePanel *palette in _tabs) {
-        y -= [ERPaletteContentView paletteTitleSize];
+        y = maxY - [palette locationInTabView] - [ERPaletteContentView paletteTitleSize];
         
         NSPoint frameOrigin = NSMakePoint(0, y);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
         
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
         [palette setTabOrigin:frameOrigin];
-        
-        y -= [ERPaletteTabView tabMargin];
     }
 }
 
 - (void)_updateRightTabsLocations
 {
-    CGFloat y = [self frame].size.height - [ERPaletteContentView paletteTitleSize];
+    CGFloat maxY = [self frame].size.height - [ERPaletteContentView paletteTitleSize];
+    CGFloat y;
     
     for (ERPalettePanel *palette in _tabs) {
-        y -= [ERPaletteContentView paletteTitleSize];
+        y = maxY - [palette locationInTabView] - [ERPaletteContentView paletteTitleSize];
         
         NSPoint frameOrigin = NSMakePoint(0, y);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
         
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
         [palette setTabOrigin:frameOrigin];
-        
-        y -= [ERPaletteTabView tabMargin];
     }
 }
 
 - (void)_updateDownTabsLocations
 {
-    CGFloat x = [ERPaletteContentView paletteTitleSize];
+    CGFloat x;
     
     for (ERPalettePanel *palette in _tabs) {
+        x = [palette locationInTabView] + [ERPaletteContentView paletteTitleSize];
         
         NSPoint frameOrigin = NSMakePoint(x, 0);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
-
+        
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
         [palette setTabOrigin:frameOrigin];
-        x += [ERPaletteContentView paletteTitleSize];
-        x += [ERPaletteTabView tabMargin];
     }
 }
 
 - (void)_updateUpTabsLocations
 {
-    CGFloat x = [ERPaletteContentView paletteTitleSize];
+    CGFloat x;
     
     for (ERPalettePanel *palette in _tabs) {
+        x = [palette locationInTabView] + [ERPaletteContentView paletteTitleSize];
         
         NSPoint frameOrigin = NSMakePoint(x, 0);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
         
         frameOrigin = [[self window] convertBaseToScreen:frameOrigin];
         [palette setTabOrigin:frameOrigin];
-        x += [ERPaletteContentView paletteTitleSize];
-        x += [ERPaletteTabView tabMargin];
     }
 }
 
@@ -351,27 +357,19 @@ static CGFloat __tabMargin = 5.;
     }
 }
 
-- (NSRect)markerForTabPosition:(int)position
+- (NSRect)markerForTabLocation:(CGFloat)location
 {
-    if (position == -1) {
-        return NSZeroRect;
-    }
     if ([self position] == ERPalettePanelPositionUp || [self position] == ERPalettePanelPositionDown) {
-        CGFloat xAccumulator = [ERPaletteContentView paletteTitleSize] - [ERPaletteTabView tabMargin];
-        
-        for (int i = 0; i < [_tabs count] && i < position; i++) {
-            xAccumulator += [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
-        }
-        return NSMakeRect(xAccumulator, 0, [ERPaletteTabView tabMargin], [self frame].size.height);
+        CGFloat x = location + 1.5*[ERPaletteContentView paletteTitleSize];
+        return NSMakeRect(x, 0, 5., [self frame].size.height);
     }else{
-        CGFloat yAccumulator = [self bounds].size.height - [ERPaletteContentView paletteTitleSize];
+        CGFloat y = location + 1.5*[ERPaletteContentView paletteTitleSize];
+        y = NSMaxY([self bounds]) - y;
         
-        for (int i = 0; i < [_tabs count] && i < position; i++) {
-            yAccumulator -= [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
-        }
-        return NSMakeRect(0, yAccumulator, [self frame].size.width, [ERPaletteTabView tabMargin]);
+        return NSMakeRect(0, y, [self frame].size.width, 5.);
     }
 }
+
 
 #pragma mark Drag and Drop Palettes
 
@@ -382,8 +380,18 @@ static CGFloat __tabMargin = 5.;
         
         if ([palette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             _highlight = YES;
-            _draggingPosition = [self tabPositionForMouseLocation:[sender draggingLocation]];
-            _draggingPositionMarker = [self markerForTabPosition:_draggingPosition];
+
+            NSPoint dropPoint = [self convertPoint:[sender draggingLocation] fromView:nil];
+            CGFloat location;
+            
+            if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
+                location = NSMaxY([self bounds]) - dropPoint.y - [ERPaletteContentView paletteTitleSize]/2.;
+            }else{
+                location = dropPoint.x - [ERPaletteContentView paletteTitleSize]/2.;
+            }
+            location -= [ERPaletteContentView paletteTitleSize];
+
+            _draggingPositionMarker = [self markerForTabLocation:location];
             
             [self setNeedsDisplay:YES];
             
@@ -397,7 +405,6 @@ static CGFloat __tabMargin = 5.;
 {
     if (!NSPointInRect([self convertPoint:[sender draggingLocation] fromView:nil], [self bounds])) {
         _highlight = NO;
-        _draggingPosition = -1;
 
         [self setNeedsDisplay:YES];
 
@@ -408,8 +415,19 @@ static CGFloat __tabMargin = 5.;
         
         if ([palette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             _highlight = YES;
-            _draggingPosition = [self tabPositionForMouseLocation:[self convertPoint:[sender draggingLocation] fromView:nil]];
-            _draggingPositionMarker = [self markerForTabPosition:_draggingPosition];
+
+            NSPoint dropPoint = [self convertPoint:[sender draggingLocation] fromView:nil];
+            CGFloat location;
+            
+            if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
+                location = NSMaxY([self bounds]) - dropPoint.y - [ERPaletteContentView paletteTitleSize]/2.;
+            }else{
+                location = dropPoint.x - [ERPaletteContentView paletteTitleSize]/2.;
+            }
+            location -= [ERPaletteContentView paletteTitleSize];
+            
+            _draggingPositionMarker = [self markerForTabLocation:location];
+            
             [self setNeedsDisplay:YES];
             
             return NSDragOperationMove;
@@ -421,17 +439,14 @@ static CGFloat __tabMargin = 5.;
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
     _highlight = NO;
-    _draggingPosition = -1;
 
     [self setNeedsDisplay:YES];
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-    int dropPosition = _draggingPosition;
     _highlight = NO;
-    _draggingPosition = -1;
-
+    
     [self setNeedsDisplay:YES];
 
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
@@ -440,14 +455,22 @@ static CGFloat __tabMargin = 5.;
         if ([palette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             ERPaletteTabView *oldTabView = [palette tabView];
 
-            if (oldTabView == self) { // we are just reordering tabs
-                if (dropPosition != [_tabs indexOfObject:palette]) { // we are actually reordering tabs
-                    [self movePalette:palette toIndex:dropPosition];
-                }else{
-                    return NO;
-                }
+            NSPoint dropPoint = [self convertPoint:[sender draggingLocation] fromView:nil];
+            CGFloat location;
+            
+            if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
+                location = NSMaxY([self bounds]) - dropPoint.y - [ERPaletteContentView paletteTitleSize]/2.;
             }else{
-                [ERPaletteTabView moveTab:palette fromView:oldTabView toView:self atIndex:dropPosition];
+                location = dropPoint.x - [ERPaletteContentView paletteTitleSize]/2.;
+            }
+            location -= [ERPaletteContentView paletteTitleSize];
+            
+
+            if (oldTabView == self) { // we are just reordering tabs
+                [palette setLocationInTabView:location];
+                [self updateTabsLocations];
+            }else{
+                [ERPaletteTabView moveTab:palette fromView:oldTabView toView:self atLocation:location];
             }
             return YES;
         }
@@ -464,8 +487,29 @@ static CGFloat __tabMargin = 5.;
         if ([draggedPalette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             if (draggedPalette != palette) { // we are not the palette on itself, but we are on the header
                 _highlight = YES;
-                _draggingPosition = (int)[_tabs indexOfObject:palette];
-                _draggingPositionMarker = [self markerForTabPosition:_draggingPosition];
+ 
+                NSPoint dropPoint = [palette convertBaseToScreen:[sender draggingLocation]];
+                dropPoint = [[self window] convertScreenToBase:dropPoint];
+                dropPoint = [self convertPoint:dropPoint fromView:nil];
+                
+                CGFloat location;
+                
+                if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
+                    location = NSMaxY([self bounds]) - dropPoint.y ;
+                }else{
+                    location = dropPoint.x + [ERPaletteContentView paletteTitleSize];
+                }
+                location -= [ERPaletteContentView paletteTitleSize];
+                
+                
+                CGFloat paletteLocation = [palette locationInTabView];
+                if (location < paletteLocation + [ERPaletteContentView paletteTitleSize]/2.) {
+                    location = paletteLocation - [ERPaletteContentView paletteTitleSize] - [ERPaletteTabView tabMargin];
+                }else{
+                    location = paletteLocation + [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
+                }
+                
+                _draggingPositionMarker = [self markerForTabLocation:location];
 
                 [self setNeedsDisplay:YES];
                 
@@ -485,15 +529,34 @@ static CGFloat __tabMargin = 5.;
         if ([draggedPalette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             if (draggedPalette != palette) { // we are not the palette on itself, but we are on the header
                 _highlight = YES;
-                _draggingPosition = (int)[_tabs indexOfObject:palette];
-                _draggingPositionMarker = [self markerForTabPosition:_draggingPosition];
+
+                NSPoint dropPoint = [palette convertBaseToScreen:[sender draggingLocation]];
+                dropPoint = [[self window] convertScreenToBase:dropPoint];
+                dropPoint = [self convertPoint:dropPoint fromView:nil];
+                
+                CGFloat location;
+                
+                if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
+                    location = NSMaxY([self bounds]) - dropPoint.y ;
+                }else{
+                    location = dropPoint.x + [ERPaletteContentView paletteTitleSize];
+                }
+                location -= [ERPaletteContentView paletteTitleSize];
+                
+                
+                CGFloat paletteLocation = [palette locationInTabView];
+                if (location < paletteLocation + [ERPaletteContentView paletteTitleSize]/2.) {
+                    location = paletteLocation - [ERPaletteContentView paletteTitleSize] - [ERPaletteTabView tabMargin];
+                }else{
+                    location = paletteLocation + [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
+                }
+                _draggingPositionMarker = [self markerForTabLocation:location];
+
                 [self setNeedsDisplay:YES];
                 
                 return NSDragOperationMove;
             }else{
                 _highlight = NO;
-                _draggingPosition = -1;
-                _draggingPositionMarker = [self markerForTabPosition:_draggingPosition];
                 [self setNeedsDisplay:YES];
 
                 return NSDragOperationNone;
@@ -508,24 +571,44 @@ static CGFloat __tabMargin = 5.;
 {
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
 
-        NSPoint location = [palette convertBaseToScreen:[sender draggingLocation]];
-        location = [[self window] convertScreenToBase:location];
-        location = [self convertPoint:location fromView:nil];
+        NSPoint mouseLocation = [palette convertBaseToScreen:[sender draggingLocation]];
+        mouseLocation = [[self window] convertScreenToBase:mouseLocation];
+        mouseLocation = [self convertPoint:mouseLocation fromView:nil];
         
         ERPalettePanel *draggedPalette = [sender draggingSource];
         
         if ([draggedPalette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
-            if (NSPointInRect(location, [self bounds])) { // we are still on the tab view
+            if (NSPointInRect(mouseLocation, [self bounds])) { // we are still on the tab view
                 _highlight = YES;
-                _draggingPosition = [self tabPositionForMouseLocation:location];
-                _draggingPositionMarker = [self markerForTabPosition:_draggingPosition];
+
+                NSPoint dropPoint = [palette convertBaseToScreen:[sender draggingLocation]];
+                dropPoint = [[self window] convertScreenToBase:dropPoint];
+                dropPoint = [self convertPoint:dropPoint fromView:nil];
                 
+                CGFloat location;
+                
+                if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
+                    location = NSMaxY([self bounds]) - dropPoint.y ;
+                }else{
+                    location = dropPoint.x + [ERPaletteContentView paletteTitleSize];
+                }
+                location -= [ERPaletteContentView paletteTitleSize];
+                
+                
+                CGFloat paletteLocation = [palette locationInTabView];
+                if (location < paletteLocation + [ERPaletteContentView paletteTitleSize]/2.) {
+                    location = paletteLocation - [ERPaletteContentView paletteTitleSize] - [ERPaletteTabView tabMargin];
+                }else{
+                    location = paletteLocation + [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
+                }
+                
+                _draggingPositionMarker = [self markerForTabLocation:location];
+
                 [self setNeedsDisplay:YES];
                 return;
             }
         }
     }
-    _draggingPosition = -1;
     _highlight = NO;
     [self setNeedsDisplay:YES];
 
@@ -533,10 +616,7 @@ static CGFloat __tabMargin = 5.;
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender inPalette:(ERPalettePanel *)palette
 {
-    int dropPosition = _draggingPosition;
-
     _highlight = NO;
-    _draggingPosition = -1;
 
     [self setNeedsDisplay:YES];
     
@@ -548,14 +628,32 @@ static CGFloat __tabMargin = 5.;
                 
                 ERPaletteTabView *oldTabView = [draggedPalette tabView];
                 
-                if (oldTabView == self) { // we are just reordering tabs
-                    if (dropPosition != [_tabs indexOfObject:draggedPalette]) { // we are actually reordering tabs
-                        [self movePalette:draggedPalette toIndex:dropPosition];
-                    }else{
-                        return NO;
-                    }
+                NSPoint dropPoint = [palette convertBaseToScreen:[sender draggingLocation]];
+                dropPoint = [[self window] convertScreenToBase:dropPoint];
+                dropPoint = [self convertPoint:dropPoint fromView:nil];
+                
+                CGFloat location;
+                
+                if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
+                    location = NSMaxY([self bounds]) - dropPoint.y ;
                 }else{
-                    [ERPaletteTabView moveTab:draggedPalette fromView:oldTabView toView:self atIndex:dropPosition];
+                    location = dropPoint.x + [ERPaletteContentView paletteTitleSize];
+                }
+                location -= [ERPaletteContentView paletteTitleSize];
+                
+
+                CGFloat paletteLocation = [palette locationInTabView];
+                if (location < paletteLocation + [ERPaletteContentView paletteTitleSize]/2.) {
+                    location = paletteLocation - [ERPaletteContentView paletteTitleSize] - [ERPaletteTabView tabMargin];
+                }else{
+                    location = paletteLocation + [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
+                }
+
+                if (oldTabView == self) { // we are just reordering tabs
+                    [draggedPalette setLocationInTabView:location];
+                    [self updateTabsLocations];
+                }else{                    
+                    [ERPaletteTabView moveTab:draggedPalette fromView:oldTabView toView:self atLocation:location];
                 }
 
                 return YES;
