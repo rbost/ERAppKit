@@ -18,7 +18,7 @@
 NSString *ERPaletteDidCloseNotification = @"Palette did close";
 NSString *ERPaletteDidOpenNotification = @"Palette did open";
 NSString *ERPaletteNewFrameKey = @"New palette frame";
-NSString *ERPalettePboardType = @"Palette Pasteboard Type";
+NSString *ERPalettePboardType = @"erappkit.palettePboardType";
 
 @implementation ERPalettePanel
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
@@ -64,6 +64,7 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     [self updateFrameSizeAndContentPlacement];
     [self updateAutoresizingMask];
     
+    [self setFloatingPanel:YES];
     [self setBackgroundColor:[NSColor clearColor]];
     [self setOpaque:NO];
     [self setHasShadow:YES];
@@ -367,6 +368,9 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
 
 - (IBAction)toggleCollapse:(id)sender
 {
+    if (! [self isAttached]) { // if the palette is detached, do nothing
+        return;
+    }
     if (_state != ERPaletteClosed) {
         [self collapse:sender];
     }else{
@@ -494,6 +498,11 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     [self setFrame:newFrame display:YES];
 }
 
+- (void)draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint
+{
+    _dragStartingPoint = screenPoint;
+}
+
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
 {
     switch(context) {
@@ -508,10 +517,41 @@ NSString *ERPalettePboardType = @"Palette Pasteboard Type";
     }
 }
 
+- (void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation
+{
+    if (operation == NSDragOperationNone) {
+        [self retain];
+        [[self tabView] removePalette:self];
+        
+        // set the palette's origin
+        NSPoint delta = screenPoint;
+        delta.x -= _dragStartingPoint.x;
+        delta.y -= _dragStartingPoint.y;
+        
+        NSPoint frameOrigin = [self frame].origin;
+        frameOrigin.x += delta.x;
+        frameOrigin.y += delta.y;
+        
+        [self setFrameOrigin:frameOrigin];
+
+        if ([self state] == ERPaletteClosed) {
+            [self setState:ERPaletteOpened];
+        }
+        
+        // being a child window resets the window level
+        [self setFloatingPanel:YES];
+        
+    }
+}
 @synthesize tabView = _tabView;
 
 - (ERPaletteHolderView *)holder
 {
     return [[self tabView] holder];
+}
+
+- (BOOL)isAttached
+{
+    return ([self tabView] != nil);
 }
 @end

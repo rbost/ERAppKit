@@ -13,7 +13,6 @@
 @interface ERPaletteTab : NSButton
 {
     NSPoint _draggingStartPoint;;
-    BOOL _didDrag;
 }
 @property (assign) ERPalettePanel *palette;
 @end

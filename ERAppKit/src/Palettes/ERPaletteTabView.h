@@ -32,7 +32,12 @@
 + (CGFloat)tabMargin;
 - (id)initWithHolder:(ERPaletteHolderView *)holder position:(ERPalettePanelPosition)position;
 - (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle;
+- (void)addPalette:(ERPalettePanel *)palette;
+- (void)insertPalette:(ERPalettePanel *)palette atIndex:(NSUInteger)index;
+- (void)movePalette:(ERPalettePanel *)palette toIndex:(NSUInteger)index;
+- (void)removePalette:(ERPalettePanel *)palette;
 
+- (void)updateTabsLocations;
 
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender inPalette:(ERPalettePanel *)palette;
 - (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender inPalette:(ERPalettePanel *)palette;

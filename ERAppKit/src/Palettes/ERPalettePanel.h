@@ -30,7 +30,7 @@ typedef enum {
 @class ERPaletteTabView, ERPaletteHolderView;
 @class ERPaletteTitleView, ERPaletteTab;
 
-@interface ERPalettePanel : NSPanel
+@interface ERPalettePanel : NSPanel <NSDraggingSource>
 {
     ERPalettePanelPosition _palettePosition;
     ERPaletteState _state;
@@ -45,6 +45,8 @@ typedef enum {
     
     ERPaletteTabButton *_button1;
     ERPaletteTabButton *_button2;
+    
+    NSPoint _dragStartingPoint;
 }
 @property (assign) ERPalettePanelPosition palettePosition;
 @property (assign) ERPaletteState state;
@@ -76,6 +78,8 @@ typedef enum {
 - (NSSize)openedPaletteSize;
 - (NSSize)closedPaletteSize;
 - (NSSize)paletteSize;
+
+- (BOOL)isAttached;
 
 @end
 

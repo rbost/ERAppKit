@@ -62,19 +62,20 @@
         delta.y -= screenLocation.y ;
         
         if (sqrt(delta.x*delta.x + delta.y*delta.y) > 10) {
-        
-            NSPasteboard *pBoard = [NSPasteboard pasteboardWithName:NSDragPboard];
-            [pBoard declareTypes:[NSArray arrayWithObject:ERPalettePboardType] owner:[self palette]];
-            [pBoard setString:NSStringFromSize([self frame].size) forType:ERPalettePboardType];
+            NSPasteboardItem *pbItem = [[NSPasteboardItem alloc] init];
+            [pbItem setString:NSStringFromSize([self frame].size) forType:ERPalettePboardType];
+            NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
+            [pbItem release];
             
-            NSPoint imageLocation = screenLocation;
-            NSSize imageSize = [self bounds].size;
-        
-            imageLocation.x -= imageSize.width/2.;
-            imageLocation.y += imageSize.height/2.;
-    
-            [self dragImage:[self draggingImage] at:imageLocation offset:NSZeroSize event:theEvent pasteboard:pBoard source:[self palette] slideBack:YES];
-            _didDrag = YES;
+            NSRect draggingFrame = [self bounds];
+            draggingFrame.origin.x -= delta.x;
+            draggingFrame.origin.y -= delta.y;
+            
+            [dragItem setDraggingFrame:draggingFrame contents:[self draggingImage]];
+            NSDraggingSession *draggingSession = [self beginDraggingSessionWithItems:[NSArray arrayWithObject:[dragItem autorelease]] event:theEvent source:((ERPalettePanel *)[self window])];
+            draggingSession.animatesToStartingPositionsOnCancelOrFail = NO;
+            
+            draggingSession.draggingFormation = NSDraggingFormationNone;
         }
     }
 }
@@ -84,8 +85,6 @@
     if ([theEvent clickCount] == 1) {
         [[self palette] toggleCollapse:self];
     }
-//    _draggingStartPoint = NSMakePoint(NSNotFound, NSNotFound);
-//    _didDrag = NO;
 }
 
 // pass the dragging methods to the tab view so it can be handled properly

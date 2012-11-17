@@ -205,6 +205,8 @@ static CGFloat __tabMargin = 5.;
 {
     if ([_tabs containsObject:palette]) {
         [_tabs removeObject:palette];
+        [palette setTabView:nil];
+        
         [[NSNotificationCenter defaultCenter] removeObserver:_holder name:ERPaletteDidCloseNotification object:palette];
         [[NSNotificationCenter defaultCenter] removeObserver:_holder name:ERPaletteDidOpenNotification object:palette];
 
@@ -371,12 +373,14 @@ static CGFloat __tabMargin = 5.;
     }
 }
 
+#pragma mark Drag and Drop Palettes
+
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
         ERPalettePanel *palette = [sender draggingSource];
         
-        if ([palette holder] == [self holder]) { // drag authorized only inside the same holder view
+        if ([palette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             _highlight = YES;
             _draggingPosition = [self tabPositionForMouseLocation:[sender draggingLocation]];
             _draggingPositionMarker = [self markerForTabPosition:_draggingPosition];
@@ -402,7 +406,7 @@ static CGFloat __tabMargin = 5.;
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
         ERPalettePanel *palette = [sender draggingSource];
         
-        if ([palette holder] == [self holder]) { // drag authorized only inside the same holder view
+        if ([palette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             _highlight = YES;
             _draggingPosition = [self tabPositionForMouseLocation:[self convertPoint:[sender draggingLocation] fromView:nil]];
             _draggingPositionMarker = [self markerForTabPosition:_draggingPosition];
@@ -433,7 +437,7 @@ static CGFloat __tabMargin = 5.;
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
         ERPalettePanel *palette = [sender draggingSource];
         
-        if ([palette holder] == [self holder]) { // drag authorized only inside the same holder view
+        if ([palette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             ERPaletteTabView *oldTabView = [palette tabView];
 
             if (oldTabView == self) { // we are just reordering tabs
@@ -457,7 +461,7 @@ static CGFloat __tabMargin = 5.;
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
         ERPalettePanel *draggedPalette = [sender draggingSource];
         
-        if ([draggedPalette holder] == [self holder]) { // drag authorized only inside the same holder view
+        if ([draggedPalette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             if (draggedPalette != palette) { // we are not the palette on itself, but we are on the header
                 _highlight = YES;
                 _draggingPosition = (int)[_tabs indexOfObject:palette];
@@ -478,7 +482,7 @@ static CGFloat __tabMargin = 5.;
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
         ERPalettePanel *draggedPalette = [sender draggingSource];
         
-        if ([draggedPalette holder] == [self holder]) { // drag authorized only inside the same holder view
+        if ([draggedPalette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             if (draggedPalette != palette) { // we are not the palette on itself, but we are on the header
                 _highlight = YES;
                 _draggingPosition = (int)[_tabs indexOfObject:palette];
@@ -510,7 +514,7 @@ static CGFloat __tabMargin = 5.;
         
         ERPalettePanel *draggedPalette = [sender draggingSource];
         
-        if ([draggedPalette holder] == [self holder]) { // drag authorized only inside the same holder view
+        if ([draggedPalette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             if (NSPointInRect(location, [self bounds])) { // we are still on the tab view
                 _highlight = YES;
                 _draggingPosition = [self tabPositionForMouseLocation:location];
@@ -539,7 +543,7 @@ static CGFloat __tabMargin = 5.;
     if ([[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:ERPalettePboardType]]) {
         ERPalettePanel *draggedPalette = [sender draggingSource];
         
-        if ([draggedPalette holder] == [self holder]) { // drag authorized only inside the same holder view
+        if ([draggedPalette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             if (draggedPalette != palette) { // we are not the palette on itself, but we are on the header
                 
                 ERPaletteTabView *oldTabView = [draggedPalette tabView];

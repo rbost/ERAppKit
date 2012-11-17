@@ -66,33 +66,56 @@
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    if (_draggingStartPoint.x != NSNotFound) {
-        NSPoint screenLocation = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-        NSPoint delta = _draggingStartPoint;
-        delta.x -= screenLocation.x ;
-        delta.y -= screenLocation.y ;
-        
-        if (sqrt(delta.x*delta.x + delta.y*delta.y) > 10) {
+    ERPalettePanel *window = (ERPalettePanel *)[self window];
+
+    if ([window isAttached]) {
+        if (_draggingStartPoint.x != NSNotFound) {
+            NSPoint screenLocation = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+            NSPoint delta = _draggingStartPoint;
+            delta.x -= screenLocation.x ;
+            delta.y -= screenLocation.y ;
             
-            NSPasteboard *pBoard = [NSPasteboard pasteboardWithName:NSDragPboard];
-            [pBoard declareTypes:[NSArray arrayWithObject:ERPalettePboardType] owner:[self window]];
-            [pBoard setString:NSStringFromSize([self frame].size) forType:ERPalettePboardType];
-            
-            NSPoint imageLocation = screenLocation;
-            NSSize imageSize = [self bounds].size;
-            
-            imageLocation.x -= _draggingStartPoint.x;
-            imageLocation.y -= _draggingStartPoint.y;
-            
-            [self dragImage:[self draggingImage] at:imageLocation offset:NSZeroSize event:theEvent pasteboard:pBoard source:[self window] slideBack:YES];
+            if (sqrt(delta.x*delta.x + delta.y*delta.y) > 10) {
+                
+                NSPasteboardItem *pbItem = [[NSPasteboardItem alloc] init];
+                [pbItem setString:NSStringFromSize([self frame].size) forType:ERPalettePboardType];
+                NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
+                [pbItem release];
+                
+                [dragItem setDraggingFrame:[self bounds] contents:[self draggingImage]];
+                NSDraggingSession *draggingSession = [self beginDraggingSessionWithItems:[NSArray arrayWithObject:[dragItem autorelease]] event:theEvent source:window];
+                draggingSession.animatesToStartingPositionsOnCancelOrFail = NO;
+                
+                draggingSession.draggingFormation = NSDraggingFormationNone;
+
+            }
         }
+    }else{
+        NSPoint startLocation =  [window convertBaseToScreen:[theEvent locationInWindow]];
+        
+        if ([window isMovableByWindowBackground]) {
+            [super mouseDragged: theEvent];
+            return;
+        }
+        
+        NSPoint origin = [window frame].origin;
+        while ((theEvent = [NSApp nextEventMatchingMask:NSLeftMouseDownMask | NSLeftMouseDraggedMask | NSLeftMouseUpMask untilDate:[NSDate distantFuture] inMode:NSEventTrackingRunLoopMode dequeue:YES]) && ([theEvent type] != NSLeftMouseUp)) {
+            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+                NSPoint currentLocation = [window convertBaseToScreen:[theEvent locationInWindow]];
+                origin.x += currentLocation.x - startLocation.x;
+                origin.y += currentLocation.y - startLocation.y;
+                [window setFrameOrigin:origin];
+                startLocation = currentLocation;
+            [pool release];
+        }
+
     }
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
     if ([theEvent clickCount] == 2) {
-        [[self window] toggleCollapse:self];
+        [(ERPalettePanel *)[self window] toggleCollapse:self];
     }
     _draggingStartPoint = NSMakePoint(NSNotFound, NSNotFound);
     
