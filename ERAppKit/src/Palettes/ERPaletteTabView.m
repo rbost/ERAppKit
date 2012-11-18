@@ -18,6 +18,17 @@ static CGFloat __tabMargin = 5.;
     return __tabMargin;
 }
 
+static CGFloat __barThickness = 30.;
++ (CGFloat)barThickness
+{
+    return __barThickness;
+}
+
++ (CGFloat)barExtremitiesMargins
+{
+    return [self barThickness];
+}
+
 + (void)moveTab:(ERPalettePanel *)palette fromView:(ERPaletteTabView *)origin toView:(ERPaletteTabView *)destination
 {
     [palette retain];
@@ -55,22 +66,23 @@ static CGFloat __tabMargin = 5.;
 - (id)initWithHolder:(ERPaletteHolderView *)holder position:(ERPalettePanelPosition)position
 {
     NSRect frame;
+    CGFloat barThickness = [ERPaletteTabView barThickness];
     
     switch (position) {
         case ERPalettePanelPositionLeft:
-            frame = NSMakeRect(0, 0, [ERPaletteContentView paletteTitleSize], [holder frame].size.height);
+            frame = NSMakeRect(0, 0, barThickness, [holder frame].size.height);
             break;
             
         case ERPalettePanelPositionDown:
-            frame = NSMakeRect(0, 0, [holder frame].size.width, [ERPaletteContentView paletteTitleSize]);
+            frame = NSMakeRect(0, 0, [holder frame].size.width, barThickness);
             break;
             
         case ERPalettePanelPositionRight:
-            frame = NSMakeRect([holder frame].size.width - [ERPaletteContentView paletteTitleSize], 0, [ERPaletteContentView paletteTitleSize], [holder frame].size.height);
+            frame = NSMakeRect([holder frame].size.width - barThickness, 0, barThickness, [holder frame].size.height);
             break;
             
         case ERPalettePanelPositionUp:
-            frame = NSMakeRect(0, [holder frame].size.height - [ERPaletteContentView paletteTitleSize], [holder frame].size.width, [ERPaletteContentView paletteTitleSize]);
+            frame = NSMakeRect(0, [holder frame].size.height - barThickness, [holder frame].size.width, barThickness);
             break;
             
         default:
@@ -143,7 +155,7 @@ static CGFloat __tabMargin = 5.;
     if ([_tabs count] > 0) {
         
         location = [[_tabs lastObject] locationInTabView]; // get the last element
-        location += [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
+        location += [ERPalettePanel tabWidth] + [ERPaletteTabView tabMargin];
     }else{
         location = 0;
     }
@@ -235,7 +247,7 @@ static CGFloat __tabMargin = 5.;
         ERPalettePanel *current = [_tabs objectAtIndex:i];
         ERPalettePanel *next = [_tabs objectAtIndex:i+1];
         
-        CGFloat minLoc = [current locationInTabView] + [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
+        CGFloat minLoc = [current locationInTabView] + [ERPalettePanel tabWidth] + [ERPaletteTabView tabMargin];
         if (minLoc > [next locationInTabView]) {
             [next setLocationInTabView:minLoc];
         }
@@ -267,11 +279,11 @@ static CGFloat __tabMargin = 5.;
 
 - (void)_updateLeftTabsLocations
 {
-    CGFloat maxY = [self frame].size.height - [ERPaletteContentView paletteTitleSize];
+    CGFloat maxY = [self frame].size.height - [ERPaletteTabView barExtremitiesMargins];
     CGFloat y;
     
     for (ERPalettePanel *palette in _tabs) {
-        y = maxY - [palette locationInTabView] - [ERPaletteContentView paletteTitleSize];
+        y = maxY - [palette locationInTabView] - [ERPalettePanel tabWidth];
         
         NSPoint frameOrigin = NSMakePoint(0, y);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
@@ -283,11 +295,11 @@ static CGFloat __tabMargin = 5.;
 
 - (void)_updateRightTabsLocations
 {
-    CGFloat maxY = [self frame].size.height - [ERPaletteContentView paletteTitleSize];
+    CGFloat maxY = [self frame].size.height - [ERPaletteTabView barExtremitiesMargins];
     CGFloat y;
     
     for (ERPalettePanel *palette in _tabs) {
-        y = maxY - [palette locationInTabView] - [ERPaletteContentView paletteTitleSize];
+        y = maxY - [palette locationInTabView] - [ERPalettePanel tabWidth];
         
         NSPoint frameOrigin = NSMakePoint(0, y);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
@@ -302,7 +314,7 @@ static CGFloat __tabMargin = 5.;
     CGFloat x;
     
     for (ERPalettePanel *palette in _tabs) {
-        x = [palette locationInTabView] + [ERPaletteContentView paletteTitleSize];
+        x = [palette locationInTabView] + [ERPaletteTabView barExtremitiesMargins];
         
         NSPoint frameOrigin = NSMakePoint(x, 0);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
@@ -317,7 +329,7 @@ static CGFloat __tabMargin = 5.;
     CGFloat x;
     
     for (ERPalettePanel *palette in _tabs) {
-        x = [palette locationInTabView] + [ERPaletteContentView paletteTitleSize];
+        x = [palette locationInTabView] + [ERPaletteTabView barExtremitiesMargins];
         
         NSPoint frameOrigin = NSMakePoint(x, 0);
         frameOrigin = [self convertPoint:frameOrigin toView:nil];
@@ -330,10 +342,10 @@ static CGFloat __tabMargin = 5.;
 - (int)tabPositionForMouseLocation:(NSPoint)location
 {
     if ([self position] == ERPalettePanelPositionUp || [self position] == ERPalettePanelPositionDown) {
-        CGFloat xAccumulator = [ERPaletteContentView paletteTitleSize];
+        CGFloat xAccumulator = [ERPalettePanel tabWidth];
         int i;
         for (i = 0; i < [_tabs count]; i++) {
-            xAccumulator += [ERPaletteContentView paletteTitleSize];
+            xAccumulator += [ERPalettePanel tabWidth];
             if (location.x < xAccumulator) {
                 break;
             }else{
@@ -342,11 +354,11 @@ static CGFloat __tabMargin = 5.;
         }
         return i;
     }else{
-        CGFloat yAccumulator = NSMaxY([self bounds]) - [ERPaletteContentView paletteTitleSize];
+        CGFloat yAccumulator = NSMaxY([self bounds]) - [ERPalettePanel tabWidth];
         int i;
         
         for (i = 0; i < [_tabs count]; i++) {
-            yAccumulator -= [ERPaletteContentView paletteTitleSize];
+            yAccumulator -= [ERPalettePanel tabWidth];
             if (location.y > yAccumulator) {
                 break;
             }else{
@@ -360,10 +372,10 @@ static CGFloat __tabMargin = 5.;
 - (NSRect)markerForTabLocation:(CGFloat)location
 {
     if ([self position] == ERPalettePanelPositionUp || [self position] == ERPalettePanelPositionDown) {
-        CGFloat x = location + 1.5*[ERPaletteContentView paletteTitleSize];
+        CGFloat x = location + [ERPaletteTabView barExtremitiesMargins];
         return NSMakeRect(x, 0, 5., [self frame].size.height);
     }else{
-        CGFloat y = location + 1.5*[ERPaletteContentView paletteTitleSize];
+        CGFloat y = location + [ERPaletteTabView barExtremitiesMargins];
         y = NSMaxY([self bounds]) - y;
         
         return NSMakeRect(0, y, [self frame].size.width, 5.);
@@ -385,11 +397,11 @@ static CGFloat __tabMargin = 5.;
             CGFloat location;
             
             if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
-                location = NSMaxY([self bounds]) - dropPoint.y - [ERPaletteContentView paletteTitleSize]/2.;
+                location = NSMaxY([self bounds]) - dropPoint.y;
             }else{
-                location = dropPoint.x - [ERPaletteContentView paletteTitleSize]/2.;
+                location = dropPoint.x;
             }
-            location -= [ERPaletteContentView paletteTitleSize];
+            location -= [ERPaletteTabView barExtremitiesMargins];
 
             _draggingPositionMarker = [self markerForTabLocation:location];
             
@@ -420,11 +432,11 @@ static CGFloat __tabMargin = 5.;
             CGFloat location;
             
             if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
-                location = NSMaxY([self bounds]) - dropPoint.y - [ERPaletteContentView paletteTitleSize]/2.;
+                location = NSMaxY([self bounds]) - dropPoint.y;
             }else{
-                location = dropPoint.x - [ERPaletteContentView paletteTitleSize]/2.;
+                location = dropPoint.x;
             }
-            location -= [ERPaletteContentView paletteTitleSize];
+            location -= [ERPaletteTabView barExtremitiesMargins];
             
             _draggingPositionMarker = [self markerForTabLocation:location];
             
@@ -459,12 +471,12 @@ static CGFloat __tabMargin = 5.;
             CGFloat location;
             
             if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
-                location = NSMaxY([self bounds]) - dropPoint.y - [ERPaletteContentView paletteTitleSize]/2.;
+                location = NSMaxY([self bounds]) - dropPoint.y;
             }else{
-                location = dropPoint.x - [ERPaletteContentView paletteTitleSize]/2.;
+                location = dropPoint.x;
             }
-            location -= [ERPaletteContentView paletteTitleSize];
-            
+            location -= [ERPaletteTabView barExtremitiesMargins];
+            location -= [ERPalettePanel tabWidth]/2.;
 
             if (oldTabView == self) { // we are just reordering tabs
                 [palette setLocationInTabView:location];
@@ -495,20 +507,19 @@ static CGFloat __tabMargin = 5.;
                 CGFloat location;
                 
                 if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
-                    location = NSMaxY([self bounds]) - dropPoint.y ;
+                    location = NSMaxY([self bounds]) - dropPoint.y;
                 }else{
-                    location = dropPoint.x + [ERPaletteContentView paletteTitleSize];
+                    location = dropPoint.x;
                 }
-                location -= [ERPaletteContentView paletteTitleSize];
+                location -= [ERPaletteTabView barExtremitiesMargins];
                 
                 
                 CGFloat paletteLocation = [palette locationInTabView];
-                if (location < paletteLocation + [ERPaletteContentView paletteTitleSize]/2.) {
-                    location = paletteLocation - [ERPaletteContentView paletteTitleSize] - [ERPaletteTabView tabMargin];
+                if (location < paletteLocation + [ERPalettePanel tabWidth]/2.) {
+                    location = paletteLocation;
                 }else{
-                    location = paletteLocation + [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
+                    location = paletteLocation + [ERPalettePanel tabWidth] + [ERPaletteTabView tabMargin];
                 }
-                
                 _draggingPositionMarker = [self markerForTabLocation:location];
 
                 [self setNeedsDisplay:YES];
@@ -537,18 +548,18 @@ static CGFloat __tabMargin = 5.;
                 CGFloat location;
                 
                 if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
-                    location = NSMaxY([self bounds]) - dropPoint.y ;
+                    location = NSMaxY([self bounds]) - dropPoint.y;
                 }else{
-                    location = dropPoint.x + [ERPaletteContentView paletteTitleSize];
+                    location = dropPoint.x;
                 }
-                location -= [ERPaletteContentView paletteTitleSize];
+                location -= [ERPaletteTabView barExtremitiesMargins];
                 
                 
                 CGFloat paletteLocation = [palette locationInTabView];
-                if (location < paletteLocation + [ERPaletteContentView paletteTitleSize]/2.) {
-                    location = paletteLocation - [ERPaletteContentView paletteTitleSize] - [ERPaletteTabView tabMargin];
+                if (location < paletteLocation + [ERPalettePanel tabWidth]/2.) {
+                    location = paletteLocation;
                 }else{
-                    location = paletteLocation + [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
+                    location = paletteLocation + [ERPalettePanel tabWidth] + [ERPaletteTabView tabMargin];
                 }
                 _draggingPositionMarker = [self markerForTabLocation:location];
 
@@ -588,18 +599,18 @@ static CGFloat __tabMargin = 5.;
                 CGFloat location;
                 
                 if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
-                    location = NSMaxY([self bounds]) - dropPoint.y ;
+                    location = NSMaxY([self bounds]) - dropPoint.y;
                 }else{
-                    location = dropPoint.x + [ERPaletteContentView paletteTitleSize];
+                    location = dropPoint.x;
                 }
-                location -= [ERPaletteContentView paletteTitleSize];
+                location -= [ERPaletteTabView barExtremitiesMargins];
                 
                 
                 CGFloat paletteLocation = [palette locationInTabView];
-                if (location < paletteLocation + [ERPaletteContentView paletteTitleSize]/2.) {
-                    location = paletteLocation - [ERPaletteContentView paletteTitleSize] - [ERPaletteTabView tabMargin];
+                if (location < paletteLocation + [ERPalettePanel tabWidth]/2.) {
+                    location = paletteLocation;
                 }else{
-                    location = paletteLocation + [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
+                    location = paletteLocation + [ERPalettePanel tabWidth] + [ERPaletteTabView tabMargin];
                 }
                 
                 _draggingPositionMarker = [self markerForTabLocation:location];
@@ -637,16 +648,16 @@ static CGFloat __tabMargin = 5.;
                 if ([self position] == ERPalettePanelPositionLeft || [self position] == ERPalettePanelPositionRight) {
                     location = NSMaxY([self bounds]) - dropPoint.y ;
                 }else{
-                    location = dropPoint.x + [ERPaletteContentView paletteTitleSize];
+                    location = dropPoint.x + [ERPalettePanel tabWidth];
                 }
-                location -= [ERPaletteContentView paletteTitleSize];
+                location -= [ERPalettePanel tabWidth];
                 
 
                 CGFloat paletteLocation = [palette locationInTabView];
-                if (location < paletteLocation + [ERPaletteContentView paletteTitleSize]/2.) {
-                    location = paletteLocation - [ERPaletteContentView paletteTitleSize] - [ERPaletteTabView tabMargin];
+                if (location < paletteLocation + [ERPalettePanel tabWidth]/2.) {
+                    location = paletteLocation - [ERPalettePanel tabWidth] - [ERPaletteTabView tabMargin];
                 }else{
-                    location = paletteLocation + [ERPaletteContentView paletteTitleSize] + [ERPaletteTabView tabMargin];
+                    location = paletteLocation + [ERPalettePanel tabWidth] + [ERPaletteTabView tabMargin];
                 }
 
                 if (oldTabView == self) { // we are just reordering tabs

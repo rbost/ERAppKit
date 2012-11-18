@@ -11,6 +11,10 @@
 #import <ERAppKit/ERPalettePanel.h>
 #import <ERAppKit/ERPaletteTabView.h>
 
+#import <ERAppKit/NSBezierPath+ERAppKit.h>
+
+#define TAB_ROUNDED_RADIUS 5
+
 @implementation ERPaletteTab
 
 - (id)initWithFrame:(NSRect)frame
@@ -30,17 +34,50 @@
 {
     // Drawing code here.
     if ([[self palette] state] == ERPaletteClosed) {
-        [[NSColor colorWithCalibratedWhite:0.3 alpha:0.9] set];
-    }else{
         [[NSColor colorWithCalibratedWhite:0.4 alpha:0.9] set];
+    }else{
+        [[NSColor colorWithCalibratedWhite:0.2 alpha:0.9] set];
+    }
+
+    NSBezierPath *bp = [NSBezierPath bezierPath];
+    NSRect bounds =[self bounds];
+
+    int corners;
+    
+    switch ([[self palette] effectiveHeaderPosition]) {
+        case ERPalettePanelPositionUp:
+            corners = ERUpperRightCorner | ERUpperLeftCorner;
+            break;
+            
+        case ERPalettePanelPositionDown:
+            corners = ERLowerRightCorner | ERLowerLeftCorner;
+            break;
+            
+        case ERPalettePanelPositionLeft:
+            corners = ERUpperRightCorner | ERLowerRightCorner;
+            break;
+            
+        case ERPalettePanelPositionRight:
+            corners = ERLowerLeftCorner | ERUpperLeftCorner;
+            break;
+            
+        default:
+            corners = ERNoneCorner;
+            break;
     }
     
-    [[NSBezierPath bezierPathWithOvalInRect:NSInsetRect([self bounds], 3, 3)] fill];
+    if ([[self palette] state] == ERPaletteClosed) {
+        corners = ERAllCorners;
+    }
+    
+    [bp appendBezierPathWithRoundedRect:bounds radius:TAB_ROUNDED_RADIUS corners:corners];
+    [bp fill];
 }
 
 - (NSImage *)draggingImage
 {
     NSImage *image = [[NSImage alloc] initWithSize:[self frame].size];
+    [image setFlipped:YES];
     [image lockFocus];
     [self drawRect:[self bounds]];
     [image unlockFocus];
@@ -68,8 +105,9 @@
             [pbItem release];
             
             NSRect draggingFrame = [self bounds];
-            draggingFrame.origin.x -= delta.x;
-            draggingFrame.origin.y -= delta.y;
+            draggingFrame.origin = screenLocation;
+            draggingFrame.origin.x -= draggingFrame.size.width/2.;
+            draggingFrame.origin.y -= draggingFrame.size.height/2.;
             
             [dragItem setDraggingFrame:draggingFrame contents:[self draggingImage]];
             NSDraggingSession *draggingSession = [self beginDraggingSessionWithItems:[NSArray arrayWithObject:[dragItem autorelease]] event:theEvent source:((ERPalettePanel *)[self window])];

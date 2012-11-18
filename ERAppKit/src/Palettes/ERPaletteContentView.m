@@ -11,13 +11,13 @@
 #import <ERAppKit/ERPalettePanel.h>
 #import <ERAppKit/ERPaletteTabView.h>
 
-static CGFloat __paletteTitleSize = 20.;
+static CGFloat __paletteTitleHeight = 20.;
 
 @implementation ERPaletteContentView
 
-+ (CGFloat)paletteTitleSize
++ (CGFloat)paletteTitleHeight
 {
-    return __paletteTitleSize;
+    return __paletteTitleHeight;
 }
 
 - (id)initWithFrame:(NSRect)frame
@@ -57,46 +57,18 @@ static CGFloat __paletteTitleSize = 20.;
             headerRect.origin = NSMakePoint(0, [content frame].size.height);
             break;
         case ERPalettePanelPositionUp:
-            headerRect.origin = NSMakePoint(0,__paletteTitleSize);
+            headerRect.origin = NSMakePoint(0,[ERPalettePanel tabHeight]);
             break;
         case ERPalettePanelPositionRight:
-            headerRect.origin = NSMakePoint(__paletteTitleSize, [content frame].size.height);
+            headerRect.origin = NSMakePoint([ERPalettePanel tabHeight], [content frame].size.height);
 
             break;
         default:
             break;
     }
-    headerRect.size = NSMakeSize([[window content] bounds].size.width, [ERPaletteContentView paletteTitleSize]);
+    headerRect.size = NSMakeSize([[window content] bounds].size.width, [ERPaletteContentView paletteTitleHeight]);
     
     return headerRect;
-}
-
-- (NSRect)tabRect
-{
-    NSRect tabRect = NSZeroRect;
-    ERPalettePanel *window = (ERPalettePanel *)[self window];
-    
-    switch ([window effectiveHeaderPosition]) {
-        case ERPalettePanelPositionDown:
-            tabRect.origin = NSMakePoint( 0, [window frame].size.height- __paletteTitleSize);
-            break;
-            
-        case ERPalettePanelPositionLeft:
-            tabRect.origin = NSMakePoint( [window frame].size.width- __paletteTitleSize ,[window frame].size.height -__paletteTitleSize);
-            break;
-        case ERPalettePanelPositionUp:
-            tabRect.origin = NSZeroPoint;
-            break;
-        case ERPalettePanelPositionRight:
-            tabRect.origin = NSMakePoint( 0,[window frame].size.height -__paletteTitleSize);
-            break;
-        default:
-            break;
-    }
-    
-    tabRect.size = NSMakeSize([ERPaletteContentView paletteTitleSize], [ERPaletteContentView paletteTitleSize]);
-    return tabRect;
-
 }
 
 - (NSRect)contentRect

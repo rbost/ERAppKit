@@ -36,6 +36,8 @@
 		6C27B5E7161E1224002D1EF9 /* ERGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B5E5161E1224002D1EF9 /* ERGeometry.m */; };
 		6C27B5EA161F8C9D002D1EF9 /* ERGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C4BCF99162B834C0082630C /* ERAppKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B58B161B9158002D1EF9 /* ERAppKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C57F81816585142004D37C8 /* NSBezierPath+ERAppKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C57F81616585142004D37C8 /* NSBezierPath+ERAppKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C57F81916585142004D37C8 /* NSBezierPath+ERAppKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57F81716585142004D37C8 /* NSBezierPath+ERAppKit.m */; };
 		6C722C59164AF0C30011BA2F /* ERPalettePanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C57164AF0C30011BA2F /* ERPalettePanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C722C5A164AF0C30011BA2F /* ERPalettePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C58164AF0C30011BA2F /* ERPalettePanel.m */; };
 		6C722C5D164AF1870011BA2F /* ERPaletteContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -115,6 +117,8 @@
 		6C27B5E4161E1224002D1EF9 /* ERGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERGeometry.h; path = src/Tools/ERGeometry.h; sourceTree = "<group>"; };
 		6C27B5E5161E1224002D1EF9 /* ERGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERGeometry.m; path = src/Tools/ERGeometry.m; sourceTree = "<group>"; };
 		6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ERGlobals.h; path = src/ERGlobals.h; sourceTree = "<group>"; };
+		6C57F81616585142004D37C8 /* NSBezierPath+ERAppKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBezierPath+ERAppKit.h"; path = "src/Tools/NSBezierPath+ERAppKit.h"; sourceTree = "<group>"; };
+		6C57F81716585142004D37C8 /* NSBezierPath+ERAppKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBezierPath+ERAppKit.m"; path = "src/Tools/NSBezierPath+ERAppKit.m"; sourceTree = "<group>"; };
 		6C722C57164AF0C30011BA2F /* ERPalettePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPalettePanel.h; path = src/Palettes/ERPalettePanel.h; sourceTree = "<group>"; };
 		6C722C58164AF0C30011BA2F /* ERPalettePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPalettePanel.m; path = src/Palettes/ERPalettePanel.m; sourceTree = "<group>"; };
 		6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteContentView.h; path = src/Palettes/ERPaletteContentView.h; sourceTree = "<group>"; };
@@ -276,6 +280,8 @@
 				6C27B5E5161E1224002D1EF9 /* ERGeometry.m */,
 				6CC94B9E162092A900FB1CD0 /* ERTimer.h */,
 				6CC94B9F162092A900FB1CD0 /* ERTimer.m */,
+				6C57F81616585142004D37C8 /* NSBezierPath+ERAppKit.h */,
+				6C57F81716585142004D37C8 /* NSBezierPath+ERAppKit.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -327,6 +333,7 @@
 				6CBD5C5A1650BA750035C6F7 /* ERPaletteTitleView.h in Headers */,
 				6CBD5C5F1650CE3F0035C6F7 /* ERPaletteTab.h in Headers */,
 				6C96860716558369005168C4 /* ERPaletteButton.h in Headers */,
+				6C57F81816585142004D37C8 /* NSBezierPath+ERAppKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +447,7 @@
 				6CBD5C5B1650BA750035C6F7 /* ERPaletteTitleView.m in Sources */,
 				6CBD5C601650CE3F0035C6F7 /* ERPaletteTab.m in Sources */,
 				6C96860816558369005168C4 /* ERPaletteButton.m in Sources */,
+				6C57F81916585142004D37C8 /* NSBezierPath+ERAppKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

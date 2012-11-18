@@ -12,3 +12,4 @@
 #import <ERAppKit/ERMenu.h>
 #import <ERAppKit/ERFadingAnimation.h>
 #import <ERAppKit/ERGeometry.h>
+#import <ERAppKit/NSBezierPath+ERAppKit.h>

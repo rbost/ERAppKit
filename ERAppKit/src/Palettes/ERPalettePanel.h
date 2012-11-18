@@ -42,10 +42,7 @@ typedef enum {
     
     ERPaletteTitleView *_titleView;
     ERPaletteTab *_tabButton;
-    
-    ERPaletteTabButton *_button1;
-    ERPaletteTabButton *_button2;
-    
+     
     NSPoint _dragStartingPoint;
 }
 @property (assign) ERPalettePanelPosition palettePosition;
@@ -56,6 +53,10 @@ typedef enum {
 @property (readonly) ERPaletteHolderView *holder;
 
 @property (assign) CGFloat locationInTabView;
+
++(CGFloat)tabWidth;
++(CGFloat)tabHeight;
++ (NSSize)tabSizeForPanelPosition:(ERPalettePanelPosition)pos;
 
 - (id)initWithContent:(NSView *)content position:(ERPalettePanelPosition)pos;
 
@@ -75,6 +76,7 @@ typedef enum {
 - (ERPalettePanelPosition)effectiveHeaderPosition;
 
 - (NSRect)headerRect;
+- (NSRect)tabRect;
 
 - (NSSize)paletteContentSize;
 - (NSSize)openedPaletteSize;
