@@ -30,11 +30,18 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
-    [[NSColor colorWithCalibratedWhite:0.3 alpha:0.9] set];
-    [[NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:[self bounds].size.height/4. yRadius:[self bounds].size.height/4.] stroke];
-    [[NSColor colorWithCalibratedWhite:0.5 alpha:0.9] set];
-    [[NSBezierPath bezierPathWithRoundedRect:[self bounds] xRadius:[self bounds].size.height/4. yRadius:[self bounds].size.height/4.] fill];
+    NSBezierPath *bp = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect([self bounds],1,1) xRadius:[self bounds].size.height/4. yRadius:[self bounds].size.height/4.];
+    NSGradient *backGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.3 alpha:0.9] endingColor:[NSColor colorWithCalibratedWhite:0.5 alpha:0.9]];
+    
+    [[NSColor colorWithCalibratedWhite:0.5 alpha:0.8] set];
+//    [bp fill];
+    [backGradient drawInBezierPath:bp angle:90];
+    [[NSColor colorWithCalibratedWhite:0.1 alpha:0.8] set];
+//    [bp stroke];
+    
+    
+    
+    
 
     NSDictionary *attributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                                 [NSColor selectedMenuItemTextColor], NSForegroundColorAttributeName,

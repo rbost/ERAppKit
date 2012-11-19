@@ -79,6 +79,7 @@ typedef enum {
 - (NSRect)tabRect;
 
 - (NSSize)paletteContentSize;
+- (NSRect)paletteContentFrame;
 - (NSSize)openedPaletteSize;
 - (NSSize)closedPaletteSize;
 - (NSSize)paletteSize;

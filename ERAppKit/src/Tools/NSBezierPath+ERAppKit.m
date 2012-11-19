@@ -9,6 +9,15 @@
 #import "NSBezierPath+ERAppKit.h"
 
 @implementation NSBezierPath (ERAppKit)
++ (NSBezierPath *)bezierPathWithRoundedRect:(NSRect)rect radius:(CGFloat)radius corners:(int)cornerMasks
+{
+    NSBezierPath *bp = [NSBezierPath bezierPath];
+    
+    [bp appendBezierPathWithRoundedRect:rect radius:radius corners:cornerMasks];
+    
+    return bp;
+}
+
 - (void)appendBezierPathWithRoundedRect:(NSRect)aRect radius:(CGFloat)radius corners:(int)cornerMasks
 {
     NSPoint ul, ur, ll, lr;

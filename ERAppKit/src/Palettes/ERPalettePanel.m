@@ -20,7 +20,7 @@ NSString *ERPaletteDidOpenNotification = @"Palette did open";
 NSString *ERPaletteNewFrameKey = @"New palette frame";
 NSString *ERPalettePboardType = @"erappkit.palettePboardType";
 
-static CGFloat __tabWidth = 20.;
+static CGFloat __tabWidth = 35.;
 static CGFloat __tabHeight = 30.;
 
 @implementation ERPalettePanel
@@ -527,12 +527,12 @@ static CGFloat __tabHeight = 30.;
                 break;
                 
             case ERPalettePanelPositionLeft:
-                newOrigin.y -= [[self content] frame].size.height;
+                newOrigin.y = tabOrigin.y + [_tabButton frame].size.height - [self paletteContentSize].height;
                 newOrigin.x -= [self paletteContentSize].width;
                 break;
                 
             case ERPalettePanelPositionRight:
-                newOrigin.y -= [[self content] frame].size.height;
+                newOrigin.y = tabOrigin.y + [_tabButton frame].size.height - [self paletteContentSize].height;
                 break;
                 
             default:

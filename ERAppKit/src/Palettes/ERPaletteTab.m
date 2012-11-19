@@ -13,10 +13,22 @@
 
 #import <ERAppKit/NSBezierPath+ERAppKit.h>
 
-#define TAB_ROUNDED_RADIUS 5
+#define TAB_ROUNDED_RADIUS 5.
 
 @implementation ERPaletteTab
++ (NSBezierPath *)openedTabCorner
+{
+    NSBezierPath *bp = [NSBezierPath bezierPath];
+    NSPoint corner = NSZeroPoint;
+    CGFloat radius = TAB_ROUNDED_RADIUS;
+    [bp moveToPoint:NSMakePoint(corner.x, corner.y+radius)];
+    [bp lineToPoint:corner];
+    [bp lineToPoint:NSMakePoint(corner.x-radius, corner.y)];
+    [bp appendBezierPathWithArcWithCenter:NSMakePoint(corner.x-radius, corner.y+radius) radius:radius startAngle:-90 endAngle:0 clockwise:NO];
+    [bp closePath];
 
+    return bp;
+}
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
@@ -32,15 +44,47 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    [[NSColor redColor] set];
+//    [NSBezierPath fillRect:dirtyRect];
+    
     // Drawing code here.
     if ([[self palette] state] == ERPaletteClosed) {
         [[NSColor colorWithCalibratedWhite:0.4 alpha:0.9] set];
     }else{
-        [[NSColor colorWithCalibratedWhite:0.2 alpha:0.9] set];
+        [[NSColor colorWithCalibratedWhite:0.1 alpha:0.9] set];
     }
 
-    NSBezierPath *bp = [NSBezierPath bezierPath];
-    NSRect bounds =[self bounds];
+    NSRect bounds ;
+    if ([[self palette] palettePosition] == ERPalettePanelPositionUp || [[self palette] palettePosition] == ERPalettePanelPositionDown) {
+        bounds = NSInsetRect([self bounds],TAB_ROUNDED_RADIUS,0.);
+        // let some space for the palette rounded corner
+        bounds.origin.x += TAB_ROUNDED_RADIUS;
+        bounds.size.width -= TAB_ROUNDED_RADIUS;
+        
+        if ([[self palette] state] == ERPaletteClosed) {
+            bounds = NSInsetRect(bounds, 0, 2.);
+        }else{
+            bounds.size.height -= 2.;
+            
+            if ([[self palette] effectiveHeaderPosition] == ERPalettePanelPositionDown) {
+                bounds.origin.y += 2.;
+            }
+        }
+    }else{
+        bounds = NSInsetRect([self bounds],0.,TAB_ROUNDED_RADIUS);
+        bounds.origin.y += TAB_ROUNDED_RADIUS;
+        bounds.size.height -= TAB_ROUNDED_RADIUS;
+        
+        if ([[self palette] state] == ERPaletteClosed) {
+            bounds = NSInsetRect(bounds, 2.,0);
+        }else{
+            bounds.size.width -= 2.;
+            
+            if ([[self palette] effectiveHeaderPosition] ==  ERPalettePanelPositionRight) {
+                bounds.origin.x += 2.;
+            }
+        }
+    }
 
     int corners;
     
@@ -70,8 +114,48 @@
         corners = ERAllCorners;
     }
     
-    [bp appendBezierPathWithRoundedRect:bounds radius:TAB_ROUNDED_RADIUS corners:corners];
+    NSBezierPath *bp = [NSBezierPath bezierPathWithRoundedRect:bounds radius:TAB_ROUNDED_RADIUS corners:corners];
+
     [bp fill];
+    
+    if ([[self palette] state] == ERPaletteOpened) {
+        // draw inverted corners
+        NSBezierPath *corner1, *corner2;
+        NSAffineTransform *at1 = [NSAffineTransform transform], *at2 = [NSAffineTransform transform];
+        
+        switch ([[self palette] effectiveHeaderPosition]) {
+            case ERPalettePanelPositionUp:
+                [at1 translateXBy:NSMinX(bounds) yBy:NSMinY(bounds)]; 
+                [at2 translateXBy:NSMaxX(bounds) yBy:NSMinY(bounds)]; [at2 scaleXBy:-1 yBy:1]; 
+                break;
+                
+            case ERPalettePanelPositionDown:
+                [at1 translateXBy:NSMinX(bounds) yBy:NSMaxY(bounds)]; [at1 scaleXBy:1 yBy:-1];
+                [at2 translateXBy:NSMaxX(bounds) yBy:NSMaxY(bounds)]; [at2 scaleXBy:-1 yBy:-1];
+                break;
+                
+            case ERPalettePanelPositionLeft:
+                [at1 translateXBy:NSMinX(bounds) yBy:NSMinY(bounds)]; [at1 scaleXBy:-1 yBy:-1];
+                [at2 translateXBy:NSMinX(bounds) yBy:NSMaxY(bounds)]; [at2 scaleXBy:-1 yBy:1];
+
+                break;
+                
+            case ERPalettePanelPositionRight:
+                [at1 translateXBy:NSMaxX(bounds) yBy:NSMinY(bounds)]; [at1 scaleXBy:1 yBy:-1];
+                [at2 translateXBy:NSMaxX(bounds) yBy:NSMaxY(bounds)]; [at2 scaleXBy:1 yBy:1];
+
+                break;
+                
+            default:
+                break;
+        }
+        
+        corner1 = [ERPaletteTab openedTabCorner]; [corner1 transformUsingAffineTransform:at1];
+        corner2 = [ERPaletteTab openedTabCorner]; [corner2 transformUsingAffineTransform:at2];
+        
+        [corner1 fill];
+        [corner2 fill];
+    }
 }
 
 - (NSImage *)draggingImage

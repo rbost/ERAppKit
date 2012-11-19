@@ -10,6 +10,7 @@
 
 #import <ERAppKit/ERPalettePanel.h>
 #import <ERAppKit/ERPaletteTabView.h>
+#import <ERAppKit/NSBezierPath+ERAppKit.h>
 
 static CGFloat __paletteTitleHeight = 20.;
 
@@ -33,13 +34,38 @@ static CGFloat __paletteTitleHeight = 20.;
 - (void)drawRect:(NSRect)dirtyRect
 {
     
-    NSRect filledRect = NSIntersectionRect([self frame],[self contentRect]);
+    NSRect filledRect;
+    filledRect = [(ERPalettePanel *)[self window] paletteContentFrame];
 
-    NSBezierPath *bckGrd = [NSBezierPath bezierPathWithRoundedRect:filledRect xRadius:5. yRadius:5.];
-    [[NSColor colorWithCalibratedWhite:0.2 alpha:0.9] set];
+    int corners;
+    
+    switch ([(ERPalettePanel *)[self window] effectiveHeaderPosition]) {
+        case ERPalettePanelPositionUp:
+            corners = ERUpperRightCorner | ERUpperLeftCorner | ERLowerRightCorner;
+            break;
+            
+        case ERPalettePanelPositionDown:
+            corners = ERUpperRightCorner  | ERLowerRightCorner | ERLowerLeftCorner;
+            break;
+            
+        case ERPalettePanelPositionLeft:
+            corners = ERLowerLeftCorner | ERUpperLeftCorner | ERLowerRightCorner;
+            break;
+            
+        case ERPalettePanelPositionRight:
+            corners = ERUpperRightCorner | ERLowerRightCorner | ERLowerLeftCorner;
+            break;
+            
+        default:
+            corners = ERAllCorners;
+            break;
+    }
+    NSBezierPath *bckGrd = [NSBezierPath bezierPathWithRoundedRect:filledRect radius:5. corners:ERAllCorners];
+
+    [[NSColor colorWithCalibratedWhite:0.1 alpha:0.95] set];
     [bckGrd fill];
-    [[NSColor colorWithCalibratedWhite:0.5 alpha:0.9] set];
-    [bckGrd stroke];
+    [[NSColor colorWithCalibratedWhite:0.5 alpha:0.95] set];
+//    [bckGrd stroke];
 }
 
 - (NSRect)headerRect

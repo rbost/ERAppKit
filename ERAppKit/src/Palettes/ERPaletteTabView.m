@@ -12,7 +12,7 @@
 
 @implementation ERPaletteTabView
 
-static CGFloat __tabMargin = 5.;
+static CGFloat __tabMargin = -10.;
 + (CGFloat)tabMargin
 {
     return __tabMargin;
