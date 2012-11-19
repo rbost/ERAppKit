@@ -54,34 +54,36 @@
         [[NSColor colorWithCalibratedWhite:0.1 alpha:0.9] set];
     }
 
-    NSRect bounds ;
+    NSRect bounds, tabRect;
     if ([[self palette] palettePosition] == ERPalettePanelPositionUp || [[self palette] palettePosition] == ERPalettePanelPositionDown) {
         bounds = NSInsetRect([self bounds],TAB_ROUNDED_RADIUS,0.);
         // let some space for the palette rounded corner
         bounds.origin.x += TAB_ROUNDED_RADIUS;
         bounds.size.width -= TAB_ROUNDED_RADIUS;
         
+        tabRect = bounds;
         if ([[self palette] state] == ERPaletteClosed) {
-            bounds = NSInsetRect(bounds, 0, 2.);
+            tabRect = NSInsetRect(tabRect, 0, 2.);
         }else{
-            bounds.size.height -= 2.;
+            tabRect.size.height -= 2.;
             
             if ([[self palette] effectiveHeaderPosition] == ERPalettePanelPositionDown) {
-                bounds.origin.y += 2.;
+                tabRect.origin.y += 2.;
             }
         }
     }else{
         bounds = NSInsetRect([self bounds],0.,TAB_ROUNDED_RADIUS);
         bounds.origin.y += TAB_ROUNDED_RADIUS;
         bounds.size.height -= TAB_ROUNDED_RADIUS;
-        
+
+        tabRect = bounds;
         if ([[self palette] state] == ERPaletteClosed) {
-            bounds = NSInsetRect(bounds, 2.,0);
+            tabRect = NSInsetRect(tabRect, 2.,0);
         }else{
-            bounds.size.width -= 2.;
+            tabRect.size.width -= 2.;
             
             if ([[self palette] effectiveHeaderPosition] ==  ERPalettePanelPositionRight) {
-                bounds.origin.x += 2.;
+                tabRect.origin.x += 2.;
             }
         }
     }
@@ -114,7 +116,7 @@
         corners = ERAllCorners;
     }
     
-    NSBezierPath *bp = [NSBezierPath bezierPathWithRoundedRect:bounds radius:TAB_ROUNDED_RADIUS corners:corners];
+    NSBezierPath *bp = [NSBezierPath bezierPathWithRoundedRect:tabRect radius:TAB_ROUNDED_RADIUS corners:corners];
 
     [bp fill];
     
@@ -125,24 +127,24 @@
         
         switch ([[self palette] effectiveHeaderPosition]) {
             case ERPalettePanelPositionUp:
-                [at1 translateXBy:NSMinX(bounds) yBy:NSMinY(bounds)]; 
-                [at2 translateXBy:NSMaxX(bounds) yBy:NSMinY(bounds)]; [at2 scaleXBy:-1 yBy:1]; 
+                [at1 translateXBy:NSMinX(tabRect) yBy:NSMinY(tabRect)]; 
+                [at2 translateXBy:NSMaxX(tabRect) yBy:NSMinY(tabRect)]; [at2 scaleXBy:-1 yBy:1]; 
                 break;
                 
             case ERPalettePanelPositionDown:
-                [at1 translateXBy:NSMinX(bounds) yBy:NSMaxY(bounds)]; [at1 scaleXBy:1 yBy:-1];
-                [at2 translateXBy:NSMaxX(bounds) yBy:NSMaxY(bounds)]; [at2 scaleXBy:-1 yBy:-1];
+                [at1 translateXBy:NSMinX(tabRect) yBy:NSMaxY(tabRect)]; [at1 scaleXBy:1 yBy:-1];
+                [at2 translateXBy:NSMaxX(tabRect) yBy:NSMaxY(tabRect)]; [at2 scaleXBy:-1 yBy:-1];
                 break;
                 
             case ERPalettePanelPositionLeft:
-                [at1 translateXBy:NSMinX(bounds) yBy:NSMinY(bounds)]; [at1 scaleXBy:-1 yBy:-1];
-                [at2 translateXBy:NSMinX(bounds) yBy:NSMaxY(bounds)]; [at2 scaleXBy:-1 yBy:1];
+                [at1 translateXBy:NSMinX(tabRect) yBy:NSMinY(tabRect)]; [at1 scaleXBy:-1 yBy:-1];
+                [at2 translateXBy:NSMinX(tabRect) yBy:NSMaxY(tabRect)]; [at2 scaleXBy:-1 yBy:1];
 
                 break;
                 
             case ERPalettePanelPositionRight:
-                [at1 translateXBy:NSMaxX(bounds) yBy:NSMinY(bounds)]; [at1 scaleXBy:1 yBy:-1];
-                [at2 translateXBy:NSMaxX(bounds) yBy:NSMaxY(bounds)]; [at2 scaleXBy:1 yBy:1];
+                [at1 translateXBy:NSMaxX(tabRect) yBy:NSMinY(tabRect)]; [at1 scaleXBy:1 yBy:-1];
+                [at2 translateXBy:NSMaxX(tabRect) yBy:NSMaxY(tabRect)]; [at2 scaleXBy:1 yBy:1];
 
                 break;
                 
@@ -156,13 +158,22 @@
         [corner1 fill];
         [corner2 fill];
     }
+    
+    NSImage *icon = [[self palette] icon];
+    NSRect iconRect;
+    iconRect.size = [icon size];
+    iconRect.origin = bounds.origin;
+    
+    iconRect.origin.x += 0.5*(bounds.size.width - iconRect.size.width); iconRect.origin.x = floor(iconRect.origin.x);
+    iconRect.origin.y += 0.5*(bounds.size.height - iconRect.size.height);iconRect.origin.y = floor(iconRect.origin.y);
+
+    [icon drawInRect:iconRect fromRect:NSMakeRect(0, 0, [icon size].width, [icon size].height) operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
 }
 
 - (NSImage *)draggingImage
 {
     NSImage *image = [[NSImage alloc] initWithSize:[self frame].size];
-    [image setFlipped:YES];
-    [image lockFocus];
+    [image lockFocusFlipped:YES];
     [self drawRect:[self bounds]];
     [image unlockFocus];
     

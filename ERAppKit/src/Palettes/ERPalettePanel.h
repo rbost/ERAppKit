@@ -52,6 +52,8 @@ typedef enum {
 @property (assign) ERPaletteTabView *tabView;
 @property (readonly) ERPaletteHolderView *holder;
 
+@property (retain) NSImage *icon;
+
 @property (assign) CGFloat locationInTabView;
 
 +(CGFloat)tabWidth;

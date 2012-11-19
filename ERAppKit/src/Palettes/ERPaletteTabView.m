@@ -137,10 +137,11 @@ static CGFloat __barThickness = 30.;
 
 @synthesize holder = _holder;
 
-- (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle
+- (void)addPaletteWithContentView:(NSView *)contentView icon:(NSImage *)icon title:(NSString *)paletteTitle
 {
     ERPalettePanel *palette = [[ERPalettePanel alloc] initWithContent:contentView position:[self position]];
     [palette setTitle:paletteTitle];
+    [palette setIcon:icon];
     
     [palette setState:ERPaletteClosed animate:NO];
     
@@ -197,6 +198,7 @@ static CGFloat __barThickness = 30.;
     
     // this also order the panel out
     [[self window] addChildWindow:palette ordered:NSWindowAbove];
+    [palette invalidateShadow];
     
     [self updateTabsLocations];
 }

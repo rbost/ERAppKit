@@ -38,6 +38,14 @@
 		6C4BCF99162B834C0082630C /* ERAppKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B58B161B9158002D1EF9 /* ERAppKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C57F81816585142004D37C8 /* NSBezierPath+ERAppKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C57F81616585142004D37C8 /* NSBezierPath+ERAppKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C57F81916585142004D37C8 /* NSBezierPath+ERAppKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57F81716585142004D37C8 /* NSBezierPath+ERAppKit.m */; };
+		6C57F824165ACA2F004D37C8 /* tool-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F81C165ACA2F004D37C8 /* tool-arrow.png */; };
+		6C57F825165ACA2F004D37C8 /* tool-bezier.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F81D165ACA2F004D37C8 /* tool-bezier.png */; };
+		6C57F826165ACA2F004D37C8 /* tool-line.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F81E165ACA2F004D37C8 /* tool-line.png */; };
+		6C57F827165ACA2F004D37C8 /* tool-oval.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F81F165ACA2F004D37C8 /* tool-oval.png */; };
+		6C57F828165ACA2F004D37C8 /* tool-polyline.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F820165ACA2F004D37C8 /* tool-polyline.png */; };
+		6C57F829165ACA2F004D37C8 /* tool-rectangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F821165ACA2F004D37C8 /* tool-rectangle.png */; };
+		6C57F82A165ACA2F004D37C8 /* tool-text.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F822165ACA2F004D37C8 /* tool-text.png */; };
+		6C57F82B165ACA2F004D37C8 /* tool-zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F823165ACA2F004D37C8 /* tool-zoom.png */; };
 		6C722C59164AF0C30011BA2F /* ERPalettePanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C57164AF0C30011BA2F /* ERPalettePanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C722C5A164AF0C30011BA2F /* ERPalettePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C58164AF0C30011BA2F /* ERPalettePanel.m */; };
 		6C722C5D164AF1870011BA2F /* ERPaletteContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -119,6 +127,14 @@
 		6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ERGlobals.h; path = src/ERGlobals.h; sourceTree = "<group>"; };
 		6C57F81616585142004D37C8 /* NSBezierPath+ERAppKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBezierPath+ERAppKit.h"; path = "src/Tools/NSBezierPath+ERAppKit.h"; sourceTree = "<group>"; };
 		6C57F81716585142004D37C8 /* NSBezierPath+ERAppKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBezierPath+ERAppKit.m"; path = "src/Tools/NSBezierPath+ERAppKit.m"; sourceTree = "<group>"; };
+		6C57F81C165ACA2F004D37C8 /* tool-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-arrow.png"; sourceTree = "<group>"; };
+		6C57F81D165ACA2F004D37C8 /* tool-bezier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-bezier.png"; sourceTree = "<group>"; };
+		6C57F81E165ACA2F004D37C8 /* tool-line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-line.png"; sourceTree = "<group>"; };
+		6C57F81F165ACA2F004D37C8 /* tool-oval.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-oval.png"; sourceTree = "<group>"; };
+		6C57F820165ACA2F004D37C8 /* tool-polyline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-polyline.png"; sourceTree = "<group>"; };
+		6C57F821165ACA2F004D37C8 /* tool-rectangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-rectangle.png"; sourceTree = "<group>"; };
+		6C57F822165ACA2F004D37C8 /* tool-text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-text.png"; sourceTree = "<group>"; };
+		6C57F823165ACA2F004D37C8 /* tool-zoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-zoom.png"; sourceTree = "<group>"; };
 		6C722C57164AF0C30011BA2F /* ERPalettePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPalettePanel.h; path = src/Palettes/ERPalettePanel.h; sourceTree = "<group>"; };
 		6C722C58164AF0C30011BA2F /* ERPalettePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPalettePanel.m; path = src/Palettes/ERPalettePanel.m; sourceTree = "<group>"; };
 		6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteContentView.h; path = src/Palettes/ERPaletteContentView.h; sourceTree = "<group>"; };
@@ -264,6 +280,7 @@
 		6C27B5B5161B93EE002D1EF9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6C57F81B165ACA2F004D37C8 /* Icons */,
 				6C27B5B6161B93EE002D1EF9 /* ERAppKitDemo-Info.plist */,
 				6C27B5B7161B93EE002D1EF9 /* InfoPlist.strings */,
 				6C27B5BA161B93EE002D1EF9 /* main.m */,
@@ -284,6 +301,21 @@
 				6C57F81716585142004D37C8 /* NSBezierPath+ERAppKit.m */,
 			);
 			name = Tools;
+			sourceTree = "<group>";
+		};
+		6C57F81B165ACA2F004D37C8 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				6C57F81C165ACA2F004D37C8 /* tool-arrow.png */,
+				6C57F81D165ACA2F004D37C8 /* tool-bezier.png */,
+				6C57F81E165ACA2F004D37C8 /* tool-line.png */,
+				6C57F81F165ACA2F004D37C8 /* tool-oval.png */,
+				6C57F820165ACA2F004D37C8 /* tool-polyline.png */,
+				6C57F821165ACA2F004D37C8 /* tool-rectangle.png */,
+				6C57F822165ACA2F004D37C8 /* tool-text.png */,
+				6C57F823165ACA2F004D37C8 /* tool-zoom.png */,
+			);
+			path = Icons;
 			sourceTree = "<group>";
 		};
 		6C722C55164AF04E0011BA2F /* Palettes */ = {
@@ -422,6 +454,14 @@
 				6C27B5B9161B93EE002D1EF9 /* InfoPlist.strings in Resources */,
 				6C27B5BF161B93EE002D1EF9 /* Credits.rtf in Resources */,
 				6C27B5C5161B93EE002D1EF9 /* MainMenu.xib in Resources */,
+				6C57F824165ACA2F004D37C8 /* tool-arrow.png in Resources */,
+				6C57F825165ACA2F004D37C8 /* tool-bezier.png in Resources */,
+				6C57F826165ACA2F004D37C8 /* tool-line.png in Resources */,
+				6C57F827165ACA2F004D37C8 /* tool-oval.png in Resources */,
+				6C57F828165ACA2F004D37C8 /* tool-polyline.png in Resources */,
+				6C57F829165ACA2F004D37C8 /* tool-rectangle.png in Resources */,
+				6C57F82A165ACA2F004D37C8 /* tool-text.png in Resources */,
+				6C57F82B165ACA2F004D37C8 /* tool-zoom.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -53,23 +53,23 @@ static CGFloat __tabMargin = 5.;
     [super dealloc];
 }
 
-- (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle atPosition:(ERPalettePanelPosition)pos
+- (void)addPaletteWithContentView:(NSView *)contentView icon:(NSImage *)icon title:(NSString *)paletteTitle atPosition:(ERPalettePanelPosition)pos
 {
     switch (pos) {
         case ERPalettePanelPositionRight:
-            [_rightTabs addPaletteWithContentView:contentView withTitle:paletteTitle];
+            [_rightTabs addPaletteWithContentView:contentView icon:icon title:paletteTitle];
             break;
             
         case ERPalettePanelPositionLeft:
-            [_leftTabs addPaletteWithContentView:contentView withTitle:paletteTitle];
+            [_leftTabs addPaletteWithContentView:contentView icon:icon title:paletteTitle];
             break;
             
         case ERPalettePanelPositionUp:
-            [_upTabs addPaletteWithContentView:contentView withTitle:paletteTitle];
+            [_upTabs addPaletteWithContentView:contentView icon:icon title:paletteTitle];
             break;
             
         case ERPalettePanelPositionDown:
-            [_downTabs addPaletteWithContentView:contentView withTitle:paletteTitle];
+            [_downTabs addPaletteWithContentView:contentView icon:icon title:paletteTitle];
             break;
             
         default:

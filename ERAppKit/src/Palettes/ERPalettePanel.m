@@ -20,7 +20,7 @@ NSString *ERPaletteDidOpenNotification = @"Palette did open";
 NSString *ERPaletteNewFrameKey = @"New palette frame";
 NSString *ERPalettePboardType = @"erappkit.palettePboardType";
 
-static CGFloat __tabWidth = 35.;
+static CGFloat __tabWidth = 40.;
 static CGFloat __tabHeight = 30.;
 
 @implementation ERPalettePanel
@@ -616,4 +616,11 @@ static CGFloat __tabHeight = 30.;
     }
 }
 
+@synthesize icon;
+
+- (void)invalidateShadow
+{
+    [super invalidateShadow];
+    [self display];
+}
 @end

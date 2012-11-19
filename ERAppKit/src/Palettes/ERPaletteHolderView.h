@@ -19,7 +19,7 @@
     ERPaletteTabView *_downTabs;
 }
 
-- (void)addPaletteWithContentView:(NSView *)contentView withTitle:(NSString *)paletteTitle atPosition:(ERPalettePanelPosition)pos;
+- (void)addPaletteWithContentView:(NSView *)contentView icon:(NSImage *)icon title:(NSString *)paletteTitle atPosition:(ERPalettePanelPosition)pos;
 
 - (BOOL)isFrameEmptyFromPalettes:(NSRect)frame except:(NSWindow *)window;
 @end
