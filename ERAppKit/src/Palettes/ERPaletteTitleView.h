@@ -8,8 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class ERPaletteButton;
+
 @interface ERPaletteTitleView : NSView
 {
     NSPoint _draggingStartPoint;
+    ERPaletteButton *_closeButton;
 }
+- (void)updateCloseButtonPosition;
 @end

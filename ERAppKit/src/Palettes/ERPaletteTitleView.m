@@ -18,11 +18,11 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-        ERPaletteButton *closeButton = [[ERPaletteButton alloc] initWithFrame:NSMakeRect(NSMaxX([self bounds])-15, (frame.size.height-10.)/2., 10, 10)];
-        [self addSubview:closeButton];
-        [closeButton release];
-        [closeButton setTarget:[self window]];
-        [closeButton setAction:@selector(collapse:)];
+        _closeButton = [[ERPaletteButton alloc] initWithFrame:NSMakeRect(NSMaxX([self bounds])-15, (frame.size.height-10.)/2., 10, 10)];
+        [self addSubview:_closeButton];
+        [_closeButton release];
+        [_closeButton setTarget:[self window]];
+        [_closeButton setAction:@selector(collapse:)];
     }
     
     return self;
@@ -50,6 +50,10 @@
     NSAttributedString *title = [[NSAttributedString alloc] initWithString:[[self window] title] attributes:attributes];
     
     NSPoint drawPoint = NSMakePoint(NSMinX([self bounds])+10, NSMinY([self bounds])+(NSHeight([self bounds])-[title size].height)/2.);
+    
+    if ([(ERPalettePanel *)[self window] effectiveHeaderPosition] == ERPalettePanelPositionLeft) {
+        drawPoint.x = NSMaxX([self bounds]) - [title size].width - drawPoint.x;
+    }
     [title drawAtPoint:drawPoint];
     [title release];
 }
@@ -128,5 +132,12 @@
     
 }
 
-
+- (void)updateCloseButtonPosition
+{
+    if ([(ERPalettePanel *)[self window] effectiveHeaderPosition] == ERPalettePanelPositionLeft) {
+        [_closeButton setFrameOrigin:NSMakePoint(5, ([self bounds].size.height-10.)/2.)];
+    }else{
+        [_closeButton setFrameOrigin:NSMakePoint(NSMaxX([self bounds])-15, ([self bounds].size.height-10.)/2.)];
+    }
+}
 @end

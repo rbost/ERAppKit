@@ -120,6 +120,7 @@ static CGFloat __tabHeight = 30.;
     _palettePosition = palettePosition;
     [_tabButton setFrameSize:[self tabSize]];
     [_tabButton setNeedsDisplay:YES];
+
     // update the content autosizing mask with respect to the new position of the palette
     [self updateFrameSizeAndContentPlacement];
     [self updateAutoresizingMask];
@@ -367,7 +368,8 @@ static CGFloat __tabHeight = 30.;
         
 
     }
-    
+    [_titleView updateCloseButtonPosition];
+
     _state = state;
 }
 
