@@ -527,6 +527,8 @@ static CGFloat __barThickness = 30.;
                 [self setNeedsDisplay:YES];
                 
                 return NSDragOperationMove;
+            }else{
+                return NSDragOperationMove;
             }
         }
 
@@ -572,7 +574,7 @@ static CGFloat __barThickness = 30.;
                 _highlight = NO;
                 [self setNeedsDisplay:YES];
 
-                return NSDragOperationNone;
+                return NSDragOperationMove;
             }
         }
         
@@ -671,7 +673,7 @@ static CGFloat __barThickness = 30.;
 
                 return YES;
             }else{
-                return NO;
+                return YES;
             }
         }
         
