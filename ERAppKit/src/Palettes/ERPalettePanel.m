@@ -396,6 +396,58 @@ static CGFloat __tabHeight = 30.;
     }
 }
 
+- (IBAction)openUp:(id)sender
+{
+    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 1) { // up or down
+        if ([self palettePosition] == ERPalettePanelPositionDown) {
+            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
+        }else{
+            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
+        }
+        
+        [self setState:ERPaletteOpened animate:YES];
+    }
+}
+
+- (IBAction)openDown:(id)sender
+{
+    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 1) { // up or down
+        if ([self palettePosition] == ERPalettePanelPositionDown) {
+            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
+        }else{
+            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
+        }
+        
+        [self setState:ERPaletteOpened animate:YES];
+    }
+}
+
+- (IBAction)openRight:(id)sender
+{
+    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 0) { // up or down
+        if ([self palettePosition] == ERPalettePanelPositionRight) {
+            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
+        }else{
+            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
+        }
+        
+        [self setState:ERPaletteOpened animate:YES];
+    }
+}
+
+- (IBAction)openLeft:(id)sender
+{
+    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 0) { // up or down
+        if ([self palettePosition] == ERPalettePanelPositionRight) {
+            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
+        }else{
+            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
+        }
+        
+        [self setState:ERPaletteOpened animate:YES];
+    }
+}
+
 - (NSView *)content
 {
     return _content;

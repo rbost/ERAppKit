@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6C2289A81650221C000E33D3 /* ERPaletteTabButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C2289A61650221C000E33D3 /* ERPaletteTabButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6C2289A91650221C000E33D3 /* ERPaletteTabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2289A71650221C000E33D3 /* ERPaletteTabButton.m */; };
 		6C27B57F161B9158002D1EF9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C27B57E161B9158002D1EF9 /* Cocoa.framework */; };
 		6C27B589161B9158002D1EF9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6C27B587161B9158002D1EF9 /* InfoPlist.strings */; };
 		6C27B5A3161B91CD002D1EF9 /* ERFadingAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B598161B91CD002D1EF9 /* ERFadingAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -52,6 +50,12 @@
 		6C722C5E164AF1870011BA2F /* ERPaletteContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */; };
 		6C722C61164B0FE50011BA2F /* ERPaletteHolderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C722C62164B0FE50011BA2F /* ERPaletteHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */; };
+		6C8C750C166095190088C47F /* ERPaletteOpenButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C8C750A166095190088C47F /* ERPaletteOpenButton.h */; };
+		6C8C750D166095190088C47F /* ERPaletteOpenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C750B166095190088C47F /* ERPaletteOpenButton.m */; };
+		6C8C75101660957B0088C47F /* ERPaletteOpenPopupContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C8C750E1660957B0088C47F /* ERPaletteOpenPopupContentView.h */; };
+		6C8C75111660957B0088C47F /* ERPaletteOpenPopupContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C750F1660957B0088C47F /* ERPaletteOpenPopupContentView.m */; };
+		6C8C7514166095D40088C47F /* ERPaletteOpenPopup.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C8C7512166095D40088C47F /* ERPaletteOpenPopup.h */; };
+		6C8C7515166095D40088C47F /* ERPaletteOpenPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C7513166095D40088C47F /* ERPaletteOpenPopup.m */; };
 		6C96860716558369005168C4 /* ERPaletteButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C96860516558368005168C4 /* ERPaletteButton.h */; };
 		6C96860816558369005168C4 /* ERPaletteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C96860616558369005168C4 /* ERPaletteButton.m */; };
 		6CBD5C5A1650BA750035C6F7 /* ERPaletteTitleView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CBD5C581650BA750035C6F7 /* ERPaletteTitleView.h */; };
@@ -88,8 +92,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6C2289A61650221C000E33D3 /* ERPaletteTabButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteTabButton.h; path = src/Palettes/ERPaletteTabButton.h; sourceTree = "<group>"; };
-		6C2289A71650221C000E33D3 /* ERPaletteTabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteTabButton.m; path = src/Palettes/ERPaletteTabButton.m; sourceTree = "<group>"; };
 		6C27B57B161B9158002D1EF9 /* ERAppKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ERAppKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C27B57E161B9158002D1EF9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		6C27B581161B9158002D1EF9 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -141,6 +143,12 @@
 		6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteContentView.m; path = src/Palettes/ERPaletteContentView.m; sourceTree = "<group>"; };
 		6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteHolderView.h; path = src/Palettes/ERPaletteHolderView.h; sourceTree = "<group>"; };
 		6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteHolderView.m; path = src/Palettes/ERPaletteHolderView.m; sourceTree = "<group>"; };
+		6C8C750A166095190088C47F /* ERPaletteOpenButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteOpenButton.h; path = "src/Palettes/Opener Popup/ERPaletteOpenButton.h"; sourceTree = "<group>"; };
+		6C8C750B166095190088C47F /* ERPaletteOpenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteOpenButton.m; path = "src/Palettes/Opener Popup/ERPaletteOpenButton.m"; sourceTree = "<group>"; };
+		6C8C750E1660957B0088C47F /* ERPaletteOpenPopupContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteOpenPopupContentView.h; path = "src/Palettes/Opener Popup/ERPaletteOpenPopupContentView.h"; sourceTree = "<group>"; };
+		6C8C750F1660957B0088C47F /* ERPaletteOpenPopupContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteOpenPopupContentView.m; path = "src/Palettes/Opener Popup/ERPaletteOpenPopupContentView.m"; sourceTree = "<group>"; };
+		6C8C7512166095D40088C47F /* ERPaletteOpenPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteOpenPopup.h; path = "src/Palettes/Opener Popup/ERPaletteOpenPopup.h"; sourceTree = "<group>"; };
+		6C8C7513166095D40088C47F /* ERPaletteOpenPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteOpenPopup.m; path = "src/Palettes/Opener Popup/ERPaletteOpenPopup.m"; sourceTree = "<group>"; };
 		6C96860516558368005168C4 /* ERPaletteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteButton.h; path = src/Palettes/ERPaletteButton.h; sourceTree = "<group>"; };
 		6C96860616558369005168C4 /* ERPaletteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERPaletteButton.m; path = src/Palettes/ERPaletteButton.m; sourceTree = "<group>"; };
 		6CBD5C581650BA750035C6F7 /* ERPaletteTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERPaletteTitleView.h; path = src/Palettes/ERPaletteTitleView.h; sourceTree = "<group>"; };
@@ -321,6 +329,7 @@
 		6C722C55164AF04E0011BA2F /* Palettes */ = {
 			isa = PBXGroup;
 			children = (
+				6C8C7508166094BE0088C47F /* Opener Popup */,
 				6C722C57164AF0C30011BA2F /* ERPalettePanel.h */,
 				6C722C58164AF0C30011BA2F /* ERPalettePanel.m */,
 				6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */,
@@ -331,14 +340,25 @@
 				6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */,
 				6CE48139164C48C6001001C8 /* ERPaletteTabView.h */,
 				6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */,
-				6C2289A61650221C000E33D3 /* ERPaletteTabButton.h */,
-				6C2289A71650221C000E33D3 /* ERPaletteTabButton.m */,
 				6CBD5C5D1650CE3F0035C6F7 /* ERPaletteTab.h */,
 				6CBD5C5E1650CE3F0035C6F7 /* ERPaletteTab.m */,
 				6C96860516558368005168C4 /* ERPaletteButton.h */,
 				6C96860616558369005168C4 /* ERPaletteButton.m */,
 			);
 			name = Palettes;
+			sourceTree = "<group>";
+		};
+		6C8C7508166094BE0088C47F /* Opener Popup */ = {
+			isa = PBXGroup;
+			children = (
+				6C8C750A166095190088C47F /* ERPaletteOpenButton.h */,
+				6C8C750B166095190088C47F /* ERPaletteOpenButton.m */,
+				6C8C750E1660957B0088C47F /* ERPaletteOpenPopupContentView.h */,
+				6C8C750F1660957B0088C47F /* ERPaletteOpenPopupContentView.m */,
+				6C8C7512166095D40088C47F /* ERPaletteOpenPopup.h */,
+				6C8C7513166095D40088C47F /* ERPaletteOpenPopup.m */,
+			);
+			name = "Opener Popup";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -361,11 +381,13 @@
 				6C722C5D164AF1870011BA2F /* ERPaletteContentView.h in Headers */,
 				6C722C61164B0FE50011BA2F /* ERPaletteHolderView.h in Headers */,
 				6CE4813B164C48C6001001C8 /* ERPaletteTabView.h in Headers */,
-				6C2289A81650221C000E33D3 /* ERPaletteTabButton.h in Headers */,
 				6CBD5C5A1650BA750035C6F7 /* ERPaletteTitleView.h in Headers */,
 				6CBD5C5F1650CE3F0035C6F7 /* ERPaletteTab.h in Headers */,
 				6C96860716558369005168C4 /* ERPaletteButton.h in Headers */,
 				6C57F81816585142004D37C8 /* NSBezierPath+ERAppKit.h in Headers */,
+				6C8C750C166095190088C47F /* ERPaletteOpenButton.h in Headers */,
+				6C8C75101660957B0088C47F /* ERPaletteOpenPopupContentView.h in Headers */,
+				6C8C7514166095D40088C47F /* ERPaletteOpenPopup.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,11 +505,13 @@
 				6C722C5E164AF1870011BA2F /* ERPaletteContentView.m in Sources */,
 				6C722C62164B0FE50011BA2F /* ERPaletteHolderView.m in Sources */,
 				6CE4813C164C48C6001001C8 /* ERPaletteTabView.m in Sources */,
-				6C2289A91650221C000E33D3 /* ERPaletteTabButton.m in Sources */,
 				6CBD5C5B1650BA750035C6F7 /* ERPaletteTitleView.m in Sources */,
 				6CBD5C601650CE3F0035C6F7 /* ERPaletteTab.m in Sources */,
 				6C96860816558369005168C4 /* ERPaletteButton.m in Sources */,
 				6C57F81916585142004D37C8 /* NSBezierPath+ERAppKit.m in Sources */,
+				6C8C750D166095190088C47F /* ERPaletteOpenButton.m in Sources */,
+				6C8C75111660957B0088C47F /* ERPaletteOpenPopupContentView.m in Sources */,
+				6C8C7515166095D40088C47F /* ERPaletteOpenPopup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

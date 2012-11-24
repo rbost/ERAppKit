@@ -12,8 +12,15 @@
 #import <ERAppKit/ERPaletteTabView.h>
 
 #import <ERAppKit/NSBezierPath+ERAppKit.h>
+#import <ERAppKit/ERGeometry.h>
+
+#import <ERAppKit/ERPaletteOpenPopup.h>
 
 #define TAB_ROUNDED_RADIUS 5.
+
+@interface ERPaletteTab ()
+- (void)_getDrawingRectsTabRect:(NSRect *)tabRectPtr bounds:(NSRect *)boundsPtr;
+@end
 
 @implementation ERPaletteTab
 + (NSBezierPath *)openedTabCorner
@@ -42,18 +49,8 @@
 
 @synthesize palette;
 
-- (void)drawRect:(NSRect)dirtyRect
+- (void)_getDrawingRectsTabRect:(NSRect *)tabRectPtr bounds:(NSRect *)boundsPtr
 {
-    [[NSColor redColor] set];
-//    [NSBezierPath fillRect:dirtyRect];
-    
-    // Drawing code here.
-    if ([[self palette] state] == ERPaletteClosed) {
-        [[NSColor colorWithCalibratedWhite:0.4 alpha:0.9] set];
-    }else{
-        [[NSColor colorWithCalibratedWhite:0.1 alpha:0.9] set];
-    }
-
     NSRect bounds, tabRect;
     if ([[self palette] palettePosition] == ERPalettePanelPositionUp || [[self palette] palettePosition] == ERPalettePanelPositionDown) {
         bounds = NSInsetRect([self bounds],TAB_ROUNDED_RADIUS,0.);
@@ -75,7 +72,7 @@
         bounds = NSInsetRect([self bounds],0.,TAB_ROUNDED_RADIUS);
         bounds.origin.y += TAB_ROUNDED_RADIUS;
         bounds.size.height -= TAB_ROUNDED_RADIUS;
-
+        
         tabRect = bounds;
         if ([[self palette] state] == ERPaletteClosed) {
             tabRect = NSInsetRect(tabRect, 2.,0);
@@ -87,6 +84,29 @@
             }
         }
     }
+    
+    if (tabRectPtr != NULL) {
+        *tabRectPtr = tabRect;
+    }
+    
+    if (boundsPtr != NULL) {
+        *boundsPtr = bounds;
+    }
+}
+- (void)drawRect:(NSRect)dirtyRect
+{
+    [[NSColor redColor] set];
+//    [NSBezierPath fillRect:dirtyRect];
+    
+    // Drawing code here.
+    if ([[self palette] state] == ERPaletteClosed) {
+        [[NSColor colorWithCalibratedWhite:0.4 alpha:0.9] set];
+    }else{
+        [[NSColor colorWithCalibratedWhite:0.1 alpha:0.9] set];
+    }
+
+    NSRect bounds, tabRect;
+    [self _getDrawingRectsTabRect:&tabRect bounds:&bounds];
 
     int corners;
     
@@ -218,6 +238,20 @@
     if ([theEvent clickCount] == 1) {
         [[self palette] toggleCollapse:self];
     }
+}
+
+- (void)rightMouseUp:(NSEvent *)theEvent
+{
+    if ([[self palette] state] == ERPaletteOpened) {
+        return;
+    }
+    NSPoint screenLocation;
+    NSRect tabRect;
+    [self _getDrawingRectsTabRect:&tabRect bounds:NULL];
+    tabRect = [self convertRect:tabRect toView:nil];
+    screenLocation = ERCenterPointOfRect([[self window] convertRectToScreen:tabRect]);
+    
+    [ERPaletteOpenPopup popupWithOrientation:(([[self palette] palettePosition])%2) palettePanel:[self palette] atLocation:screenLocation];
 }
 
 // pass the dragging methods to the tab view so it can be handled properly

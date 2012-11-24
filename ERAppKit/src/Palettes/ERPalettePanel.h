@@ -65,6 +65,11 @@ typedef enum {
 - (IBAction)collapse:(id)sender;
 - (IBAction)openInBestDirection:(id)sender;
 - (IBAction)toggleCollapse:(id)sender;
+- (IBAction)openUp:(id)sender;
+- (IBAction)openDown:(id)sender;
+- (IBAction)openRight:(id)sender;
+- (IBAction)openLeft:(id)sender;
+
 - (NSView *)content;
 - (void)setContent:(NSView *)newContent;
 - (NSRect)contentScreenFrame;

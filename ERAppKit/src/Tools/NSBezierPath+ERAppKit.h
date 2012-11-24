@@ -20,4 +20,6 @@ typedef enum{
 @interface NSBezierPath (ERAppKit)
 + (NSBezierPath *)bezierPathWithRoundedRect:(NSRect)rect radius:(CGFloat)radius corners:(int)cornerMasks;
 - (void)appendBezierPathWithRoundedRect:(NSRect)aRect radius:(CGFloat)radius corners:(int)cornerMasks;
+
++ (NSBezierPath *)centeredRightArrow;
 @end

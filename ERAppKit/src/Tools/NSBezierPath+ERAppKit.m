@@ -58,4 +58,30 @@
 
     [self closePath];
 }
+
+
++ (NSBezierPath *)centeredRightArrow
+{
+    NSBezierPath *arrow = [NSBezierPath bezierPath];
+    
+    CGFloat y1 = 7.,y2 = 12.;
+    CGFloat x1 = 12., x2 = 25;
+    
+    [arrow moveToPoint:NSMakePoint(0, y1)];
+    [arrow lineToPoint:NSMakePoint(x1, y1)];
+    [arrow lineToPoint:NSMakePoint(x1, y2)];
+    [arrow lineToPoint:NSMakePoint(x2, 0)];
+    [arrow lineToPoint:NSMakePoint(x1, -y2)];
+    [arrow lineToPoint:NSMakePoint(x1, -y1)];
+    [arrow lineToPoint:NSMakePoint(0, -y1)];
+    [arrow closePath];
+    
+    
+    NSRect bounds = [arrow bounds];
+    NSAffineTransform *at = [NSAffineTransform transform];
+    
+    [at translateXBy:-bounds.size.width/2. yBy:0];
+    [arrow transformUsingAffineTransform:at];
+    return arrow;
+}
 @end
