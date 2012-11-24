@@ -11,10 +11,10 @@
 #import <ERAppKit/ERPaletteTabButton.h>
 
 typedef enum{
-    ERPalettePanelPositionUp = 0,
-    ERPalettePanelPositionRight,
+    ERPalettePanelPositionRight = 0,
     ERPalettePanelPositionDown,
-    ERPalettePanelPositionLeft
+    ERPalettePanelPositionLeft,
+    ERPalettePanelPositionUp
 }ERPalettePanelPosition;
 
 typedef enum{
