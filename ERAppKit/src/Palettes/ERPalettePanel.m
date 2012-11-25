@@ -84,7 +84,8 @@ static CGFloat __tabHeight = 30.;
     [_tabButton release];
     [_tabButton setPalette:self];
 
-    [self updateFrameSizeAndContentPlacement];
+    [self updateFrameSize];
+    [self updateContentPlacement];
     [self updateAutoresizingMask];
     
     [self setFloatingPanel:YES];
@@ -122,7 +123,8 @@ static CGFloat __tabHeight = 30.;
     [_tabButton setNeedsDisplay:YES];
 
     // update the content autosizing mask with respect to the new position of the palette
-    [self updateFrameSizeAndContentPlacement];
+    [self updateFrameSize];
+    [self updateContentPlacement];
     [self updateAutoresizingMask];
     [[self contentView] setNeedsDisplay:YES];
 }
@@ -147,7 +149,8 @@ static CGFloat __tabHeight = 30.;
 - (void)setOpeningDirection:(ERPaletteOpeningDirection)openingDirection
 {
     _openingDirection = openingDirection;
-    [self updateFrameSizeAndContentPlacement];
+//    [self updateFrameSize];
+    [self updateContentPlacement];
     [self updateAutoresizingMask];
 }
 
@@ -252,33 +255,34 @@ static CGFloat __tabHeight = 30.;
     [_tabButton setAutoresizingMask:mask];
 }
 
-- (void)updateFrameSizeAndContentPlacement
+- (void)updateFrameSize
 {
     NSRect frame = [self frame];
     
     frame.size = [self paletteSize];
     [self setFrame:frame display:YES];
+}
 
+- (void)updateContentPlacement
+{
     NSPoint frameOrigin = NSZeroPoint;
     ERPalettePanelPosition pos = [self effectiveHeaderPosition];
-    
+    NSRect tabRect = [self tabRect];
+
     if (pos == ERPalettePanelPositionUp) {
         frameOrigin.y = [ERPaletteContentView paletteTitleHeight]+[ERPalettePanel tabHeight];
     }else if(pos == ERPalettePanelPositionDown) {
-        frameOrigin.y = [self paletteSize].height - [ERPaletteContentView paletteTitleHeight] - [ERPalettePanel tabHeight] - [[self content] frame].size.height;
+        frameOrigin.y = NSMinY(tabRect) - [ERPaletteContentView paletteTitleHeight] - [[self content] frame].size.height;
     }else if (pos == ERPalettePanelPositionRight) {
         frameOrigin.x = [ERPalettePanel tabHeight];
-        frameOrigin.y = [self paletteSize].height - [ERPaletteContentView paletteTitleHeight] - [[self content] frame].size.height;
-
+        frameOrigin.y = NSMaxY(tabRect) - [ERPaletteContentView paletteTitleHeight] - [[self content] frame].size.height;
     }else if (pos == ERPalettePanelPositionLeft) {
-        frameOrigin.x = [self paletteSize].width - [ERPalettePanel tabHeight] - [[self content] frame].size.width;
-        frameOrigin.y = [self paletteSize].height - [ERPaletteContentView paletteTitleHeight] - [[self content] frame].size.height;
-
+        frameOrigin.x = NSMinX(tabRect) - [[self content] frame].size.width;
+        frameOrigin.y = NSMaxY(tabRect) - [ERPaletteContentView paletteTitleHeight] - [[self content] frame].size.height;
     }
     
     [_content setFrameOrigin:frameOrigin];
     
-    NSRect tabRect = [self tabRect];
     if (pos == ERPalettePanelPositionUp) {
         frameOrigin = NSMakePoint(NSMinX(tabRect), NSMaxY(tabRect));
     }else if(pos == ERPalettePanelPositionDown) {
@@ -319,7 +323,7 @@ static CGFloat __tabHeight = 30.;
         }else{
             [self setFrame:tabFrame display:YES];
         }
-    }else{
+    }else if (state == ERPaletteOpened) {
         NSSize contentSize = [self paletteContentSize];
         NSRect newFrame,tabFrame;
         newFrame.size = [self openedPaletteSize];
@@ -367,7 +371,51 @@ static CGFloat __tabHeight = 30.;
         }
         
 
+    }else if(state == ERPaletteTooltip) {
+        NSRect headerRect, tabRect;
+        headerRect = [self headerRect];
+        tabRect = [self tabRect];
+        NSRect newFrame;
+        
+        newFrame = tabRect;
+        
+        
+        ERPalettePanelPosition pos = [self effectiveHeaderPosition];
+        
+        switch (pos) {
+            case ERPalettePanelPositionLeft:
+                newFrame.size.width += [self paletteContentSize].width;
+                newFrame.origin.x -= [self paletteContentSize].width;
+                break;
+                
+            case ERPalettePanelPositionRight:
+                newFrame.size.width += [self paletteContentSize].width;
+                break;
+                
+            case ERPalettePanelPositionUp:
+                newFrame.size.width = [self paletteContentSize].width;
+                newFrame.size.height += [ERPaletteContentView paletteTitleHeight];
+                break;
+                
+            case ERPalettePanelPositionDown:
+                newFrame.size.width = [self paletteContentSize].width;
+                newFrame.size.height += [ERPaletteContentView paletteTitleHeight];
+                newFrame.origin.y -= [ERPaletteContentView paletteTitleHeight];
+                break;
+                
+            default:
+                break;
+        }
+
+        newFrame = [self convertRectToScreen:newFrame];
+        
+        if (animate) {
+            [[self animator] setFrame:newFrame display:YES];
+        }else{
+            [self setFrame:newFrame display:YES];
+        }
     }
+    
     [_titleView updateCloseButtonPosition];
 
     _state = state;
@@ -389,11 +437,20 @@ static CGFloat __tabHeight = 30.;
     if (! [self isAttached]) { // if the palette is detached, do nothing
         return;
     }
-    if (_state != ERPaletteClosed) {
+    if (_state == ERPaletteOpened) {
         [self collapse:sender];
     }else{
         [self openInBestDirection:sender];
     }
+}
+
+- (IBAction)showTooltip:(id)sender
+{
+    if ([self state] != ERPaletteClosed) {
+        return;
+    }
+    [self setOpeningDirection:[self bestOpeningDirection]];
+    [self setState:ERPaletteTooltip animate:YES];
 }
 
 - (IBAction)openUp:(id)sender
@@ -520,12 +577,28 @@ static CGFloat __tabHeight = 30.;
     return [self tabSize];
 }
 
+- (NSSize)tooltipPaletteSize
+{
+    NSSize size = [_titleView frame].size;
+    
+    if ([self palettePosition]%2 == 0) {
+        size.height += [ERPalettePanel tabWidth];
+        size.width += [ERPalettePanel tabHeight];
+    }else{
+        size.width += [ERPalettePanel tabWidth];
+    }
+    
+    return size;
+}
+
 - (NSSize)paletteSize
 {
     if ([self state] == ERPaletteClosed) {
         return [self closedPaletteSize];
-    }else{
+    }else if ([self state] == ERPaletteOpened){
         return [self openedPaletteSize];
+    }else if ([self state] == ERPaletteTooltip){
+        return [self tooltipPaletteSize];
     }
 }
 

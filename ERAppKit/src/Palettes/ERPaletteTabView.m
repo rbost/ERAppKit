@@ -35,7 +35,7 @@ static CGFloat __barThickness = 30.;
     
     [origin removePalette:palette];
     [destination addPalette:palette];
-    [palette updateFrameSizeAndContentPlacement];
+    [palette updateContentPlacement];
     [[palette contentView] setNeedsDisplay:YES];
     
     [palette release];

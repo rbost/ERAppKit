@@ -19,7 +19,8 @@ typedef enum{
 
 typedef enum{
     ERPaletteClosed = 0,
-    ERPaletteOpened
+    ERPaletteOpened,
+    ERPaletteTooltip
 }ERPaletteState;
 
 typedef enum {
@@ -65,6 +66,7 @@ typedef enum {
 - (IBAction)collapse:(id)sender;
 - (IBAction)openInBestDirection:(id)sender;
 - (IBAction)toggleCollapse:(id)sender;
+- (IBAction)showTooltip:(id)sender;
 - (IBAction)openUp:(id)sender;
 - (IBAction)openDown:(id)sender;
 - (IBAction)openRight:(id)sender;
@@ -78,7 +80,7 @@ typedef enum {
 
 - (void)setState:(ERPaletteState)state animate:(BOOL)animate;
 - (void)updateAutoresizingMask;
-- (void)updateFrameSizeAndContentPlacement;
+- (void)updateContentPlacement;
 
 - (ERPalettePanelPosition)effectiveHeaderPosition;
 

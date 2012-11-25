@@ -8,11 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import <ERAppKit/ERTimer.h>
+
 @class ERPalettePanel;
 
 @interface ERPaletteTab : NSButton
 {
-    NSPoint _draggingStartPoint;;
+    NSPoint _draggingStartPoint;
+    
+    NSTrackingArea *_mouseOverArea;
+    ERTimer *_mouseOverTimer;
 }
 @property (assign) ERPalettePanel *palette;
 @end

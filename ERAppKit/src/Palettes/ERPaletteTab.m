@@ -18,6 +18,8 @@
 
 #define TAB_ROUNDED_RADIUS 5.
 
+#define ERTAB_MOUSEOVER_INTERVAL 1.
+
 @interface ERPaletteTab ()
 - (void)_getDrawingRectsTabRect:(NSRect *)tabRectPtr bounds:(NSRect *)boundsPtr;
 @end
@@ -36,15 +38,37 @@
 
     return bp;
 }
+
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
         [self registerForDraggedTypes:[NSArray arrayWithObject:ERPalettePboardType]];
+        
+        NSRect bounds;
+        [self _getDrawingRectsTabRect:NULL bounds:&bounds];
+        _mouseOverArea = [[NSTrackingArea alloc] initWithRect:bounds
+                                                      options: (NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp )
+                                                        owner:self userInfo:nil];
+        
+        [self addTrackingArea:_mouseOverArea];
+        
+        
+        _mouseOverTimer = [[ERTimer alloc] initWithTimeInterval:ERTAB_MOUSEOVER_INTERVAL target:self selector:@selector(_timerCallBack) argument:nil];
+
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [_mouseOverArea release];
+    [_mouseOverTimer stop];
+    [_mouseOverTimer release];
+    
+    [super dealloc];
 }
 
 @synthesize palette;
@@ -252,6 +276,52 @@
     screenLocation = ERCenterPointOfRect([[self window] convertRectToScreen:tabRect]);
     
     [ERPaletteOpenPopup popupWithOrientation:(([[self palette] palettePosition])%2) palettePanel:[self palette] atLocation:screenLocation];
+}
+
+
+- (void)updateTrackingAreas
+{
+    [self removeTrackingArea:_mouseOverArea];
+    [_mouseOverArea release];
+    
+    
+    NSRect bounds;
+    [self _getDrawingRectsTabRect:NULL bounds:&bounds];
+    _mouseOverArea = [[NSTrackingArea alloc] initWithRect:bounds
+                                        options: (NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp )
+                                          owner:self userInfo:nil];
+
+    [self addTrackingArea:_mouseOverArea];
+}
+
+- (void)mouseEntered:(NSEvent *)theEvent
+{
+//    NSLog(@"mouse entered");
+    
+    if ([[self palette] state] == ERPaletteClosed) {
+        [_mouseOverTimer start];
+    }
+}
+
+- (void)mouseExited:(NSEvent *)theEvent
+{
+//    NSLog(@"mouse exited");
+    [_mouseOverTimer stop];
+    
+    if ([palette state] == ERPaletteTooltip) {
+        [palette setState:ERPaletteClosed animate:YES];
+    }
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+//    NSLog(@"mouse moved");
+}
+
+- (void)_timerCallBack
+{
+//    NSLog(@"timer finished");
+    [[self palette] showTooltip:self];
 }
 
 // pass the dragging methods to the tab view so it can be handled properly

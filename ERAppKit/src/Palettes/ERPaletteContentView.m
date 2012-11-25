@@ -33,7 +33,7 @@ static CGFloat __paletteTitleHeight = 20.;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    
+
     NSRect filledRect;
     filledRect = [(ERPalettePanel *)[self window] paletteContentFrame];
 
