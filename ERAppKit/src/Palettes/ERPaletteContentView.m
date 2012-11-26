@@ -35,7 +35,7 @@ static CGFloat __paletteTitleHeight = 20.;
 {
 
     NSRect filledRect;
-    filledRect = [(ERPalettePanel *)[self window] paletteContentFrame];
+    filledRect = [(ERPalettePanel *)[self window] contentFilledRect];
 
     int corners;
     
@@ -61,7 +61,7 @@ static CGFloat __paletteTitleHeight = 20.;
             break;
     }
     NSBezierPath *bckGrd = [NSBezierPath bezierPathWithRoundedRect:filledRect radius:5. corners:ERAllCorners];
-
+    bckGrd = [NSBezierPath bezierPathWithRoundedRect:filledRect xRadius:5. yRadius:5.];
     [[NSColor colorWithCalibratedWhite:0.1 alpha:0.95] set];
     [bckGrd fill];
     [[NSColor colorWithCalibratedWhite:0.5 alpha:0.95] set];

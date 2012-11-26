@@ -283,20 +283,44 @@ static CGFloat __tabHeight = 30.;
     
     [_content setFrameOrigin:frameOrigin];
     
-    if (pos == ERPalettePanelPositionUp) {
-        frameOrigin = NSMakePoint(NSMinX(tabRect), NSMaxY(tabRect));
-    }else if(pos == ERPalettePanelPositionDown) {
-        frameOrigin = NSMakePoint(NSMinX(tabRect), NSMinY(tabRect)-[_titleView frame].size.height);
-    }else if (pos == ERPalettePanelPositionRight) {
-        frameOrigin = NSMakePoint(NSMaxX(tabRect), NSMaxY(tabRect)-[_titleView frame].size.height);
-    }else if (pos == ERPalettePanelPositionLeft) {
-        frameOrigin = NSMakePoint(NSMinX(tabRect)-[_titleView frame].size.width, NSMaxY(tabRect)-[_titleView frame].size.height);
-    }
-
-    [_titleView setFrameOrigin:frameOrigin];
+    [self updateTitleViewPlacement];
+    
     [_tabButton setFrameOrigin:[self tabRect].origin];
 }
 
+- (void)updateTitleViewPlacement
+{
+    NSPoint frameOrigin = NSZeroPoint;
+    ERPalettePanelPosition pos = [self effectiveHeaderPosition];
+    NSRect tabRect = [self tabRect];
+
+    if ([self state] == ERPaletteTooltip) {
+        NSRect tabButtonRect = [_tabButton convertRect:[_tabButton drawnButtonRect] toView:nil];
+        
+        
+        if (pos == ERPalettePanelPositionUp) {
+            frameOrigin = NSMakePoint(NSMinX(tabRect), NSMaxY(tabButtonRect));
+        }else if(pos == ERPalettePanelPositionDown) {
+            frameOrigin = NSMakePoint(NSMinX(tabRect), NSMinY(tabButtonRect)-[_titleView frame].size.height);
+        }else if (pos == ERPalettePanelPositionRight) {
+            frameOrigin = NSMakePoint(NSMaxX(tabButtonRect), NSMaxY(tabButtonRect)-[_titleView frame].size.height);
+        }else if (pos == ERPalettePanelPositionLeft) {
+            frameOrigin = NSMakePoint(NSMinX(tabButtonRect)-[_titleView frame].size.width, NSMaxY(tabButtonRect)-[_titleView frame].size.height);
+        }
+    }else{
+        if (pos == ERPalettePanelPositionUp) {
+            frameOrigin = NSMakePoint(NSMinX(tabRect), NSMaxY(tabRect));
+        }else if(pos == ERPalettePanelPositionDown) {
+            frameOrigin = NSMakePoint(NSMinX(tabRect), NSMinY(tabRect)-[_titleView frame].size.height);
+        }else if (pos == ERPalettePanelPositionRight) {
+            frameOrigin = NSMakePoint(NSMaxX(tabRect), NSMaxY(tabRect)-[_titleView frame].size.height);
+        }else if (pos == ERPalettePanelPositionLeft) {
+            frameOrigin = NSMakePoint(NSMinX(tabRect)-[_titleView frame].size.width, NSMaxY(tabRect)-[_titleView frame].size.height);
+        }
+    }
+    [_titleView setFrameOrigin:frameOrigin];
+
+}
 - (ERPaletteState)state
 {
     return _state;
@@ -350,7 +374,6 @@ static CGFloat __tabHeight = 30.;
             case ERPalettePanelPositionDown:
                 newFrame.origin.x = NSMinX(tabFrame);
                 newFrame.origin.y = NSMinY(tabFrame) - contentSize.height;
-//                newFrame.origin.y -= contentSize.height + [[self contentView] headerRect].size.height;
                 break;
 
             default:
@@ -359,8 +382,6 @@ static CGFloat __tabHeight = 30.;
         newFrame = [[self contentView] convertRect:newFrame toView:nil];
         newFrame = [self convertRectToScreen:newFrame];
 
-//        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSValue valueWithRect:newFrame],ERPaletteNewFrameKey,
-//                                  nil]
         NSRect contentFrame = [self contentFrameForOpeningDirection:[self openingDirection]];
         [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidOpenNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:contentFrame] forKey:ERPaletteNewFrameKey]];
         
@@ -415,10 +436,17 @@ static CGFloat __tabHeight = 30.;
             [self setFrame:newFrame display:YES];
         }
     }
-    
+
     [_titleView updateCloseButtonPosition];
 
+    ERPaletteState oldState = _state;
     _state = state;
+
+    [_content setHidden:([self state] == ERPaletteTooltip)];
+    
+    if((oldState == ERPaletteClosed) || (oldState == ERPaletteTooltip && _state == ERPaletteOpened))
+        [self updateTitleViewPlacement];
+
 }
 
 - (IBAction)collapse:(id)sender
@@ -519,12 +547,6 @@ static CGFloat __tabHeight = 30.;
     [[self contentView] addSubview:_content];
     NSPoint frameOrigin = NSZeroPoint;
     
-//    if ([self palettePosition] == ERPalettePanelPositionUp) {
-//        frameOrigin.y = [ERPaletteContentView paletteTitleHeight];
-//    }else if ([self palettePosition] == ERPalettePanelPositionRight) {
-//        frameOrigin.x = [ERPaletteContentView paletteTitleHeight];
-//    }
-    
     [_content setFrameOrigin:frameOrigin];
 }
 
@@ -554,7 +576,41 @@ static CGFloat __tabHeight = 30.;
     
     frame.origin = NSMakePoint(MIN(headerOrigin.x, contentOrigin.x), MIN(headerOrigin.y, contentOrigin.y));
     frame.size = [self paletteContentSize];
-    
+        
+    return frame;
+}
+
+
+- (NSRect)contentFilledRect
+{
+    NSRect frame;
+    frame.size = [[self contentView] bounds].size;
+    NSRect tabRect = [self tabRect];
+
+    switch ([self effectiveHeaderPosition]) {
+        case ERPalettePanelPositionDown:
+            frame.origin = NSZeroPoint;
+            frame.size.height -= tabRect.size.height;
+            break;
+        case ERPalettePanelPositionUp:
+            frame.origin = NSMakePoint(0, NSMaxY(tabRect));
+            frame.size.height -= tabRect.size.height;
+            break;
+            
+        case ERPalettePanelPositionLeft:
+            frame.origin = NSMakePoint(0, 0);
+            frame.size.width -= tabRect.size.width;
+            break;
+            
+        case ERPalettePanelPositionRight:
+            frame.origin = NSMakePoint(NSMaxX(tabRect), 0);
+            frame.size.width -= tabRect.size.width;
+            break;
+            
+        default:
+            break;
+    }
+
     return frame;
 }
 
@@ -600,6 +656,8 @@ static CGFloat __tabHeight = 30.;
     }else if ([self state] == ERPaletteTooltip){
         return [self tooltipPaletteSize];
     }
+    
+    return NSZeroSize;
 }
 
 - (NSRect)headerRect

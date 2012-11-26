@@ -20,4 +20,5 @@
     ERTimer *_mouseOverTimer;
 }
 @property (assign) ERPalettePanel *palette;
+- (NSRect)drawnButtonRect;
 @end

@@ -117,6 +117,15 @@
         *boundsPtr = bounds;
     }
 }
+
+- (NSRect)drawnButtonRect
+{
+    NSRect bounds;
+    [self _getDrawingRectsTabRect:NULL bounds:&bounds];
+    
+    return bounds;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     [[NSColor redColor] set];
@@ -227,6 +236,7 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
    _draggingStartPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    [_mouseOverTimer stop];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
@@ -259,9 +269,8 @@
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-    if ([theEvent clickCount] == 1) {
-        [[self palette] toggleCollapse:self];
-    }
+    [_mouseOverTimer stop];
+    [[self palette] toggleCollapse:self];
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent

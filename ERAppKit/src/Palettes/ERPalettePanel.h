@@ -81,6 +81,8 @@ typedef enum {
 - (void)setState:(ERPaletteState)state animate:(BOOL)animate;
 - (void)updateAutoresizingMask;
 - (void)updateContentPlacement;
+- (void)updateTitleViewPlacement;
+
 
 - (ERPalettePanelPosition)effectiveHeaderPosition;
 
@@ -89,6 +91,7 @@ typedef enum {
 
 - (NSSize)paletteContentSize;
 - (NSRect)paletteContentFrame;
+- (NSRect)contentFilledRect;
 - (NSSize)openedPaletteSize;
 - (NSSize)closedPaletteSize;
 - (NSSize)paletteSize;
