@@ -18,6 +18,22 @@ NSPoint ERCenterPointOfRect(NSRect rect)
     return center;
 }
 
+NSRect ERSetCenterPointOfRect(NSRect rect, NSPoint newCenter)
+{
+    NSPoint center = ERCenterPointOfRect(rect);
+    
+    CGFloat dX, dY;
+    dX = newCenter.x - center.x;
+    dY = newCenter.y - center.y;
+
+    NSRect newRect = rect;
+    
+    newRect.origin.x += dX;
+    newRect.origin.y += dY;
+    
+    return newRect;
+}
+
 NSRect ERPutRectInRect(NSRect rect,NSRect container)
 {
     if(NSContainsRect(container, rect)){ // if rect is in the container, just return rect

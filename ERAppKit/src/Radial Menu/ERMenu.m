@@ -17,6 +17,9 @@ static NSGradient *__itemGradient = nil;
 static NSColor *__itemColor = nil;
 static NSColor *__itemStrokeColor = nil;
 
+static NSColor *__submenuArrowColor = nil;
+static NSColor *__submenuArrowSelectedColor = nil;
+
 static NSDictionary *__menuItemTitleAttributes = nil;
 static NSDictionary *__selectedMenuItemTitleAttributes = nil;
 
@@ -208,12 +211,45 @@ static CGFloat __menuRadius = 100.;
     __itemStrokeColor = color;
 }
 
++ (NSColor *)submenuArrowColor
+{
+    if(!__submenuArrowColor){
+        __submenuArrowColor = [[NSColor colorWithCalibratedWhite:0.3 alpha:1.0] copy];
+    }
+    
+    return __submenuArrowColor;
+}
+
++ (void)setSubmenuArrowColor:(NSColor *)color
+{
+    [color retain];
+    [__submenuArrowColor release];
+    __submenuArrowColor = color;
+}
+
++ (NSColor *)submenuArrowSelectedColor
+{
+    if(!__submenuArrowSelectedColor){
+        __submenuArrowSelectedColor = [[NSColor whiteColor] copy];
+    }
+    
+    return __submenuArrowSelectedColor;
+}
+
++ (void)setSubmenuArrowSelectedColor:(NSColor *)color
+{
+    [color retain];
+    [__submenuArrowSelectedColor release];
+    __submenuArrowSelectedColor = color;
+}
+
+
 + (NSDictionary *)menuItemTitleAttributes
 {
     if(!__menuItemTitleAttributes){
         __menuItemTitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                                  [NSColor textColor], NSForegroundColorAttributeName,
-                                 [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
+                                 [NSFont controlContentFontOfSize:12.0], NSFontAttributeName,
                                  nil];        
     }
     
@@ -233,7 +269,7 @@ static CGFloat __menuRadius = 100.;
     if(!__selectedMenuItemTitleAttributes){
         __selectedMenuItemTitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                               [NSColor selectedMenuItemTextColor], NSForegroundColorAttributeName,
-                              [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
+                              [NSFont controlContentFontOfSize:12.0], NSFontAttributeName,
                               nil];
         
     }
