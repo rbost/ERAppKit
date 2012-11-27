@@ -44,6 +44,8 @@ static CGFloat __tabHeight = 30.;
     }
 }
 
+#pragma mark Initialization and overrides
+
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
 {
     self = [super initWithContentRect:contentRect styleMask:(NSUtilityWindowMask) backing:bufferingType defer:deferCreation];
@@ -97,6 +99,13 @@ static CGFloat __tabHeight = 30.;
     return self;
 }
 
+- (void)dealloc
+{
+    [_content release];
+    
+    [super dealloc];
+}
+
 - (BOOL)canBecomeKeyWindow {
     return YES;
 }
@@ -108,6 +117,9 @@ static CGFloat __tabHeight = 30.;
 
     [super sendEvent:event];
 }
+
+#pragma mark Positioning properties
+
 - (ERPalettePanelPosition)palettePosition
 {
     return _palettePosition;
@@ -139,9 +151,6 @@ static CGFloat __tabHeight = 30.;
     return pos;
 }
 
-
-//@synthesize openingDirection = _openingDirection;
-
 - (ERPaletteOpeningDirection)openingDirection
 {
     return _openingDirection;
@@ -150,7 +159,6 @@ static CGFloat __tabHeight = 30.;
 - (void)setOpeningDirection:(ERPaletteOpeningDirection)openingDirection
 {
     _openingDirection = openingDirection;
-//    [self updateFrameSize];
     [self updateContentPlacement];
     [self updateAutoresizingMask];
 }
@@ -205,6 +213,7 @@ static CGFloat __tabHeight = 30.;
     return [self preferedOpeningDirection];
 }
 
+#pragma mark Content updating
 - (void)updateAutoresizingMask
 {
     NSUInteger mask;
@@ -283,9 +292,6 @@ static CGFloat __tabHeight = 30.;
     }
     
     [_content setFrameOrigin:frameOrigin];
-    
-//    [self updateTitleViewPlacement];
-    
     [_tabButton setFrameOrigin:[self tabRect].origin];
 }
 
@@ -325,6 +331,14 @@ static CGFloat __tabHeight = 30.;
         [_titleView setFrameOrigin:frameOrigin];        
     }
 }
+
+- (void)invalidateShadow
+{
+    [super invalidateShadow];
+    [self display];
+}
+
+#pragma mark Palette state
 
 - (ERPaletteState)state
 {
@@ -456,89 +470,7 @@ static CGFloat __tabHeight = 30.;
     
 }
 
-- (IBAction)collapse:(id)sender
-{
-    [self setState:ERPaletteClosed animate:YES];
-}
-
-- (IBAction)openInBestDirection:(id)sender
-{
-    [self setOpeningDirection:[self bestOpeningDirection]];
-    [self setState:ERPaletteOpened animate:YES];
-}
-
-- (IBAction)toggleCollapse:(id)sender
-{
-    if (! [self isAttached]) { // if the palette is detached, do nothing
-        return;
-    }
-    if (_state == ERPaletteOpened) {
-        [self collapse:sender];
-    }else{
-        [self openInBestDirection:sender];
-    }
-}
-
-- (IBAction)showTooltip:(id)sender
-{
-    if ([self state] != ERPaletteClosed) {
-        return;
-    }
-    [self setOpeningDirection:[self bestOpeningDirection]];
-    [self setState:ERPaletteTooltip animate:YES];
-}
-
-- (IBAction)openUp:(id)sender
-{
-    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 1) { // up or down
-        if ([self palettePosition] == ERPalettePanelPositionDown) {
-            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
-        }else{
-            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
-        }
-        
-        [self setState:ERPaletteOpened animate:YES];
-    }
-}
-
-- (IBAction)openDown:(id)sender
-{
-    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 1) { // up or down
-        if ([self palettePosition] == ERPalettePanelPositionDown) {
-            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
-        }else{
-            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
-        }
-        
-        [self setState:ERPaletteOpened animate:YES];
-    }
-}
-
-- (IBAction)openRight:(id)sender
-{
-    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 0) { // up or down
-        if ([self palettePosition] == ERPalettePanelPositionRight) {
-            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
-        }else{
-            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
-        }
-        
-        [self setState:ERPaletteOpened animate:YES];
-    }
-}
-
-- (IBAction)openLeft:(id)sender
-{
-    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 0) { // up or down
-        if ([self palettePosition] == ERPalettePanelPositionRight) {
-            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
-        }else{
-            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
-        }
-        
-        [self setState:ERPaletteOpened animate:YES];
-    }
-}
+#pragma mark Content view management
 
 - (NSView *)content
 {
@@ -738,6 +670,123 @@ static CGFloat __tabHeight = 30.;
     [self setFrame:newFrame display:YES];
 }
 
+@synthesize icon;
+
+#pragma mark Tab view and holder view
+
+@synthesize tabView = _tabView;
+
+- (ERPaletteHolderView *)holder
+{
+    return [[self tabView] holder];
+}
+
+- (BOOL)isAttached
+{
+    return ([self tabView] != nil);
+}
+
+@synthesize locationInTabView;
+
+- (NSComparisonResult)compareLocationInTabView:(ERPalettePanel *)palette
+{
+    CGFloat diff = [self locationInTabView] - [palette locationInTabView];
+    if (diff < 0 ) {
+        return NSOrderedAscending;
+    }else if(diff > 0) {
+        return NSOrderedDescending;
+    }else{
+        return NSOrderedSame;
+    }
+}
+
+#pragma mark Actions
+
+- (IBAction)collapse:(id)sender
+{
+    [self setState:ERPaletteClosed animate:YES];
+}
+
+- (IBAction)openInBestDirection:(id)sender
+{
+    [self setOpeningDirection:[self bestOpeningDirection]];
+    [self setState:ERPaletteOpened animate:YES];
+}
+
+- (IBAction)toggleCollapse:(id)sender
+{
+    if (! [self isAttached]) { // if the palette is detached, do nothing
+        return;
+    }
+    if (_state == ERPaletteOpened) {
+        [self collapse:sender];
+    }else{
+        [self openInBestDirection:sender];
+    }
+}
+
+- (IBAction)showTooltip:(id)sender
+{
+    if ([self state] != ERPaletteClosed) {
+        return;
+    }
+    [self setOpeningDirection:[self bestOpeningDirection]];
+    [self setState:ERPaletteTooltip animate:YES];
+}
+
+- (IBAction)openUp:(id)sender
+{
+    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 1) { // up or down
+        if ([self palettePosition] == ERPalettePanelPositionDown) {
+            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
+        }else{
+            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
+        }
+        
+        [self setState:ERPaletteOpened animate:YES];
+    }
+}
+
+- (IBAction)openDown:(id)sender
+{
+    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 1) { // up or down
+        if ([self palettePosition] == ERPalettePanelPositionDown) {
+            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
+        }else{
+            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
+        }
+        
+        [self setState:ERPaletteOpened animate:YES];
+    }
+}
+
+- (IBAction)openRight:(id)sender
+{
+    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 0) { // up or down
+        if ([self palettePosition] == ERPalettePanelPositionRight) {
+            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
+        }else{
+            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
+        }
+        
+        [self setState:ERPaletteOpened animate:YES];
+    }
+}
+
+- (IBAction)openLeft:(id)sender
+{
+    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 0) { // up or down
+        if ([self palettePosition] == ERPalettePanelPositionRight) {
+            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
+        }else{
+            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
+        }
+        
+        [self setState:ERPaletteOpened animate:YES];
+    }
+}
+
+#pragma mark NSDraggingSource protocol
 - (void)draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint
 {
     _dragStartingPoint = screenPoint;
@@ -773,7 +822,7 @@ static CGFloat __tabHeight = 30.;
         frameOrigin.y += delta.y;
         
         [self setFrameOrigin:frameOrigin];
-
+        
         if ([self state] == ERPaletteClosed) {
             [self setState:ERPaletteOpened];
         }
@@ -782,37 +831,5 @@ static CGFloat __tabHeight = 30.;
         [self setFloatingPanel:YES];
         
     }
-}
-@synthesize tabView = _tabView;
-
-- (ERPaletteHolderView *)holder
-{
-    return [[self tabView] holder];
-}
-
-- (BOOL)isAttached
-{
-    return ([self tabView] != nil);
-}
-
-@synthesize locationInTabView;
-- (NSComparisonResult)compareLocationInTabView:(ERPalettePanel *)palette
-{
-    CGFloat diff = [self locationInTabView] - [palette locationInTabView];
-    if (diff < 0 ) {
-        return NSOrderedAscending;
-    }else if(diff > 0) {
-        return NSOrderedDescending;
-    }else{
-        return NSOrderedSame;
-    }
-}
-
-@synthesize icon;
-
-- (void)invalidateShadow
-{
-    [super invalidateShadow];
-    [self display];
 }
 @end
