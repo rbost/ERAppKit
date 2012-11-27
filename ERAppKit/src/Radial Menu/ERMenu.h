@@ -75,6 +75,11 @@
 
 
 
+/**
+ Sets radial menu properties so it fits to the aqua style
+*/
++ (void)setAquaStyleForRadialMenus;
+
 
 /**
  Returns the gradient to fill a selected menu item

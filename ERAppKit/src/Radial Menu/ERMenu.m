@@ -78,6 +78,27 @@ static CGFloat __menuRadius = 100.;
 
 #pragma mark Appearance Options
 
++ (void)setAquaStyleForRadialMenus
+{
+    [self setFillCentralMenuItem:YES];
+    
+    [self setSelectedItemGradient:[[NSGradient alloc] initWithStartingColor:
+                                   [NSColor colorWithCalibratedRed:.396 green:.541 blue:.941 alpha:1.]
+                                                                endingColor:
+                                   [NSColor colorWithCalibratedRed:.157 green:.384 blue:.929 alpha:1.]]];
+    [self setSelectedItemStrokeColor:[NSColor colorWithCalibratedRed:0.898 green:0.898 blue:0.898 alpha:1]];
+    [self setItemColor:[NSColor controlBackgroundColor]];
+    [self setItemStrokeColor:[NSColor colorWithCalibratedRed:0.898 green:0.898 blue:0.898 alpha:1]];
+    [self setMenuItemTitleAttributes:[[NSDictionary alloc] initWithObjectsAndKeys:
+                                      [NSColor textColor], NSForegroundColorAttributeName,
+                                      [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
+                                      nil]];
+    [self setSelectedMenuItemTitleAttributes:[[NSDictionary alloc] initWithObjectsAndKeys:
+                                              [NSColor selectedMenuItemTextColor], NSForegroundColorAttributeName,
+                                              [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
+                                              nil]];
+}
+
 + (NSGradient *)selectedItemGradient
 {
     if(!__selectedItemGradient && !__selectedItemColor){ // no gradient and no color set --> the gradient is the default
