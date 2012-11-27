@@ -9,7 +9,12 @@
 #import <AppKit/AppKit.h>
 
 #import <ERAppKit/ERGlobals.h>
-#import <ERAppKit/ERMenu.h>
+
 #import <ERAppKit/ERFadingAnimation.h>
 #import <ERAppKit/ERGeometry.h>
 #import <ERAppKit/NSBezierPath+ERAppKit.h>
+#import <ERAppKit/ERTimer.h>
+
+#import <ERAppKit/ERMenu.h>
+
+#import <ERAppKit/ERPalette.h>

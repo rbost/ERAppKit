@@ -11,6 +11,12 @@
 #import <ERAppKit/ERPalettePanel.h>
 #import <ERAppKit/ERPaletteTabView.h>
 
+/**
+ * ERPaletteHolderView is the wrapper class for the palette widgets: you basically only need to use this to implement palettes.
+ * You just have to creat a holder view which will be the superview of your content (like a NSScrollView) and it will creates the necessary tab views all around the holder view.
+ * Then, you will be able to add palettes by specifying their content view, title and icon.
+ */
+
 @interface ERPaletteHolderView : NSView
 {
     ERPaletteTabView *_leftTabs;

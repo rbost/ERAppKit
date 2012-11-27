@@ -44,9 +44,10 @@
 		6C57F829165ACA2F004D37C8 /* tool-rectangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F821165ACA2F004D37C8 /* tool-rectangle.png */; };
 		6C57F82A165ACA2F004D37C8 /* tool-text.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F822165ACA2F004D37C8 /* tool-text.png */; };
 		6C57F82B165ACA2F004D37C8 /* tool-zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F823165ACA2F004D37C8 /* tool-zoom.png */; };
+		6C68115C166555110019F7ED /* ERPalette.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C68115B166555110019F7ED /* ERPalette.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C722C59164AF0C30011BA2F /* ERPalettePanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C57164AF0C30011BA2F /* ERPalettePanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C722C5A164AF0C30011BA2F /* ERPalettePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C58164AF0C30011BA2F /* ERPalettePanel.m */; };
-		6C722C5D164AF1870011BA2F /* ERPaletteContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C722C5D164AF1870011BA2F /* ERPaletteContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */; settings = {ATTRIBUTES = (); }; };
 		6C722C5E164AF1870011BA2F /* ERPaletteContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */; };
 		6C722C61164B0FE50011BA2F /* ERPaletteHolderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C722C62164B0FE50011BA2F /* ERPaletteHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */; };
@@ -137,6 +138,7 @@
 		6C57F821165ACA2F004D37C8 /* tool-rectangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-rectangle.png"; sourceTree = "<group>"; };
 		6C57F822165ACA2F004D37C8 /* tool-text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-text.png"; sourceTree = "<group>"; };
 		6C57F823165ACA2F004D37C8 /* tool-zoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-zoom.png"; sourceTree = "<group>"; };
+		6C68115B166555110019F7ED /* ERPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPalette.h; sourceTree = "<group>"; };
 		6C722C57164AF0C30011BA2F /* ERPalettePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPalettePanel.h; sourceTree = "<group>"; };
 		6C722C58164AF0C30011BA2F /* ERPalettePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPalettePanel.m; sourceTree = "<group>"; };
 		6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteContentView.h; sourceTree = "<group>"; };
@@ -329,21 +331,22 @@
 		6C722C55164AF04E0011BA2F /* Palettes */ = {
 			isa = PBXGroup;
 			children = (
-				6C8C7508166094BE0088C47F /* Opener Popup */,
+				6C68115B166555110019F7ED /* ERPalette.h */,
 				6C722C57164AF0C30011BA2F /* ERPalettePanel.h */,
 				6C722C58164AF0C30011BA2F /* ERPalettePanel.m */,
-				6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */,
-				6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */,
-				6CBD5C581650BA750035C6F7 /* ERPaletteTitleView.h */,
-				6CBD5C591650BA750035C6F7 /* ERPaletteTitleView.m */,
 				6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */,
 				6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */,
 				6CE48139164C48C6001001C8 /* ERPaletteTabView.h */,
 				6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */,
+				6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */,
+				6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */,
+				6CBD5C581650BA750035C6F7 /* ERPaletteTitleView.h */,
+				6CBD5C591650BA750035C6F7 /* ERPaletteTitleView.m */,
 				6CBD5C5D1650CE3F0035C6F7 /* ERPaletteTab.h */,
 				6CBD5C5E1650CE3F0035C6F7 /* ERPaletteTab.m */,
 				6C96860516558368005168C4 /* ERPaletteButton.h */,
 				6C96860616558369005168C4 /* ERPaletteButton.m */,
+				6C8C7508166094BE0088C47F /* Opener Popup */,
 			);
 			name = Palettes;
 			path = src/Palettes;
@@ -389,6 +392,7 @@
 				6C8C750C166095190088C47F /* ERPaletteOpenButton.h in Headers */,
 				6C8C75101660957B0088C47F /* ERPaletteOpenPopupContentView.h in Headers */,
 				6C8C7514166095D40088C47F /* ERPaletteOpenPopup.h in Headers */,
+				6C68115C166555110019F7ED /* ERPalette.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

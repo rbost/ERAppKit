@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 
 #import <ERAppKit/ERMenu.h>
-#import <ERAppKit/ERPalettePanel.h>
 
 @implementation AppDelegate
 

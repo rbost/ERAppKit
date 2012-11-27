@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <ERAppKit/ERPaletteHolderView.h>
+#import <ERAppKit/ERPalette.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
