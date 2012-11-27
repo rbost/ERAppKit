@@ -82,9 +82,7 @@ static CGFloat __menuRadius = 100.;
 #pragma mark Appearance Options
 
 + (void)setAquaStyleForRadialMenus
-{
-    [self setFillCentralMenuItem:YES];
-    
+{    
     [self setSelectedItemGradient:[[NSGradient alloc] initWithStartingColor:
                                    [NSColor colorWithCalibratedRed:.396 green:.541 blue:.941 alpha:1.]
                                                                 endingColor:
@@ -92,6 +90,11 @@ static CGFloat __menuRadius = 100.;
     [self setSelectedItemStrokeColor:[NSColor colorWithCalibratedRed:0.898 green:0.898 blue:0.898 alpha:1]];
     [self setItemColor:[NSColor controlBackgroundColor]];
     [self setItemStrokeColor:[NSColor colorWithCalibratedRed:0.898 green:0.898 blue:0.898 alpha:1]];
+    
+    [ERMenu setSubmenuArrowColor:[NSColor colorWithCalibratedWhite:0.3 alpha:1.0]];
+    [ERMenu setSubmenuArrowSelectedColor:[NSColor whiteColor]];
+
+    
     [self setMenuItemTitleAttributes:[[NSDictionary alloc] initWithObjectsAndKeys:
                                       [NSColor textColor], NSForegroundColorAttributeName,
                                       [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
@@ -100,6 +103,24 @@ static CGFloat __menuRadius = 100.;
                                               [NSColor selectedMenuItemTextColor], NSForegroundColorAttributeName,
                                               [NSFont controlContentFontOfSize:11.0], NSFontAttributeName,
                                               nil]];
+}
+
++ (void)setHUDStyleForRadialMenus
+{
+    [ERMenu setItemStrokeColor:[NSColor clearColor]];
+    [ERMenu setSelectedItemStrokeColor:[NSColor clearColor]];
+    [ERMenu setItemColor:[NSColor colorWithCalibratedWhite:0.3 alpha:0.7]];
+    [ERMenu setSubmenuArrowColor:[NSColor whiteColor]];
+    [ERMenu setSubmenuArrowSelectedColor:[NSColor whiteColor]];
+    [ERMenu setSelectedItemGradient:[[[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.7 alpha:0.7]
+                                                                   endingColor:[NSColor colorWithCalibratedWhite:0.3 alpha:0.7] ] autorelease]];
+    
+    
+    [ERMenu setMenuItemTitleAttributes:[NSDictionary  dictionaryWithObjectsAndKeys:
+                                        [NSColor whiteColor], NSForegroundColorAttributeName,
+                                        [NSFont controlContentFontOfSize:12.0], NSFontAttributeName,
+                                        nil]];
+
 }
 
 + (NSGradient *)selectedItemGradient

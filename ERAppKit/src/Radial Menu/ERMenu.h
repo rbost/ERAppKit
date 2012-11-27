@@ -80,6 +80,11 @@
 */
 + (void)setAquaStyleForRadialMenus;
 
+/**
+ Sets radial menu properties so it fits to the HUD style
+ */
++ (void)setHUDStyleForRadialMenus;
+
 
 /**
  Returns the gradient to fill a selected menu item
