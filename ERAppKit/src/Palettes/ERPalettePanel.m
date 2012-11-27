@@ -86,9 +86,10 @@ static CGFloat __tabHeight = 30.;
 
     [self updateFrameSize];
     [self updateContentPlacement];
+    [self updateTitleViewPlacement:NO];
     [self updateAutoresizingMask];
     
-    [self setFloatingPanel:YES];
+    [self setFloatingPanel:NO];
     [self setBackgroundColor:[NSColor clearColor]];
     [self setOpaque:NO];
     [self setHasShadow:YES];
@@ -283,12 +284,12 @@ static CGFloat __tabHeight = 30.;
     
     [_content setFrameOrigin:frameOrigin];
     
-    [self updateTitleViewPlacement];
+//    [self updateTitleViewPlacement];
     
     [_tabButton setFrameOrigin:[self tabRect].origin];
 }
 
-- (void)updateTitleViewPlacement
+- (void)updateTitleViewPlacement:(BOOL)animate
 {
     NSPoint frameOrigin = NSZeroPoint;
     ERPalettePanelPosition pos = [self effectiveHeaderPosition];
@@ -318,9 +319,13 @@ static CGFloat __tabHeight = 30.;
             frameOrigin = NSMakePoint(NSMinX(tabRect)-[_titleView frame].size.width, NSMaxY(tabRect)-[_titleView frame].size.height);
         }
     }
-    [_titleView setFrameOrigin:frameOrigin];
-
+    if (animate) {
+        [[_titleView animator] setFrameOrigin:frameOrigin];
+    }else{
+        [_titleView setFrameOrigin:frameOrigin];        
+    }
 }
+
 - (ERPaletteState)state
 {
     return _state;
@@ -335,6 +340,7 @@ static CGFloat __tabHeight = 30.;
     if (state == _state) {
         return;
     }
+    NSRect newFrame;
     
     if (state == ERPaletteClosed) {
         NSRect tabFrame = [self tabRect];
@@ -342,14 +348,11 @@ static CGFloat __tabHeight = 30.;
         tabFrame = [self convertRectToScreen:tabFrame];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidCloseNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:tabFrame] forKey:ERPaletteNewFrameKey]];
-        if (animate) {
-            [[self animator] setFrame:tabFrame display:YES];
-        }else{
-            [self setFrame:tabFrame display:YES];
-        }
+
+        newFrame = tabFrame;
     }else if (state == ERPaletteOpened) {
         NSSize contentSize = [self paletteContentSize];
-        NSRect newFrame,tabFrame;
+        NSRect tabFrame;
         newFrame.size = [self openedPaletteSize];
         
         tabFrame = [self tabRect];
@@ -385,18 +388,10 @@ static CGFloat __tabHeight = 30.;
         NSRect contentFrame = [self contentFrameForOpeningDirection:[self openingDirection]];
         [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidOpenNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:contentFrame] forKey:ERPaletteNewFrameKey]];
         
-        if (animate) {
-            [[self animator] setFrame:newFrame display:YES];
-        }else{
-            [self setFrame:newFrame display:YES];
-        }
-        
-
     }else if(state == ERPaletteTooltip) {
         NSRect headerRect, tabRect;
         headerRect = [self headerRect];
         tabRect = [self tabRect];
-        NSRect newFrame;
         
         newFrame = tabRect;
         
@@ -430,23 +425,48 @@ static CGFloat __tabHeight = 30.;
 
         newFrame = [self convertRectToScreen:newFrame];
         
-        if (animate) {
-            [[self animator] setFrame:newFrame display:YES];
-        }else{
-            [self setFrame:newFrame display:YES];
-        }
     }
+
+    if (animate) {
+        [NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setCompletionHandler:^{[self updateTitleViewPlacement:YES];}];
+//        [[NSAnimationContext currentContext] setDuration:2.];
+
+        [[self animator] setFrame:newFrame display:YES];
+        
+        [NSAnimationContext endGrouping];
+    }else{
+        [self setFrame:newFrame display:YES];
+    }
+    
 
     [_titleView updateCloseButtonPosition];
 
     ERPaletteState oldState = _state;
     _state = state;
 
-    [_content setHidden:([self state] == ERPaletteTooltip)];
+    if ([self state] == ERPaletteTooltip || (oldState == ERPaletteTooltip && [self state] == ERPaletteClosed)) {
+        [_content setHidden:YES];
+    }else{
+        [_content setHidden:NO];
+    }
     
-    if((oldState == ERPaletteClosed) || (oldState == ERPaletteTooltip && _state == ERPaletteOpened))
-        [self updateTitleViewPlacement];
+    if((oldState == ERPaletteClosed)/* || (oldState == ERPaletteTooltip && _state == ERPaletteOpened)*/)
+        [self updateTitleViewPlacement:NO];
+    
+//    _lastFrameAnimation = [[self animator] animationForKey:@"frame"];
+//    [_lastFrameAnimation setDelegate:self];
 
+//    NSLog(@"lastFrameAnimation %@",_lastFrameAnimation);
+
+
+}
+
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
+{
+    NSLog(@"frame animation did stop");
+    
+    _lastFrameAnimation = nil;
 }
 
 - (IBAction)collapse:(id)sender

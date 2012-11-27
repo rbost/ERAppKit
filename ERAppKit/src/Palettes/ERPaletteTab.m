@@ -275,12 +275,13 @@
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
+    [_mouseOverTimer stop];
     if ([[self palette] state] == ERPaletteOpened) {
         return;
     }
     NSPoint screenLocation;
     NSRect tabRect;
-    [self _getDrawingRectsTabRect:&tabRect bounds:NULL];
+    [self _getDrawingRectsTabRect:NULL bounds:&tabRect];
     tabRect = [self convertRect:tabRect toView:nil];
     screenLocation = ERCenterPointOfRect([[self window] convertRectToScreen:tabRect]);
     

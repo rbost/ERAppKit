@@ -45,6 +45,9 @@ typedef enum {
     ERPaletteTab *_tabButton;
      
     NSPoint _dragStartingPoint;
+    
+    @private
+    CAAnimation *_lastFrameAnimation;
 }
 @property (assign) ERPalettePanelPosition palettePosition;
 @property (assign) ERPaletteState state;
@@ -81,7 +84,7 @@ typedef enum {
 - (void)setState:(ERPaletteState)state animate:(BOOL)animate;
 - (void)updateAutoresizingMask;
 - (void)updateContentPlacement;
-- (void)updateTitleViewPlacement;
+- (void)updateTitleViewPlacement:(BOOL)animate;
 
 
 - (ERPalettePanelPosition)effectiveHeaderPosition;
