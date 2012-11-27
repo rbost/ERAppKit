@@ -451,22 +451,9 @@ static CGFloat __tabHeight = 30.;
         [_content setHidden:NO];
     }
     
-    if((oldState == ERPaletteClosed)/* || (oldState == ERPaletteTooltip && _state == ERPaletteOpened)*/)
+    if(oldState == ERPaletteClosed)
         [self updateTitleViewPlacement:NO];
     
-//    _lastFrameAnimation = [[self animator] animationForKey:@"frame"];
-//    [_lastFrameAnimation setDelegate:self];
-
-//    NSLog(@"lastFrameAnimation %@",_lastFrameAnimation);
-
-
-}
-
-- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
-{
-    NSLog(@"frame animation did stop");
-    
-    _lastFrameAnimation = nil;
 }
 
 - (IBAction)collapse:(id)sender

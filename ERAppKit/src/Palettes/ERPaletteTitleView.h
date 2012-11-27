@@ -8,12 +8,17 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import <ERAppKit/ERTimer.h>
+
 @class ERPaletteButton;
 
 @interface ERPaletteTitleView : NSView
 {
     NSPoint _draggingStartPoint;
     ERPaletteButton *_closeButton;
+    
+    NSTrackingArea *_mouseOverArea;
+    ERTimer *_mouseOverTimer;
 }
 - (void)updateCloseButtonPosition;
 @end

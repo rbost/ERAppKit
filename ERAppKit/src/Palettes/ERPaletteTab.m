@@ -305,9 +305,7 @@
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent
-{
-//    NSLog(@"mouse entered");
-    
+{    
     if ([[self palette] state] == ERPaletteClosed) {
         [_mouseOverTimer start];
     }
@@ -315,22 +313,19 @@
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
-//    NSLog(@"mouse exited");
     [_mouseOverTimer stop];
     
+    NSPoint location = [theEvent locationInWindow];
+    
     if ([palette state] == ERPaletteTooltip) {
-        [palette setState:ERPaletteClosed animate:YES];
+        if (!NSPointInRect(location, [[self palette] contentFilledRect])) { // the mouse is now outside of the palette
+            [palette setState:ERPaletteClosed animate:YES];
+        }
     }
-}
-
-- (void)mouseMoved:(NSEvent *)theEvent
-{
-//    NSLog(@"mouse moved");
 }
 
 - (void)_timerCallBack
 {
-//    NSLog(@"timer finished");
     [[self palette] showTooltip:self];
 }
 

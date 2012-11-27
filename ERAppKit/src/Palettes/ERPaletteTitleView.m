@@ -11,6 +11,8 @@
 #import "ERPaletteButton.h"
 #import <ERAppKit/ERPalettePanel.h>
 
+#define ERHEADER_MOUSEOVER_INTERVAL 1.
+
 @implementation ERPaletteTitleView
 
 - (id)initWithFrame:(NSRect)frame
@@ -23,11 +25,28 @@
         [_closeButton release];
         [_closeButton setTarget:[self window]];
         [_closeButton setAction:@selector(collapse:)];
+        
+        
+        _mouseOverArea = [[NSTrackingArea alloc] initWithRect:[self bounds]
+                                                      options: (NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp )
+                                                        owner:self userInfo:nil];
+        
+        [self addTrackingArea:_mouseOverArea];
+
+        _mouseOverTimer = [[ERTimer alloc] initWithTimeInterval:ERHEADER_MOUSEOVER_INTERVAL target:self selector:@selector(_timerCallBack) argument:nil];
+
     }
     
     return self;
 }
 
+- (void)dealloc
+{
+    [_mouseOverTimer stop];
+    [_mouseOverTimer release];
+    
+    [super dealloc];
+}
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSBezierPath *bp = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect([self bounds],1,1) xRadius:[self bounds].size.height/4. yRadius:[self bounds].size.height/4.];
@@ -140,4 +159,31 @@
         [_closeButton setFrameOrigin:NSMakePoint(NSMaxX([self bounds])-15, ([self bounds].size.height-10.)/2.)];
     }
 }
+
+
+- (void)mouseEntered:(NSEvent *)theEvent
+{
+    if ([(ERPalettePanel *)[self window] state] == ERPaletteTooltip) {
+        [_mouseOverTimer start];
+    }
+}
+
+- (void)mouseExited:(NSEvent *)theEvent
+{
+    [_mouseOverTimer stop];
+    
+    NSPoint location = [theEvent locationInWindow];
+    ERPalettePanel *palette = (ERPalettePanel *)[self window];
+    if ([palette state] == ERPaletteTooltip) {
+        if (!NSPointInRect(location, [palette tabRect])) { // the mouse is now outside of the palette
+            [palette setState:ERPaletteClosed animate:YES];
+        }
+    }
+}
+
+- (void)_timerCallBack
+{
+    [(ERPalettePanel *)[self window] setState:ERPaletteOpened animate:YES];
+}
+
 @end

@@ -45,9 +45,6 @@ typedef enum {
     ERPaletteTab *_tabButton;
      
     NSPoint _dragStartingPoint;
-    
-    @private
-    CAAnimation *_lastFrameAnimation;
 }
 @property (assign) ERPalettePanelPosition palettePosition;
 @property (assign) ERPaletteState state;
