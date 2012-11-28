@@ -9,6 +9,7 @@
 #import "ERPaletteTabView.h"
 
 #import <ERAppKit/ERPaletteHolderView.h>
+#import <ERAppKit/ERPaletteContentView.h>
 
 @implementation ERPaletteTabView
 

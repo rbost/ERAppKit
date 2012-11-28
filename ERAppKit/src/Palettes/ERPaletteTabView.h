@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 #import <ERAppKit/ERPalettePanel.h>
-#import <ERAppKit/ERPaletteContentView.h>
 
 @class ERPaletteHolderView;
 
