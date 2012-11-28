@@ -1,0 +1,26 @@
+ERAppKit
+========
+
+ERAppKit is a Cocoa framework first developed as a class project for CS2310 at Brown University.
+Its goal is to provide some new widgets for Cocoa applications such as radial menus and palettes.
+
+Introduction
+------------
+
+ERAppKit is an Objective-C written Cocoa framework for OS X. It has been created by [Raphael Bost](http://cs.brown.edu/~bost) and Evan Altman as a part of a Human-Computer Interaction class project. 
+
+Its original goal was to provide some new widgets for the [DrawBerry][DB] vector drawing application, widgets that will ease the application use while reducing the screen size needed to run the app comfortably.
+
+Usage
+-----
+
+You can use this framework in your app by using it as a private framework (as described by [Apple's documentation](https://developer.apple.com/library/mac/#documentation/MacOSX/Conceptual/BPFrameworks/Tasks/CreatingFrameworks.html#//apple_ref/doc/uid/20002258-106880)): in XCode, add it to your target and then add a new 'Copy Files' build phase to the 'Framework' directory. Let the ERAppKit framework be part of it. (You can take a look to [Growl's Documentation](http://growl.info/documentation/developer/implementing-growl.php#including-and-linking) for a more detailed explanation).                     
+
+After installing the framework in your target, you will be able to use all the classes defined by ERAppKit by including the headers:                                            
+
+* if you want access to all the features (radial menus and palettes), you can use
+`#import <ERAppKit/ERAppKit.h>`
+* if you only want to use the radial menus, use `#import <ERAppKit/ERMenu.h>`
+* if what you want is only palettes, use `#import <ERAppKit/ERPalette.h>`
+
+[DB]: http://cs.brown.edu/~bost/DrawBerry.html
