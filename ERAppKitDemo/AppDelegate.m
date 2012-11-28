@@ -29,6 +29,14 @@
     [centralRadiusField setFloatValue:[ERMenu centralButtonRadius]];
     [menuRadiusField setFloatValue:[ERMenu menuRadius]];
     [menuRadiusSlider setFloatValue:[ERMenu menuRadius]];
+    
+    // for the palettes tests
+    [[self paletteHolder] addPaletteWithContentView:[self paletteContent1] icon:[NSImage imageNamed:@"tool-arrow"] title:@"Content 1" atPosition:ERPalettePanelPositionUp];
+    [[self paletteHolder] addPaletteWithContentView:[self paletteContent2] icon:[NSImage imageNamed:@"tool-bezier"] title:@"Content 2" atPosition:ERPalettePanelPositionLeft];
+    [[self paletteHolder] addPaletteWithContentView:[self paletteContent3] icon:[NSImage imageNamed:@"tool-text"] title:@"Content 3" atPosition:ERPalettePanelPositionRight];
+    [[self paletteHolder] addPaletteWithContentView:[self paletteContent4] icon:[NSImage imageNamed:@"tool-oval"] title:@"Content 4" atPosition:ERPalettePanelPositionDown];
+    [[self paletteHolder] addPaletteWithContentView:[self paletteContent5] icon:[NSImage imageNamed:@"tool-rectangle"] title:@"Content 5" atPosition:ERPalettePanelPositionUp];
+    [[self paletteHolder] addPaletteWithContentView:[self paletteContent6] icon:[NSImage imageNamed:@"tool-zoom"] title:@"Content 6" atPosition:ERPalettePanelPositionLeft];
 }
 
 - (void)showDummyMenu:(NSEvent *)event
@@ -59,6 +67,6 @@
 
 - (IBAction)takeFillCentralMenuItemFrom:(id)sender
 {
-    [ERMenu setFillCentralMenuItem:[sender state]];
+    [ERMenu setFillCentralMenuItem:[(NSButton *)sender state]];
 }
 @end

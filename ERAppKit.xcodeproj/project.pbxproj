@@ -34,8 +34,39 @@
 		6C27B5E7161E1224002D1EF9 /* ERGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C27B5E5161E1224002D1EF9 /* ERGeometry.m */; };
 		6C27B5EA161F8C9D002D1EF9 /* ERGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C4BCF99162B834C0082630C /* ERAppKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C27B58B161B9158002D1EF9 /* ERAppKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6CC94BA0162092A900FB1CD0 /* ERTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CC94B9E162092A900FB1CD0 /* ERTimer.h */; };
+		6C57F81816585142004D37C8 /* NSBezierPath+ERAppKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C57F81616585142004D37C8 /* NSBezierPath+ERAppKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C57F81916585142004D37C8 /* NSBezierPath+ERAppKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57F81716585142004D37C8 /* NSBezierPath+ERAppKit.m */; };
+		6C57F824165ACA2F004D37C8 /* tool-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F81C165ACA2F004D37C8 /* tool-arrow.png */; };
+		6C57F825165ACA2F004D37C8 /* tool-bezier.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F81D165ACA2F004D37C8 /* tool-bezier.png */; };
+		6C57F826165ACA2F004D37C8 /* tool-line.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F81E165ACA2F004D37C8 /* tool-line.png */; };
+		6C57F827165ACA2F004D37C8 /* tool-oval.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F81F165ACA2F004D37C8 /* tool-oval.png */; };
+		6C57F828165ACA2F004D37C8 /* tool-polyline.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F820165ACA2F004D37C8 /* tool-polyline.png */; };
+		6C57F829165ACA2F004D37C8 /* tool-rectangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F821165ACA2F004D37C8 /* tool-rectangle.png */; };
+		6C57F82A165ACA2F004D37C8 /* tool-text.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F822165ACA2F004D37C8 /* tool-text.png */; };
+		6C57F82B165ACA2F004D37C8 /* tool-zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C57F823165ACA2F004D37C8 /* tool-zoom.png */; };
+		6C68115C166555110019F7ED /* ERPalette.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C68115B166555110019F7ED /* ERPalette.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C722C59164AF0C30011BA2F /* ERPalettePanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C57164AF0C30011BA2F /* ERPalettePanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C722C5A164AF0C30011BA2F /* ERPalettePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C58164AF0C30011BA2F /* ERPalettePanel.m */; };
+		6C722C5D164AF1870011BA2F /* ERPaletteContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */; settings = {ATTRIBUTES = (); }; };
+		6C722C5E164AF1870011BA2F /* ERPaletteContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */; };
+		6C722C61164B0FE50011BA2F /* ERPaletteHolderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C722C62164B0FE50011BA2F /* ERPaletteHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */; };
+		6C8C750C166095190088C47F /* ERPaletteOpenButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C8C750A166095190088C47F /* ERPaletteOpenButton.h */; };
+		6C8C750D166095190088C47F /* ERPaletteOpenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C750B166095190088C47F /* ERPaletteOpenButton.m */; };
+		6C8C75101660957B0088C47F /* ERPaletteOpenPopupContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C8C750E1660957B0088C47F /* ERPaletteOpenPopupContentView.h */; };
+		6C8C75111660957B0088C47F /* ERPaletteOpenPopupContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C750F1660957B0088C47F /* ERPaletteOpenPopupContentView.m */; };
+		6C8C7514166095D40088C47F /* ERPaletteOpenPopup.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C8C7512166095D40088C47F /* ERPaletteOpenPopup.h */; };
+		6C8C7515166095D40088C47F /* ERPaletteOpenPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C7513166095D40088C47F /* ERPaletteOpenPopup.m */; };
+		6C96860716558369005168C4 /* ERPaletteButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C96860516558368005168C4 /* ERPaletteButton.h */; };
+		6C96860816558369005168C4 /* ERPaletteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C96860616558369005168C4 /* ERPaletteButton.m */; };
+		6CBD5C5A1650BA750035C6F7 /* ERPaletteTitleView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CBD5C581650BA750035C6F7 /* ERPaletteTitleView.h */; };
+		6CBD5C5B1650BA750035C6F7 /* ERPaletteTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD5C591650BA750035C6F7 /* ERPaletteTitleView.m */; };
+		6CBD5C5F1650CE3F0035C6F7 /* ERPaletteTab.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CBD5C5D1650CE3F0035C6F7 /* ERPaletteTab.h */; };
+		6CBD5C601650CE3F0035C6F7 /* ERPaletteTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD5C5E1650CE3F0035C6F7 /* ERPaletteTab.m */; };
+		6CC94BA0162092A900FB1CD0 /* ERTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CC94B9E162092A900FB1CD0 /* ERTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CC94BA1162092A900FB1CD0 /* ERTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC94B9F162092A900FB1CD0 /* ERTimer.m */; };
+		6CE4813B164C48C6001001C8 /* ERPaletteTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE48139164C48C6001001C8 /* ERPaletteTabView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6CE4813C164C48C6001001C8 /* ERPaletteTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,8 +128,39 @@
 		6C27B5E4161E1224002D1EF9 /* ERGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERGeometry.h; path = src/Tools/ERGeometry.h; sourceTree = "<group>"; };
 		6C27B5E5161E1224002D1EF9 /* ERGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERGeometry.m; path = src/Tools/ERGeometry.m; sourceTree = "<group>"; };
 		6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ERGlobals.h; path = src/ERGlobals.h; sourceTree = "<group>"; };
+		6C57F81616585142004D37C8 /* NSBezierPath+ERAppKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBezierPath+ERAppKit.h"; path = "src/Tools/NSBezierPath+ERAppKit.h"; sourceTree = "<group>"; };
+		6C57F81716585142004D37C8 /* NSBezierPath+ERAppKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBezierPath+ERAppKit.m"; path = "src/Tools/NSBezierPath+ERAppKit.m"; sourceTree = "<group>"; };
+		6C57F81C165ACA2F004D37C8 /* tool-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-arrow.png"; sourceTree = "<group>"; };
+		6C57F81D165ACA2F004D37C8 /* tool-bezier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-bezier.png"; sourceTree = "<group>"; };
+		6C57F81E165ACA2F004D37C8 /* tool-line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-line.png"; sourceTree = "<group>"; };
+		6C57F81F165ACA2F004D37C8 /* tool-oval.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-oval.png"; sourceTree = "<group>"; };
+		6C57F820165ACA2F004D37C8 /* tool-polyline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-polyline.png"; sourceTree = "<group>"; };
+		6C57F821165ACA2F004D37C8 /* tool-rectangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-rectangle.png"; sourceTree = "<group>"; };
+		6C57F822165ACA2F004D37C8 /* tool-text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-text.png"; sourceTree = "<group>"; };
+		6C57F823165ACA2F004D37C8 /* tool-zoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tool-zoom.png"; sourceTree = "<group>"; };
+		6C68115B166555110019F7ED /* ERPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPalette.h; sourceTree = "<group>"; };
+		6C722C57164AF0C30011BA2F /* ERPalettePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPalettePanel.h; sourceTree = "<group>"; };
+		6C722C58164AF0C30011BA2F /* ERPalettePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPalettePanel.m; sourceTree = "<group>"; };
+		6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteContentView.h; sourceTree = "<group>"; };
+		6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteContentView.m; sourceTree = "<group>"; };
+		6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteHolderView.h; sourceTree = "<group>"; };
+		6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteHolderView.m; sourceTree = "<group>"; };
+		6C8C750A166095190088C47F /* ERPaletteOpenButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteOpenButton.h; sourceTree = "<group>"; };
+		6C8C750B166095190088C47F /* ERPaletteOpenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteOpenButton.m; sourceTree = "<group>"; };
+		6C8C750E1660957B0088C47F /* ERPaletteOpenPopupContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteOpenPopupContentView.h; sourceTree = "<group>"; };
+		6C8C750F1660957B0088C47F /* ERPaletteOpenPopupContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteOpenPopupContentView.m; sourceTree = "<group>"; };
+		6C8C7512166095D40088C47F /* ERPaletteOpenPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteOpenPopup.h; sourceTree = "<group>"; };
+		6C8C7513166095D40088C47F /* ERPaletteOpenPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteOpenPopup.m; sourceTree = "<group>"; };
+		6C96860516558368005168C4 /* ERPaletteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteButton.h; sourceTree = "<group>"; };
+		6C96860616558369005168C4 /* ERPaletteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteButton.m; sourceTree = "<group>"; };
+		6CBD5C581650BA750035C6F7 /* ERPaletteTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteTitleView.h; sourceTree = "<group>"; };
+		6CBD5C591650BA750035C6F7 /* ERPaletteTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteTitleView.m; sourceTree = "<group>"; };
+		6CBD5C5D1650CE3F0035C6F7 /* ERPaletteTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteTab.h; sourceTree = "<group>"; };
+		6CBD5C5E1650CE3F0035C6F7 /* ERPaletteTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteTab.m; sourceTree = "<group>"; };
 		6CC94B9E162092A900FB1CD0 /* ERTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERTimer.h; path = src/Tools/ERTimer.h; sourceTree = "<group>"; };
 		6CC94B9F162092A900FB1CD0 /* ERTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERTimer.m; path = src/Tools/ERTimer.m; sourceTree = "<group>"; };
+		6CE48139164C48C6001001C8 /* ERPaletteTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteTabView.h; sourceTree = "<group>"; };
+		6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteTabView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +225,7 @@
 		6C27B584161B9158002D1EF9 /* ERAppKit */ = {
 			isa = PBXGroup;
 			children = (
+				6C722C55164AF04E0011BA2F /* Palettes */,
 				6C27B58B161B9158002D1EF9 /* ERAppKit.h */,
 				6C27B5E9161F8C28002D1EF9 /* ERGlobals.h */,
 				6C27B597161B91CD002D1EF9 /* Animations */,
@@ -227,6 +290,7 @@
 		6C27B5B5161B93EE002D1EF9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6C57F81B165ACA2F004D37C8 /* Icons */,
 				6C27B5B6161B93EE002D1EF9 /* ERAppKitDemo-Info.plist */,
 				6C27B5B7161B93EE002D1EF9 /* InfoPlist.strings */,
 				6C27B5BA161B93EE002D1EF9 /* main.m */,
@@ -243,8 +307,62 @@
 				6C27B5E5161E1224002D1EF9 /* ERGeometry.m */,
 				6CC94B9E162092A900FB1CD0 /* ERTimer.h */,
 				6CC94B9F162092A900FB1CD0 /* ERTimer.m */,
+				6C57F81616585142004D37C8 /* NSBezierPath+ERAppKit.h */,
+				6C57F81716585142004D37C8 /* NSBezierPath+ERAppKit.m */,
 			);
 			name = Tools;
+			sourceTree = "<group>";
+		};
+		6C57F81B165ACA2F004D37C8 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				6C57F81C165ACA2F004D37C8 /* tool-arrow.png */,
+				6C57F81D165ACA2F004D37C8 /* tool-bezier.png */,
+				6C57F81E165ACA2F004D37C8 /* tool-line.png */,
+				6C57F81F165ACA2F004D37C8 /* tool-oval.png */,
+				6C57F820165ACA2F004D37C8 /* tool-polyline.png */,
+				6C57F821165ACA2F004D37C8 /* tool-rectangle.png */,
+				6C57F822165ACA2F004D37C8 /* tool-text.png */,
+				6C57F823165ACA2F004D37C8 /* tool-zoom.png */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
+		6C722C55164AF04E0011BA2F /* Palettes */ = {
+			isa = PBXGroup;
+			children = (
+				6C68115B166555110019F7ED /* ERPalette.h */,
+				6C722C57164AF0C30011BA2F /* ERPalettePanel.h */,
+				6C722C58164AF0C30011BA2F /* ERPalettePanel.m */,
+				6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */,
+				6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */,
+				6CE48139164C48C6001001C8 /* ERPaletteTabView.h */,
+				6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */,
+				6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */,
+				6C722C5C164AF1870011BA2F /* ERPaletteContentView.m */,
+				6CBD5C581650BA750035C6F7 /* ERPaletteTitleView.h */,
+				6CBD5C591650BA750035C6F7 /* ERPaletteTitleView.m */,
+				6CBD5C5D1650CE3F0035C6F7 /* ERPaletteTab.h */,
+				6CBD5C5E1650CE3F0035C6F7 /* ERPaletteTab.m */,
+				6C96860516558368005168C4 /* ERPaletteButton.h */,
+				6C96860616558369005168C4 /* ERPaletteButton.m */,
+				6C8C7508166094BE0088C47F /* Opener Popup */,
+			);
+			name = Palettes;
+			path = src/Palettes;
+			sourceTree = "<group>";
+		};
+		6C8C7508166094BE0088C47F /* Opener Popup */ = {
+			isa = PBXGroup;
+			children = (
+				6C8C750A166095190088C47F /* ERPaletteOpenButton.h */,
+				6C8C750B166095190088C47F /* ERPaletteOpenButton.m */,
+				6C8C750E1660957B0088C47F /* ERPaletteOpenPopupContentView.h */,
+				6C8C750F1660957B0088C47F /* ERPaletteOpenPopupContentView.m */,
+				6C8C7512166095D40088C47F /* ERPaletteOpenPopup.h */,
+				6C8C7513166095D40088C47F /* ERPaletteOpenPopup.m */,
+			);
+			path = "Opener Popup";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +381,18 @@
 				6C27B5EA161F8C9D002D1EF9 /* ERGlobals.h in Headers */,
 				6CC94BA0162092A900FB1CD0 /* ERTimer.h in Headers */,
 				6C4BCF99162B834C0082630C /* ERAppKit.h in Headers */,
+				6C722C59164AF0C30011BA2F /* ERPalettePanel.h in Headers */,
+				6C722C5D164AF1870011BA2F /* ERPaletteContentView.h in Headers */,
+				6C722C61164B0FE50011BA2F /* ERPaletteHolderView.h in Headers */,
+				6CE4813B164C48C6001001C8 /* ERPaletteTabView.h in Headers */,
+				6CBD5C5A1650BA750035C6F7 /* ERPaletteTitleView.h in Headers */,
+				6CBD5C5F1650CE3F0035C6F7 /* ERPaletteTab.h in Headers */,
+				6C96860716558369005168C4 /* ERPaletteButton.h in Headers */,
+				6C57F81816585142004D37C8 /* NSBezierPath+ERAppKit.h in Headers */,
+				6C8C750C166095190088C47F /* ERPaletteOpenButton.h in Headers */,
+				6C8C75101660957B0088C47F /* ERPaletteOpenPopupContentView.h in Headers */,
+				6C8C7514166095D40088C47F /* ERPaletteOpenPopup.h in Headers */,
+				6C68115C166555110019F7ED /* ERPalette.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +481,14 @@
 				6C27B5B9161B93EE002D1EF9 /* InfoPlist.strings in Resources */,
 				6C27B5BF161B93EE002D1EF9 /* Credits.rtf in Resources */,
 				6C27B5C5161B93EE002D1EF9 /* MainMenu.xib in Resources */,
+				6C57F824165ACA2F004D37C8 /* tool-arrow.png in Resources */,
+				6C57F825165ACA2F004D37C8 /* tool-bezier.png in Resources */,
+				6C57F826165ACA2F004D37C8 /* tool-line.png in Resources */,
+				6C57F827165ACA2F004D37C8 /* tool-oval.png in Resources */,
+				6C57F828165ACA2F004D37C8 /* tool-polyline.png in Resources */,
+				6C57F829165ACA2F004D37C8 /* tool-rectangle.png in Resources */,
+				6C57F82A165ACA2F004D37C8 /* tool-text.png in Resources */,
+				6C57F82B165ACA2F004D37C8 /* tool-zoom.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +506,17 @@
 				6C27B5AC161B91CD002D1EF9 /* ERRadialMenuWindow.m in Sources */,
 				6C27B5E7161E1224002D1EF9 /* ERGeometry.m in Sources */,
 				6CC94BA1162092A900FB1CD0 /* ERTimer.m in Sources */,
+				6C722C5A164AF0C30011BA2F /* ERPalettePanel.m in Sources */,
+				6C722C5E164AF1870011BA2F /* ERPaletteContentView.m in Sources */,
+				6C722C62164B0FE50011BA2F /* ERPaletteHolderView.m in Sources */,
+				6CE4813C164C48C6001001C8 /* ERPaletteTabView.m in Sources */,
+				6CBD5C5B1650BA750035C6F7 /* ERPaletteTitleView.m in Sources */,
+				6CBD5C601650CE3F0035C6F7 /* ERPaletteTab.m in Sources */,
+				6C96860816558369005168C4 /* ERPaletteButton.m in Sources */,
+				6C57F81916585142004D37C8 /* NSBezierPath+ERAppKit.m in Sources */,
+				6C8C750D166095190088C47F /* ERPaletteOpenButton.m in Sources */,
+				6C8C75111660957B0088C47F /* ERPaletteOpenPopupContentView.m in Sources */,
+				6C8C7515166095D40088C47F /* ERPaletteOpenPopup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,9 +599,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -473,8 +622,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				SDKROOT = macosx;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};
