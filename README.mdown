@@ -22,5 +22,11 @@ After installing the framework in your target, you will be able to use all the c
 `#import <ERAppKit/ERAppKit.h>`
 * if you only want to use the radial menus, use `#import <ERAppKit/ERMenu.h>`
 * if what you want is only palettes, use `#import <ERAppKit/ERPalette.h>`
+                                                
+Authors
+-------
+
+* Raphael Bost
+* Evan Altman       
 
 [DB]: http://cs.brown.edu/~bost/DrawBerry.html
