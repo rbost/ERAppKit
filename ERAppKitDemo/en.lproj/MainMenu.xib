@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1080</int>
+		<int key="IBDocument.SystemTarget">1070</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2843</string>
+			<string key="NS.object.0">2844</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBNSLayoutConstraint</string>
@@ -1315,7 +1315,7 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="439893737">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSButton" id="154096960">
@@ -1323,7 +1323,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{18, 121}, {134, 18}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="127889718"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -1359,7 +1358,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{159, 94}, {256, 21}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1065520014"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -1385,7 +1383,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{159, 62}, {256, 21}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1043945279"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -1411,7 +1408,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{159, 30}, {256, 21}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="296969386"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -1437,7 +1433,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{17, 96}, {82, 17}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="807738236"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
@@ -1474,7 +1469,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{17, 64}, {139, 17}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="344700782"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
@@ -1495,7 +1489,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{17, 32}, {114, 17}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="547422964"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
@@ -1516,7 +1509,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{421, 93}, {56, 22}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="462597216"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -1596,7 +1588,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{421, 61}, {56, 22}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="924059410"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -1656,8 +1647,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{421, 29}, {56, 22}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="487545257">
@@ -1720,7 +1709,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{30, 30}, {437, 311}}</string>
 									<reference key="NSSuperview" ref="210401655"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="154096960"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">ERDummyView</string>
@@ -1728,15 +1716,12 @@
 							</array>
 							<string key="NSFrame">{{0, 145}, {497, 371}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1004766752"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSClassName">ERPaletteHolderView</string>
 						</object>
 					</array>
 					<string key="NSFrameSize">{497, 516}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="210401655"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
@@ -2066,7 +2051,7 @@
 				</array>
 			</object>
 			<object class="NSCustomView" id="781417419">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSButton" id="74867050">
@@ -2074,8 +2059,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{34, 31}, {94, 32}}</string>
 						<reference key="NSSuperview" ref="781417419"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="135482883">
@@ -2096,14 +2079,12 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{163, 96}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="74867050"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="560345431">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSScrollView" id="675022323">
@@ -2138,8 +2119,7 @@
 										</set>
 										<string key="NSFrameSize">{169, 86}</string>
 										<reference key="NSSuperview" ref="176717425"/>
-										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="813285462"/>
+										<reference key="NSNextKeyView" ref="898960906"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<object class="NSTextContainer" key="NSTextContainer" id="507358199">
 											<object class="NSLayoutManager" key="NSLayoutManager">
@@ -2201,7 +2181,6 @@
 								</array>
 								<string key="NSFrame">{{1, 1}, {169, 86}}</string>
 								<reference key="NSSuperview" ref="675022323"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="604966767"/>
 								<string key="NSReuseIdentifierKey">_NS:11</string>
 								<reference key="NSDocView" ref="604966767"/>
@@ -2366,8 +2345,6 @@ wGw</bytes>
 								<int key="NSvFlags">256</int>
 								<string key="NSFrame">{{154, 1}, {16, 86}}</string>
 								<reference key="NSSuperview" ref="675022323"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:83</string>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<reference key="NSTarget" ref="675022323"/>
@@ -2379,7 +2356,6 @@ wGw</bytes>
 								<int key="NSvFlags">-2147483392</int>
 								<string key="NSFrame">{{-100, -100}, {87, 18}}</string>
 								<reference key="NSSuperview" ref="675022323"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="176717425"/>
 								<string key="NSReuseIdentifierKey">_NS:33</string>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -2392,8 +2368,7 @@ wGw</bytes>
 						</array>
 						<string key="NSFrame">{{12, 12}, {171, 88}}</string>
 						<reference key="NSSuperview" ref="560345431"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="898960906"/>
+						<reference key="NSNextKeyView" ref="176717425"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">133138</int>
 						<reference key="NSVScroller" ref="813285462"/>
@@ -2405,8 +2380,6 @@ wGw</bytes>
 					</object>
 				</array>
 				<string key="NSFrameSize">{195, 113}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="675022323"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="NSClassName">NSView</string>
@@ -2421,7 +2394,6 @@ wGw</bytes>
 						<string key="NSFrame">{{20, 20}, {111, 38}}</string>
 						<reference key="NSSuperview" ref="686357144"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -2555,7 +2527,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="NSBackgroundColor" ref="426214564"/>
 						<reference key="NSCellBackgroundColor" ref="146448786"/>
 						<reference key="NSFont" ref="367177049"/>
-						<bool key="NSAutorecalculatesCellSize">YES</bool>
 					</object>
 				</array>
 				<string key="NSFrameSize">{155, 78}</string>
@@ -2616,7 +2587,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="1039217671">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSImageView" id="516757968">
@@ -2632,6 +2603,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						</set>
 						<string key="NSFrame">{{17, 17}, {48, 50}}</string>
 						<reference key="NSSuperview" ref="1039217671"/>
+						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSImageCell" key="NSCell" id="648078925">
@@ -2648,6 +2620,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 				</array>
 				<string key="NSFrameSize">{82, 84}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="516757968"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="NSClassName">NSView</string>
@@ -7414,6 +7388,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
+			<real value="1070" key="NS.object.0"/>
+		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
