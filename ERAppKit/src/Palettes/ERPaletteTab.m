@@ -126,21 +126,31 @@
     return bounds;
 }
 
-- (void)drawRect:(NSRect)dirtyRect
+- (void)drawTab
 {
-    [[NSColor redColor] set];
-//    [NSBezierPath fillRect:dirtyRect];
-    
-    // Drawing code here.
-    if ([[self palette] state] == ERPaletteClosed) {
-        [[NSColor colorWithCalibratedWhite:0.4 alpha:0.9] set];
-    }else{
-        [[NSColor colorWithCalibratedWhite:0.1 alpha:0.9] set];
-    }
-
     NSRect bounds, tabRect;
     [self _getDrawingRectsTabRect:&tabRect bounds:&bounds];
+    NSBezierPath *bp = [NSBezierPath bezierPathWithRoundedRect:tabRect xRadius:TAB_ROUNDED_RADIUS yRadius:TAB_ROUNDED_RADIUS];
+    
+    [[NSColor colorWithCalibratedWhite:0.4 alpha:0.9] set];
 
+    [bp fill];
+    
+    NSImage *icon = [[self palette] icon];
+    NSRect iconRect;
+    iconRect.size = [icon size];
+    iconRect.origin = bounds.origin;
+    
+    iconRect.origin.x += 0.5*(bounds.size.width - iconRect.size.width); iconRect.origin.x = floor(iconRect.origin.x);
+    iconRect.origin.y += 0.5*(bounds.size.height - iconRect.size.height);iconRect.origin.y = floor(iconRect.origin.y);
+    
+    [icon drawInRect:iconRect fromRect:NSMakeRect(0, 0, [icon size].width, [icon size].height) operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
+}
+
+- (void)drawOpenTab
+{
+    NSRect bounds, tabRect;
+    [self _getDrawingRectsTabRect:&tabRect bounds:&bounds];
     int corners;
     
     switch ([[self palette] effectiveHeaderPosition]) {
@@ -165,11 +175,9 @@
             break;
     }
     
-    if ([[self palette] state] == ERPaletteClosed) {
-        corners = ERAllCorners;
-    }
-    
     NSBezierPath *bp = [NSBezierPath bezierPathWithRoundedRect:tabRect radius:TAB_ROUNDED_RADIUS corners:corners];
+    
+    [[NSColor colorWithCalibratedWhite:0.1 alpha:0.9] set];
 
     [bp fill];
     
@@ -180,8 +188,8 @@
         
         switch ([[self palette] effectiveHeaderPosition]) {
             case ERPalettePanelPositionUp:
-                [at1 translateXBy:NSMinX(tabRect) yBy:NSMinY(tabRect)]; 
-                [at2 translateXBy:NSMaxX(tabRect) yBy:NSMinY(tabRect)]; [at2 scaleXBy:-1 yBy:1]; 
+                [at1 translateXBy:NSMinX(tabRect) yBy:NSMinY(tabRect)];
+                [at2 translateXBy:NSMaxX(tabRect) yBy:NSMinY(tabRect)]; [at2 scaleXBy:-1 yBy:1];
                 break;
                 
             case ERPalettePanelPositionDown:
@@ -192,13 +200,13 @@
             case ERPalettePanelPositionLeft:
                 [at1 translateXBy:NSMinX(tabRect) yBy:NSMinY(tabRect)]; [at1 scaleXBy:-1 yBy:-1];
                 [at2 translateXBy:NSMinX(tabRect) yBy:NSMaxY(tabRect)]; [at2 scaleXBy:-1 yBy:1];
-
+                
                 break;
                 
             case ERPalettePanelPositionRight:
                 [at1 translateXBy:NSMaxX(tabRect) yBy:NSMinY(tabRect)]; [at1 scaleXBy:1 yBy:-1];
                 [at2 translateXBy:NSMaxX(tabRect) yBy:NSMaxY(tabRect)]; [at2 scaleXBy:1 yBy:1];
-
+                
                 break;
                 
             default:
@@ -211,7 +219,7 @@
         [corner1 fill];
         [corner2 fill];
     }
-    
+
     NSImage *icon = [[self palette] icon];
     NSRect iconRect;
     iconRect.size = [icon size];
@@ -219,15 +227,25 @@
     
     iconRect.origin.x += 0.5*(bounds.size.width - iconRect.size.width); iconRect.origin.x = floor(iconRect.origin.x);
     iconRect.origin.y += 0.5*(bounds.size.height - iconRect.size.height);iconRect.origin.y = floor(iconRect.origin.y);
-
+    
     [icon drawInRect:iconRect fromRect:NSMakeRect(0, 0, [icon size].width, [icon size].height) operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
+
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    if ([[self palette] state] == ERPaletteClosed) {
+        [self drawTab];
+    }else{
+        [self drawOpenTab];
+    }
 }
 
 - (NSImage *)draggingImage
 {
     NSImage *image = [[NSImage alloc] initWithSize:[self frame].size];
     [image lockFocusFlipped:YES];
-    [self drawRect:[self bounds]];
+    [self drawTab];
     [image unlockFocus];
     
     return [image autorelease];
