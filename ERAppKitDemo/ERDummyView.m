@@ -41,25 +41,28 @@
     [NSBezierPath fillRect:dirtyRect];
 }
 
-- (void)mouseDown:(NSEvent *)theEvent
+- (void)rightMouseDown:(NSEvent *)theEvent
 {
-//    [delegate showDummyMenu:theEvent];
-    NSPoint centerPoint = ERCenterPointOfRect([self bounds]);
-    NSPoint loc = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    NSPoint centerPoint = ERCenterPointOfRect([self bounds]); // get the center point the the view
+    NSPoint loc = [self convertPoint:[theEvent locationInWindow] fromView:nil]; // get the click location
     CGFloat direction = 0.;
-    if (loc.x <= centerPoint.x) {
-        if (loc.y <= centerPoint.y) {
+    
+    // compute the click location with respect to the center point
+    if (loc.x <= centerPoint.x) { // left
+        if (loc.y <= centerPoint.y) { // low
             direction = 45;
-        }else{
+        }else{ // up
             direction = 315;
         }
-    }else{
-        if (loc.y <= centerPoint.y) {
+    }else{ // right
+        if (loc.y <= centerPoint.y) { // low
             direction = 135;
-        }else{
+        }else{ // up
             direction = 225;
         }
     }
+    
+    // display the menu (set through the interface builder) with the proper menu style and direction
     [ERMenu popUpContextMenu:[self menu] withEvent:theEvent forView:self menuStyle:EREmptyQuarterMenuStyle direction:direction];
 }
 
