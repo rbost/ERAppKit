@@ -22,7 +22,32 @@ After installing the framework in your target, you will be able to use all the c
 `#import <ERAppKit/ERAppKit.h>`
 * if you only want to use the radial menus, use `#import <ERAppKit/ERMenu.h>`
 * if what you want is only palettes, use `#import <ERAppKit/ERPalette.h>`
-                                                
+             
+License
+-------
+ERAppKit is licensed under the terms of the [GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl-3.0.en.html). You can find a copy of the license with the sources.
+
+The license may change in the future for a more restrictive one.
+
+Documentation
+-------------
+The public headers are documented using [Doxygen](http://www.stack.nl/~dimitri/doxygen/).
+
+The framework code by itself is not as well documented as it should but it should remain understandable.
+
+For an example of what you can do with ERAppKit, and how to do it, just take a look the demo application included in ERAppKit's XCode project. You will see how simple it is to integrate the radial menus and the palettes.
+
+TODO
+----
+(Check the [issue's page](https://github.com/rbost/ERAppKit/issues) on GitHub to have a more precise list of what we are planning to do)
+
+* Palettes
+	- Save the state of the palettes in the preferences (like with the standard's window autosave name)
+    - Add the possibility to make a palette slide along its tab 
+* Radial Menus
+	- Add new animations for menus opening and closing
+	
+	
 Authors
 -------
 
