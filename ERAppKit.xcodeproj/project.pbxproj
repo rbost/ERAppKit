@@ -64,9 +64,8 @@
 		6CBD5C601650CE3F0035C6F7 /* ERPaletteTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD5C5E1650CE3F0035C6F7 /* ERPaletteTab.m */; };
 		6CC94BA0162092A900FB1CD0 /* ERTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CC94B9E162092A900FB1CD0 /* ERTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CC94BA1162092A900FB1CD0 /* ERTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC94B9F162092A900FB1CD0 /* ERTimer.m */; };
-		6CE3FE5216693EF7004CE26E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3FE5016693EF7004CE26E /* LICENSE */; };
-		6CE3FE5316693EF7004CE26E /* LICENSE.LESSER in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3FE5116693EF7004CE26E /* LICENSE.LESSER */; };
-		6CE3FE5516693F00004CE26E /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3FE5416693F00004CE26E /* README.mdown */; };
+		6CE3FE6B16694194004CE26E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3FE6816694194004CE26E /* LICENSE */; };
+		6CE3FE6C16694194004CE26E /* LICENSE.LESSER in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3FE6916694194004CE26E /* LICENSE.LESSER */; };
 		6CE4813B164C48C6001001C8 /* ERPaletteTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE48139164C48C6001001C8 /* ERPaletteTabView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CE4813C164C48C6001001C8 /* ERPaletteTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */; };
 /* End PBXBuildFile section */
@@ -160,9 +159,9 @@
 		6CBD5C5E1650CE3F0035C6F7 /* ERPaletteTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteTab.m; sourceTree = "<group>"; };
 		6CC94B9E162092A900FB1CD0 /* ERTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ERTimer.h; path = src/Tools/ERTimer.h; sourceTree = "<group>"; };
 		6CC94B9F162092A900FB1CD0 /* ERTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ERTimer.m; path = src/Tools/ERTimer.m; sourceTree = "<group>"; };
-		6CE3FE5016693EF7004CE26E /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
-		6CE3FE5116693EF7004CE26E /* LICENSE.LESSER */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.LESSER; sourceTree = SOURCE_ROOT; };
-		6CE3FE5416693F00004CE26E /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = SOURCE_ROOT; };
+		6CE3FE6816694194004CE26E /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		6CE3FE6916694194004CE26E /* LICENSE.LESSER */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.LESSER; sourceTree = SOURCE_ROOT; };
+		6CE3FE6A16694194004CE26E /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = SOURCE_ROOT; };
 		6CE48139164C48C6001001C8 /* ERPaletteTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteTabView.h; sourceTree = "<group>"; };
 		6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteTabView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -243,9 +242,9 @@
 		6C27B585161B9158002D1EF9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				6CE3FE5416693F00004CE26E /* README.mdown */,
-				6CE3FE5016693EF7004CE26E /* LICENSE */,
-				6CE3FE5116693EF7004CE26E /* LICENSE.LESSER */,
+				6CE3FE6816694194004CE26E /* LICENSE */,
+				6CE3FE6916694194004CE26E /* LICENSE.LESSER */,
+				6CE3FE6A16694194004CE26E /* README.mdown */,
 				6C27B5D7161B9CD4002D1EF9 /* doxyfile */,
 				6C27B586161B9158002D1EF9 /* ERAppKit-Info.plist */,
 				6C27B587161B9158002D1EF9 /* InfoPlist.strings */,
@@ -476,9 +475,8 @@
 			files = (
 				6C27B589161B9158002D1EF9 /* InfoPlist.strings in Resources */,
 				6C27B5D8161B9CD4002D1EF9 /* doxyfile in Resources */,
-				6CE3FE5216693EF7004CE26E /* LICENSE in Resources */,
-				6CE3FE5316693EF7004CE26E /* LICENSE.LESSER in Resources */,
-				6CE3FE5516693F00004CE26E /* README.mdown in Resources */,
+				6CE3FE6B16694194004CE26E /* LICENSE in Resources */,
+				6CE3FE6C16694194004CE26E /* LICENSE.LESSER in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
