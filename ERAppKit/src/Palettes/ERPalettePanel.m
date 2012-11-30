@@ -139,6 +139,8 @@ static CGFloat __tabHeight = 30.;
     [self updateFrameSize];
     [self updateContentPlacement];
     [self updateAutoresizingMask];
+    [self updateTitleViewPlacement:NO];
+    
     [[self contentView] setNeedsDisplay:YES];
 }
 
