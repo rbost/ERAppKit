@@ -13,6 +13,13 @@
 
 static CGFloat __tabMargin = 5.;
 
+@interface ERPaletteHolderView ()
+@property (readonly) ERPaletteTabView *leftTabs;
+@property (readonly) ERPaletteTabView *rightTabs;
+@property (readonly) ERPaletteTabView *upTabs;
+@property (readonly) ERPaletteTabView *downTabs;
+@end
+
 @implementation ERPaletteHolderView
 + (CGFloat)tabMargin
 {
@@ -32,10 +39,10 @@ static CGFloat __tabMargin = 5.;
         
         [self setAutoresizesSubviews:YES];
         
-        [self addSubview:_leftTabs]; [_leftTabs release]; [_leftTabs setAutoresizingMask:(NSViewHeightSizable|NSViewMaxXMargin)];
-        [self addSubview:_rightTabs]; [_rightTabs release]; [_rightTabs setAutoresizingMask:(NSViewHeightSizable|NSViewMinXMargin)];
-        [self addSubview:_upTabs]; [_upTabs release]; [_upTabs setAutoresizingMask:(NSViewWidthSizable|NSViewMinYMargin)];
-        [self addSubview:_downTabs]; [_downTabs release]; [_downTabs setAutoresizingMask:(NSViewWidthSizable|NSViewMaxYMargin)];
+        [self addSubview:_leftTabs positioned:NSWindowAbove relativeTo:nil]; [_leftTabs release]; [_leftTabs setAutoresizingMask:(NSViewHeightSizable|NSViewMaxXMargin)];
+        [self addSubview:_rightTabs positioned:NSWindowAbove relativeTo:nil]; [_rightTabs release]; [_rightTabs setAutoresizingMask:(NSViewHeightSizable|NSViewMinXMargin)];
+        [self addSubview:_upTabs positioned:NSWindowAbove relativeTo:nil]; [_upTabs release]; [_upTabs setAutoresizingMask:(NSViewWidthSizable|NSViewMinYMargin)];
+        [self addSubview:_downTabs positioned:NSWindowAbove relativeTo:nil]; [_downTabs release]; [_downTabs setAutoresizingMask:(NSViewWidthSizable|NSViewMaxYMargin)];
     }
     
     return self;
@@ -51,6 +58,26 @@ static CGFloat __tabMargin = 5.;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     [super dealloc];
+}
+
+NSComparisonResult viewSort(id v1, id v2, void* context)
+{
+    ERPaletteHolderView *sortedView = context;
+    if (v1 == [sortedView leftTabs] || v1 == [sortedView rightTabs] || v1 == [sortedView upTabs] || v1 == [sortedView downTabs]) {
+        return NSOrderedDescending;
+    }else if(v2 == [sortedView leftTabs] || v2 == [sortedView rightTabs] || v2 == [sortedView upTabs] || v2 == [sortedView downTabs]) {
+        return NSOrderedAscending;
+    }else{
+        return NSOrderedSame;
+    }
+}
+
+- (void)addSubview:(NSView *)aView
+{
+    [super addSubview:aView];
+    
+    // force the tab view to be over the other subviews
+    [self sortSubviewsUsingFunction:viewSort context:self];
 }
 
 - (void)addPaletteWithContentView:(NSView *)contentView icon:(NSImage *)icon title:(NSString *)paletteTitle atPosition:(ERPalettePanelPosition)pos
@@ -156,6 +183,9 @@ static CGFloat __tabMargin = 5.;
     
     return YES;
 }
+
+@synthesize leftTabs = _leftTabs, rightTabs = _rightTabs, upTabs = _upTabs, downTabs = _downTabs;
+
 #pragma mark Notifications
 
 - (void)paletteDidClose:(NSNotification *)note

@@ -11,6 +11,8 @@
 #import <ERAppKit/ERPaletteHolderView.h>
 #import <ERAppKit/ERPaletteContentView.h>
 
+#import <ERAppKit/NSBezierPath+ERAppKit.h>
+
 @implementation ERPaletteTabView
 
 static CGFloat __tabMargin = -10.;
@@ -27,6 +29,7 @@ static CGFloat __barThickness = 30.;
 
 + (CGFloat)barExtremitiesMargins
 {
+    return 0;
     return [self barThickness];
 }
 
@@ -71,19 +74,19 @@ static CGFloat __barThickness = 30.;
     
     switch (position) {
         case ERPalettePanelPositionLeft:
-            frame = NSMakeRect(0, 0, barThickness, [holder frame].size.height);
+            frame = NSMakeRect(0, barThickness, barThickness, [holder frame].size.height-2*barThickness);
             break;
             
         case ERPalettePanelPositionDown:
-            frame = NSMakeRect(0, 0, [holder frame].size.width, barThickness);
+            frame = NSMakeRect(barThickness, 0, [holder frame].size.width-2*barThickness, barThickness);
             break;
             
         case ERPalettePanelPositionRight:
-            frame = NSMakeRect([holder frame].size.width - barThickness, 0, barThickness, [holder frame].size.height);
+            frame = NSMakeRect([holder frame].size.width - barThickness, barThickness, barThickness, [holder frame].size.height - 2*barThickness);
             break;
             
         case ERPalettePanelPositionUp:
-            frame = NSMakeRect(0, [holder frame].size.height - barThickness, [holder frame].size.width, barThickness);
+            frame = NSMakeRect(barThickness, [holder frame].size.height - barThickness, [holder frame].size.width - 2*barThickness, barThickness);
             break;
             
         default:
@@ -91,6 +94,13 @@ static CGFloat __barThickness = 30.;
             break;
     }
     
+    self = [self initWithHolder:holder frame:frame position:position];
+    
+    return self;
+}
+
+- (id)initWithHolder:(ERPaletteHolderView *)holder frame:(NSRect)frame position:(ERPalettePanelPosition)position
+{    
     self = [super initWithFrame:frame];
     
     _tabs = [[NSMutableArray alloc] init];
@@ -116,16 +126,48 @@ static CGFloat __barThickness = 30.;
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+    int corners;
     
-    [[NSColor colorWithCalibratedWhite:0.7 alpha:1.0] set];
-    if (_highlight) {
-        [[NSColor colorWithCalibratedWhite:0.8 alpha:1.0] set];
+    switch ([self position]) {
+        case ERPalettePanelPositionUp:
+            corners = ERLowerRightCorner | ERLowerLeftCorner;
+            break;
+            
+        case ERPalettePanelPositionDown:
+            corners = ERUpperRightCorner | ERUpperLeftCorner;
+            break;
+            
+        case ERPalettePanelPositionLeft:
+            corners = ERUpperRightCorner | ERLowerRightCorner;
+            break;
+            
+        case ERPalettePanelPositionRight:
+            corners = ERLowerLeftCorner | ERUpperLeftCorner;
+            break;
+            
+        default:
+            corners = ERNoneCorner;
+            break;
     }
-    [NSBezierPath fillRect:dirtyRect];
+    NSBezierPath *bp = [NSBezierPath bezierPathWithRoundedRect:[self bounds] radius:5.0 corners:corners];
+    
+    NSGradient *backGradient;
+    if (_highlight) {
+        backGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.8 alpha:0.6] endingColor:[NSColor colorWithCalibratedWhite:0.7 alpha:0.6]];
+    }else{
+        backGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.7 alpha:0.6] endingColor:[NSColor colorWithCalibratedWhite:0.6 alpha:0.6]];
+    }
+
+    [backGradient drawInBezierPath:bp angle:-90.*[self position]];
+
+    [[NSColor colorWithDeviceWhite:0.8 alpha:0.9] set];
+    [bp stroke];
     
     if (_highlight) {
         [[NSColor whiteColor] set];
-        [NSBezierPath fillRect:_draggingPositionMarker];
+        
+        [[NSBezierPath bezierPathWithRoundedRect:_draggingPositionMarker xRadius:2.5 yRadius:2.5] fill];
+//        [NSBezierPath fillRect:_draggingPositionMarker];
     }
 }
 
@@ -376,12 +418,12 @@ static CGFloat __barThickness = 30.;
 {
     if ([self position] == ERPalettePanelPositionUp || [self position] == ERPalettePanelPositionDown) {
         CGFloat x = location + [ERPaletteTabView barExtremitiesMargins];
-        return NSMakeRect(x, 0, 5., [self frame].size.height);
+        return NSInsetRect(NSMakeRect(x, 0, 5., [self frame].size.height),0,3.);
     }else{
         CGFloat y = location + [ERPaletteTabView barExtremitiesMargins];
         y = NSMaxY([self bounds]) - y;
         
-        return NSMakeRect(0, y, [self frame].size.width, 5.);
+        return NSInsetRect(NSMakeRect(0, y, [self frame].size.width, 5.),3.,0);
     }
 }
 
