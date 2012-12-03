@@ -182,6 +182,17 @@ static CGFloat __barThickness = 30.;
     }
 }
 
+- (void)setBounds:(NSRect)aRect
+{
+    [super setBounds:aRect];
+    [self updateBarFrame:NO];
+}
+
+- (void)setFrame:(NSRect)frameRect
+{
+    [super setFrame:frameRect];
+    [self updateBarFrame:NO];
+}
 - (NSRect)barFrame
 {
     return _barFrame;
@@ -213,12 +224,12 @@ static CGFloat __barThickness = 30.;
     return frame;
 }
 
-- (void)updateBarFrame
+- (void)updateBarFrame:(BOOL)animate
 {
     if ([_tabs count] > 0) {
-        [self setBarFrameOpened:YES];
+        [self setBarFrameOpened:animate];
     }else{
-        [self setBarFrameCollapsed:YES];
+        [self setBarFrameCollapsed:animate];
     }
     [self setNeedsDisplay:YES];
 }
@@ -314,7 +325,7 @@ static CGFloat __barThickness = 30.;
     [palette invalidateShadow];
     
     [self updateTabsLocations];
-    [self updateBarFrame];
+    [self updateBarFrame:NO];
 }
 
 - (void)removePalette:(ERPalettePanel *)palette
@@ -332,7 +343,7 @@ static CGFloat __barThickness = 30.;
         [[self window] removeChildWindow:palette];
         [self updateTabsLocations];
         
-        [self updateBarFrame];
+        [self updateBarFrame:NO];
     }
 }
 

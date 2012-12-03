@@ -36,6 +36,12 @@
     ERPaletteTabView *rightTabs = [[self paletteHolder] addTabViewWithPosition:ERPalettePanelPositionRight];
     ERPaletteTabView *downTabs1 = [[self paletteHolder] addTabViewWithSize:200 location:[ERPaletteTabView barThickness] position:ERPalettePanelPositionDown];
     ERPaletteTabView *downTabs2 = [[self paletteHolder] addTabViewWithSize:200 location:200+2*[ERPaletteTabView barThickness] position:ERPalettePanelPositionDown];
+
+    [upTabs setAutoresizingMask:(NSViewWidthSizable|NSViewMinYMargin)];
+    [leftTabs setAutoresizingMask:(NSViewHeightSizable|NSViewMaxXMargin)];
+    [rightTabs setAutoresizingMask:(NSViewHeightSizable|NSViewMinXMargin)];
+    [downTabs1 setAutoresizingMask:(NSViewWidthSizable|NSViewMaxYMargin|NSViewMaxXMargin)];
+    [downTabs2 setAutoresizingMask:(NSViewWidthSizable|NSViewMaxYMargin|NSViewMinXMargin)];
     
     [upTabs addPaletteWithContentView:[self paletteContent1] icon:[NSImage imageNamed:@"tool-arrow"] title:@"Content 1"];
     [leftTabs addPaletteWithContentView:[self paletteContent2] icon:[NSImage imageNamed:@"tool-bezier"] title:@"Content 2"];

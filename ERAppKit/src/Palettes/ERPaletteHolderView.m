@@ -77,6 +77,28 @@ NSComparisonResult viewSort(id v1, id v2, void* context)
 {
     [_tabViews addObject:view];
     [self addSubview:view];
+    
+    switch ([view position]) {
+        case ERPalettePanelPositionLeft:
+            [view setAutoresizingMask:NSViewMaxXMargin|NSViewMinYMargin];
+            break;
+
+        case ERPalettePanelPositionRight:
+            [view setAutoresizingMask:NSViewMinXMargin|NSViewMinYMargin];
+            break;
+            
+        case ERPalettePanelPositionUp:
+            [view setAutoresizingMask:NSViewMinYMargin];
+            break;
+            
+        case ERPalettePanelPositionDown:
+            [view setAutoresizingMask:NSViewMaxYMargin];
+            break;
+            
+        default:
+            break;
+    }
+    
     [self sortSubviewsUsingFunction:viewSort context:self];
 }
 

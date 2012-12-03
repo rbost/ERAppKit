@@ -197,7 +197,6 @@
 		6C27B56F161B9157002D1EF9 = {
 			isa = PBXGroup;
 			children = (
-				6CE3FE6E166C3143004CE26E /* QuartzCore.framework */,
 				6C27B584161B9158002D1EF9 /* ERAppKit */,
 				6C27B5B4161B93EE002D1EF9 /* ERAppKitDemo */,
 				6C27B57D161B9158002D1EF9 /* Frameworks */,
@@ -218,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				6C27B57E161B9158002D1EF9 /* Cocoa.framework */,
+				6CE3FE6E166C3143004CE26E /* QuartzCore.framework */,
 				6C27B580161B9158002D1EF9 /* Other Frameworks */,
 			);
 			name = Frameworks;

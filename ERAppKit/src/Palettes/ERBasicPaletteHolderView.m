@@ -23,10 +23,10 @@
         
         [self setAutoresizesSubviews:YES];
         
-        [self addTabView:_leftTabs]; [_leftTabs release];
-        [self addTabView:_rightTabs]; [_rightTabs release];
-        [self addTabView:_upTabs]; [_upTabs release];
-        [self addTabView:_downTabs]; [_downTabs release];
+        [self addTabView:_leftTabs]; [_leftTabs release]; [_leftTabs setAutoresizingMask:(NSViewHeightSizable|NSViewMaxXMargin)];
+        [self addTabView:_rightTabs]; [_rightTabs release]; [_rightTabs setAutoresizingMask:(NSViewHeightSizable|NSViewMinXMargin)];
+        [self addTabView:_upTabs]; [_upTabs release]; [_upTabs setAutoresizingMask:(NSViewWidthSizable|NSViewMinYMargin)];
+        [self addTabView:_downTabs]; [_downTabs release]; [_downTabs setAutoresizingMask:(NSViewWidthSizable|NSViewMaxYMargin)];
     }
     
     return self;

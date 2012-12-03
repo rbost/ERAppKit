@@ -99,8 +99,9 @@
 
 /**
  * Display the bar as collapsed if there is no tab, open it otherwise.
+ * @param animate YES if you want to show an animation when updating the bar frame. NO otherwise.
  */
-- (void)updateBarFrame;
+- (void)updateBarFrame:(BOOL)animate;
 @end
 
 
