@@ -66,6 +66,7 @@
 		6CC94BA1162092A900FB1CD0 /* ERTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC94B9F162092A900FB1CD0 /* ERTimer.m */; };
 		6CE3FE6B16694194004CE26E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3FE6816694194004CE26E /* LICENSE */; };
 		6CE3FE6C16694194004CE26E /* LICENSE.LESSER in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3FE6916694194004CE26E /* LICENSE.LESSER */; };
+		6CE3FE6F166C3143004CE26E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE3FE6E166C3143004CE26E /* QuartzCore.framework */; };
 		6CE4813B164C48C6001001C8 /* ERPaletteTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE48139164C48C6001001C8 /* ERPaletteTabView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CE4813C164C48C6001001C8 /* ERPaletteTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */; };
 /* End PBXBuildFile section */
@@ -162,6 +163,7 @@
 		6CE3FE6816694194004CE26E /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		6CE3FE6916694194004CE26E /* LICENSE.LESSER */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.LESSER; sourceTree = SOURCE_ROOT; };
 		6CE3FE6A16694194004CE26E /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = SOURCE_ROOT; };
+		6CE3FE6E166C3143004CE26E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6CE48139164C48C6001001C8 /* ERPaletteTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteTabView.h; sourceTree = "<group>"; };
 		6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteTabView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,6 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CE3FE6F166C3143004CE26E /* QuartzCore.framework in Frameworks */,
 				6C27B57F161B9158002D1EF9 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,6 +193,7 @@
 		6C27B56F161B9157002D1EF9 = {
 			isa = PBXGroup;
 			children = (
+				6CE3FE6E166C3143004CE26E /* QuartzCore.framework */,
 				6C27B584161B9158002D1EF9 /* ERAppKit */,
 				6C27B5B4161B93EE002D1EF9 /* ERAppKitDemo */,
 				6C27B57D161B9158002D1EF9 /* Frameworks */,

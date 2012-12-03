@@ -13,6 +13,8 @@
 
 #import <ERAppKit/NSBezierPath+ERAppKit.h>
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation ERPaletteTabView
 
 static CGFloat __tabMargin = -10.;
@@ -43,6 +45,9 @@ static CGFloat __barThickness = 30.;
     [[palette contentView] setNeedsDisplay:YES];
     
     [palette release];
+
+    [origin updateBarFrame];
+    [destination updateBarFrame];
 }
 
 + (void)moveTab:(ERPalettePanel *)palette fromView:(ERPaletteTabView *)origin toView:(ERPaletteTabView *)destination atLocation:(CGFloat)loc
@@ -65,6 +70,19 @@ static CGFloat __barThickness = 30.;
     [[palette contentView] setNeedsDisplay:YES];
     
     [palette release];
+    
+    [origin updateBarFrame];
+    [destination updateBarFrame];
+}
+
++ (id)defaultAnimationForKey:(NSString *)key {
+    if ([key isEqualToString:@"barFrame"]) {
+        // By default, animate border color changes with simple linear interpolation to the new color value.
+        return [CABasicAnimation animation];
+    } else {
+        // Defer to super's implementation for any keys we don't specifically handle.
+        return [super defaultAnimationForKey:key];
+    }
 }
 
 - (id)initWithHolder:(ERPaletteHolderView *)holder position:(ERPalettePanelPosition)position
@@ -109,6 +127,8 @@ static CGFloat __barThickness = 30.;
     
     [self registerForDraggedTypes:[NSArray arrayWithObject:ERPalettePboardType]];
     
+    [self setBarFrame:[self bounds]];
+    
     return self;
 }
 
@@ -149,7 +169,7 @@ static CGFloat __barThickness = 30.;
             corners = ERNoneCorner;
             break;
     }
-    NSBezierPath *bp = [NSBezierPath bezierPathWithRoundedRect:[self bounds] radius:5.0 corners:corners];
+    NSBezierPath *bp = [NSBezierPath bezierPathWithRoundedRect:[self barFrame] radius:5.0 corners:corners];
     
     NSGradient *backGradient;
     if (_highlight) {
@@ -167,7 +187,64 @@ static CGFloat __barThickness = 30.;
         [[NSColor whiteColor] set];
         
         [[NSBezierPath bezierPathWithRoundedRect:_draggingPositionMarker xRadius:2.5 yRadius:2.5] fill];
-//        [NSBezierPath fillRect:_draggingPositionMarker];
+    }
+}
+
+- (NSRect)barFrame
+{
+    return _barFrame;
+}
+
+- (void)setBarFrame:(NSRect)barFrame
+{
+    _barFrame = barFrame;
+    [self setNeedsDisplay:YES];
+}
+
+- (NSRect)collapsedBarFrame
+{
+    NSRect bounds = [self bounds];
+    NSRect frame = [self bounds];
+    
+    if ([self position] % 2 == 0) {
+        frame.size.width *= 0.3;
+        if ([self position] == ERPalettePanelPositionRight) {
+            frame.origin.x += bounds.size.width - frame.size.width;
+        }
+    }else{
+        frame.size.height *= 0.3;
+        if ([self position] == ERPalettePanelPositionUp) {
+            frame.origin.y += bounds.size.height - frame.size.height;
+        }
+    }
+    
+    return frame;
+}
+
+- (void)updateBarFrame
+{
+    if ([_tabs count] > 0) {
+        [self setBarFrameOpened:YES];
+    }else{
+        [self setBarFrameCollapsed:YES];
+    }
+}
+
+- (void)setBarFrameOpened:(BOOL)animate
+{
+    if (animate) {
+        [[self animator] setBarFrame:[self bounds]];
+    }else{
+        [self setBarFrame:[self bounds]];
+    }
+}
+
+- (void)setBarFrameCollapsed:(BOOL)animate
+{
+    if (animate) {
+        [[self animator] setBarFrame:[self collapsedBarFrame]];
+    }else{
+        [self setBarFrame:[self collapsedBarFrame]];
     }
 }
 
@@ -438,6 +515,10 @@ static CGFloat __barThickness = 30.;
         if ([palette holder] == [self holder] || [palette holder] == nil) { // drag authorized only inside the same holder view
             _highlight = YES;
 
+            if ([_tabs count] == 0) {
+                [self setBarFrameOpened:YES];
+            }
+
             NSPoint dropPoint = [self convertPoint:[sender draggingLocation] fromView:nil];
             CGFloat location;
             
@@ -496,6 +577,10 @@ static CGFloat __barThickness = 30.;
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
     _highlight = NO;
+    
+    if ([_tabs count] == 0) {
+        [self setBarFrameCollapsed:YES];
+    }
 
     [self setNeedsDisplay:YES];
 }

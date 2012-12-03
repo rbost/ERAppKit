@@ -26,6 +26,8 @@
     
     
     NSRect _draggingPositionMarker;
+    
+    NSRect _barFrame;
 }
 /** Palettes attached to the tab view */
 @property (readonly) NSArray *tabs;
@@ -33,6 +35,8 @@
 @property (readonly) ERPalettePanelPosition position;
 /** The holder view owning the tab view. Should also view the receiver's superview.*/
 @property (readonly) ERPaletteHolderView *holder;
+/** The rectangle frame of the displayed bar */
+@property (assign) NSRect barFrame;
 /**
  * Returns the margin between the palette tabs.
  */
@@ -76,6 +80,11 @@
  * Recomputes the position of the tabs according to their desired location.
  */
 - (void)updateTabsLocations;
+
+/**
+ * Display the bar as collapsed if there is no tab, open it otherwise.
+ */
+- (void)updateBarFrame;
 @end
 
 
