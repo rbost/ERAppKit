@@ -45,9 +45,6 @@ static CGFloat __barThickness = 30.;
     [[palette contentView] setNeedsDisplay:YES];
     
     [palette release];
-
-    [origin updateBarFrame];
-    [destination updateBarFrame];
 }
 
 + (void)moveTab:(ERPalettePanel *)palette fromView:(ERPaletteTabView *)origin toView:(ERPaletteTabView *)destination atLocation:(CGFloat)loc
@@ -66,21 +63,16 @@ static CGFloat __barThickness = 30.;
     if (wasOpen) {
         [palette openInBestDirection:nil];
     }
-    //    [palette updateFrameSizeAndContentPlacement];
+
     [[palette contentView] setNeedsDisplay:YES];
     
     [palette release];
-    
-    [origin updateBarFrame];
-    [destination updateBarFrame];
 }
 
 + (id)defaultAnimationForKey:(NSString *)key {
     if ([key isEqualToString:@"barFrame"]) {
-        // By default, animate border color changes with simple linear interpolation to the new color value.
         return [CABasicAnimation animation];
     } else {
-        // Defer to super's implementation for any keys we don't specifically handle.
         return [super defaultAnimationForKey:key];
     }
 }
@@ -228,6 +220,7 @@ static CGFloat __barThickness = 30.;
     }else{
         [self setBarFrameCollapsed:YES];
     }
+    [self setNeedsDisplay:YES];
 }
 
 - (void)setBarFrameOpened:(BOOL)animate
@@ -321,6 +314,7 @@ static CGFloat __barThickness = 30.;
     [palette invalidateShadow];
     
     [self updateTabsLocations];
+    [self updateBarFrame];
 }
 
 - (void)removePalette:(ERPalettePanel *)palette
@@ -337,6 +331,8 @@ static CGFloat __barThickness = 30.;
 
         [[self window] removeChildWindow:palette];
         [self updateTabsLocations];
+        
+        [self updateBarFrame];
     }
 }
 
