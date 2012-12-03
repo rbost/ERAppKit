@@ -7,6 +7,10 @@
 //
 
 #import <ERAppKit/ERPaletteHolderView.h>
+/**
+ * ERBasicPaletteHolderView is a basic implementation of a holder view. It can only display 4 tab bars on the four sides of the content view.
+ * Use this class if you want things to remain simple. Otherwise, for more complex configuration, use the superclass, ERPaletteHolderView, instead.
+ */
 
 @interface ERBasicPaletteHolderView : ERPaletteHolderView
 {

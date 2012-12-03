@@ -9,3 +9,4 @@
 #import <ERAppKit/ERPalettePanel.h>
 #import <ERAppKit/ERPaletteTabView.h>
 #import <ERAppKit/ERPaletteHolderView.h>
+#import <ERAppKit/ERBasicPaletteHolderView.h>

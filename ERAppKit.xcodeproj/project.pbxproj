@@ -67,7 +67,7 @@
 		6CE3FE6B16694194004CE26E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3FE6816694194004CE26E /* LICENSE */; };
 		6CE3FE6C16694194004CE26E /* LICENSE.LESSER in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3FE6916694194004CE26E /* LICENSE.LESSER */; };
 		6CE3FE6F166C3143004CE26E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE3FE6E166C3143004CE26E /* QuartzCore.framework */; };
-		6CE3FE76166C536B004CE26E /* ERBasicPaletteHolderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE3FE74166C536B004CE26E /* ERBasicPaletteHolderView.h */; };
+		6CE3FE76166C536B004CE26E /* ERBasicPaletteHolderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE3FE74166C536B004CE26E /* ERBasicPaletteHolderView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CE3FE77166C536B004CE26E /* ERBasicPaletteHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE3FE75166C536B004CE26E /* ERBasicPaletteHolderView.m */; };
 		6CE4813B164C48C6001001C8 /* ERPaletteTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE48139164C48C6001001C8 /* ERPaletteTabView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CE4813C164C48C6001001C8 /* ERPaletteTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */; };
