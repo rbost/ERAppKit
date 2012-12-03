@@ -109,10 +109,32 @@ NSComparisonResult viewSort(id v1, id v2, void* context)
     [self addTabView:tabView];
     [tabView release];
     
+    switch (pos) {
+        case ERPalettePanelPositionLeft:
+            [tabView setAutoresizingMask:(NSViewHeightSizable|NSViewMaxXMargin)];
+            break;
+            
+        case ERPalettePanelPositionRight:
+            [tabView setAutoresizingMask:(NSViewHeightSizable|NSViewMinXMargin)];
+            break;
+            
+        case ERPalettePanelPositionUp:
+            [tabView setAutoresizingMask:(NSViewWidthSizable|NSViewMinYMargin)];
+            break;
+            
+        case ERPalettePanelPositionDown:
+            [tabView setAutoresizingMask:(NSViewWidthSizable|NSViewMaxYMargin)];
+            break;
+            
+        default:
+            break;
+    }
+
+    
     return tabView;
 }
 
-- (ERPaletteTabView *)addTabViewWithSize:(CGFloat)tabSize location:(CGFloat)location position:(ERPalettePanelPosition)pos;
+- (ERPaletteTabView *)addTabViewWithSize:(CGFloat)tabSize location:(CGFloat)location position:(ERPalettePanelPosition)pos
 {
     NSRect frame;
     CGFloat barThickness = [ERPaletteTabView barThickness];
