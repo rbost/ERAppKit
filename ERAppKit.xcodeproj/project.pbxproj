@@ -67,6 +67,8 @@
 		6CE3FE6B16694194004CE26E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3FE6816694194004CE26E /* LICENSE */; };
 		6CE3FE6C16694194004CE26E /* LICENSE.LESSER in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3FE6916694194004CE26E /* LICENSE.LESSER */; };
 		6CE3FE6F166C3143004CE26E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE3FE6E166C3143004CE26E /* QuartzCore.framework */; };
+		6CE3FE76166C536B004CE26E /* ERBasicPaletteHolderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE3FE74166C536B004CE26E /* ERBasicPaletteHolderView.h */; };
+		6CE3FE77166C536B004CE26E /* ERBasicPaletteHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE3FE75166C536B004CE26E /* ERBasicPaletteHolderView.m */; };
 		6CE4813B164C48C6001001C8 /* ERPaletteTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE48139164C48C6001001C8 /* ERPaletteTabView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CE4813C164C48C6001001C8 /* ERPaletteTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */; };
 /* End PBXBuildFile section */
@@ -164,6 +166,8 @@
 		6CE3FE6916694194004CE26E /* LICENSE.LESSER */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.LESSER; sourceTree = SOURCE_ROOT; };
 		6CE3FE6A16694194004CE26E /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = SOURCE_ROOT; };
 		6CE3FE6E166C3143004CE26E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6CE3FE74166C536B004CE26E /* ERBasicPaletteHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERBasicPaletteHolderView.h; sourceTree = "<group>"; };
+		6CE3FE75166C536B004CE26E /* ERBasicPaletteHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERBasicPaletteHolderView.m; sourceTree = "<group>"; };
 		6CE48139164C48C6001001C8 /* ERPaletteTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPaletteTabView.h; sourceTree = "<group>"; };
 		6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPaletteTabView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -345,6 +349,8 @@
 				6C722C58164AF0C30011BA2F /* ERPalettePanel.m */,
 				6C722C5F164B0FE50011BA2F /* ERPaletteHolderView.h */,
 				6C722C60164B0FE50011BA2F /* ERPaletteHolderView.m */,
+				6CE3FE74166C536B004CE26E /* ERBasicPaletteHolderView.h */,
+				6CE3FE75166C536B004CE26E /* ERBasicPaletteHolderView.m */,
 				6CE48139164C48C6001001C8 /* ERPaletteTabView.h */,
 				6CE4813A164C48C6001001C8 /* ERPaletteTabView.m */,
 				6C722C5B164AF1870011BA2F /* ERPaletteContentView.h */,
@@ -402,6 +408,7 @@
 				6C8C75101660957B0088C47F /* ERPaletteOpenPopupContentView.h in Headers */,
 				6C8C7514166095D40088C47F /* ERPaletteOpenPopup.h in Headers */,
 				6C68115C166555110019F7ED /* ERPalette.h in Headers */,
+				6CE3FE76166C536B004CE26E /* ERBasicPaletteHolderView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +534,7 @@
 				6C8C750D166095190088C47F /* ERPaletteOpenButton.m in Sources */,
 				6C8C75111660957B0088C47F /* ERPaletteOpenPopupContentView.m in Sources */,
 				6C8C7515166095D40088C47F /* ERPaletteOpenPopup.m in Sources */,
+				6CE3FE77166C536B004CE26E /* ERBasicPaletteHolderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

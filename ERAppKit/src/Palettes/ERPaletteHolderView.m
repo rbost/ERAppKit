@@ -13,13 +13,6 @@
 
 static CGFloat __tabMargin = 5.;
 
-@interface ERPaletteHolderView ()
-@property (readonly) ERPaletteTabView *leftTabs;
-@property (readonly) ERPaletteTabView *rightTabs;
-@property (readonly) ERPaletteTabView *upTabs;
-@property (readonly) ERPaletteTabView *downTabs;
-@end
-
 @implementation ERPaletteHolderView
 + (CGFloat)tabMargin
 {
@@ -32,17 +25,9 @@ static CGFloat __tabMargin = 5.;
     if (self) {
         // Initialization code here.
 
-        _leftTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionLeft];
-        _rightTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionRight];
-        _upTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionUp];
-        _downTabs = [[ERPaletteTabView alloc] initWithHolder:self position:ERPalettePanelPositionDown];
-        
+        _tabViews = [[NSMutableArray alloc] init];
         [self setAutoresizesSubviews:YES];
         
-        [self addSubview:_leftTabs positioned:NSWindowAbove relativeTo:nil]; [_leftTabs release]; [_leftTabs setAutoresizingMask:(NSViewHeightSizable|NSViewMaxXMargin)];
-        [self addSubview:_rightTabs positioned:NSWindowAbove relativeTo:nil]; [_rightTabs release]; [_rightTabs setAutoresizingMask:(NSViewHeightSizable|NSViewMinXMargin)];
-        [self addSubview:_upTabs positioned:NSWindowAbove relativeTo:nil]; [_upTabs release]; [_upTabs setAutoresizingMask:(NSViewWidthSizable|NSViewMinYMargin)];
-        [self addSubview:_downTabs positioned:NSWindowAbove relativeTo:nil]; [_downTabs release]; [_downTabs setAutoresizingMask:(NSViewWidthSizable|NSViewMaxYMargin)];
     }
     
     return self;
@@ -57,19 +42,27 @@ static CGFloat __tabMargin = 5.;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
+    [_tabViews release];
+    
     [super dealloc];
+}
+
+- (NSArray *)tabViews
+{
+    return _tabViews;
 }
 
 NSComparisonResult viewSort(id v1, id v2, void* context)
 {
     ERPaletteHolderView *sortedView = context;
-    if (v1 == [sortedView leftTabs] || v1 == [sortedView rightTabs] || v1 == [sortedView upTabs] || v1 == [sortedView downTabs]) {
+    if ([[sortedView tabViews] containsObject:v1]) {
         return NSOrderedDescending;
-    }else if(v2 == [sortedView leftTabs] || v2 == [sortedView rightTabs] || v2 == [sortedView upTabs] || v2 == [sortedView downTabs]) {
+    }else if ([[sortedView tabViews] containsObject:v2]) {
         return NSOrderedAscending;
     }else{
         return NSOrderedSame;
     }
+
 }
 
 - (void)addSubview:(NSView *)aView
@@ -80,111 +73,99 @@ NSComparisonResult viewSort(id v1, id v2, void* context)
     [self sortSubviewsUsingFunction:viewSort context:self];
 }
 
-- (void)addPaletteWithContentView:(NSView *)contentView icon:(NSImage *)icon title:(NSString *)paletteTitle atPosition:(ERPalettePanelPosition)pos
+- (void)addTabView:(ERPaletteTabView *)view
 {
+    [_tabViews addObject:view];
+    [self addSubview:view];
+    [self sortSubviewsUsingFunction:viewSort context:self];
+}
+
+- (ERPaletteTabView *)addTabViewWithPosition:(ERPalettePanelPosition)pos
+{
+    ERPaletteTabView *tabView = [[ERPaletteTabView alloc] initWithHolder:self position:pos];
+    
+    [self addTabView:tabView];
+    [tabView release];
+    
+    return tabView;
+}
+
+- (ERPaletteTabView *)addTabViewWithSize:(CGFloat)tabSize location:(CGFloat)location position:(ERPalettePanelPosition)pos;
+{
+    NSRect frame;
+    CGFloat barThickness = [ERPaletteTabView barThickness];
+
     switch (pos) {
-        case ERPalettePanelPositionRight:
-            [_rightTabs addPaletteWithContentView:contentView icon:icon title:paletteTitle];
-            break;
-            
         case ERPalettePanelPositionLeft:
-            [_leftTabs addPaletteWithContentView:contentView icon:icon title:paletteTitle];
-            break;
-            
-        case ERPalettePanelPositionUp:
-            [_upTabs addPaletteWithContentView:contentView icon:icon title:paletteTitle];
+            frame = NSMakeRect(0, location, barThickness, tabSize);
             break;
             
         case ERPalettePanelPositionDown:
-            [_downTabs addPaletteWithContentView:contentView icon:icon title:paletteTitle];
+            frame = NSMakeRect(location, 0, tabSize, barThickness);
+            break;
+            
+        case ERPalettePanelPositionRight:
+            frame = NSMakeRect([self frame].size.width - barThickness, location, barThickness, tabSize);
+            break;
+            
+        case ERPalettePanelPositionUp:
+            frame = NSMakeRect(location, [self frame].size.height - barThickness, tabSize, barThickness);
             break;
             
         default:
+            frame = NSZeroRect;
             break;
     }
+
+    ERPaletteTabView *tabView = [[ERPaletteTabView alloc] initWithHolder:self frame:frame position:pos];
     
+    [self addTabView:tabView];
+    [tabView release];
+
+    return tabView;
+}
+
+- (void)removeTabView:(ERPaletteTabView *)view
+{
+    if ([view superview] == self) {
+        [view removeFromSuperview];
+        [_tabViews removeObject:view];
+    }
 }
 
 - (void)collapsePaletteIntersectingRect:(NSRect)frame
 {
-    for (ERPalettePanel *p in [_leftTabs tabs]) {
-        if (NSIntersectsRect([p frame], frame)) {
-            [p setState:ERPaletteClosed animate:YES];
+    for (ERPaletteTabView *tabView in _tabViews) {
+        for (ERPalettePanel *p in [tabView tabs]) {
+            if (NSIntersectsRect([p frame], frame)) {
+                [p setState:ERPaletteClosed animate:YES];
+            }
         }
     }
-    for (ERPalettePanel *p in [_rightTabs tabs]) {
-        if (NSIntersectsRect([p frame], frame)) {
-            [p setState:ERPaletteClosed animate:YES];
-        }
-    }
-    for (ERPalettePanel *p in [_upTabs tabs]) {
-        if (NSIntersectsRect([p frame], frame)) {
-            [p setState:ERPaletteClosed animate:YES];
-        }
-    }
-    for (ERPalettePanel *p in [_downTabs tabs]) {
-        if (NSIntersectsRect([p frame], frame)) {
-            [p setState:ERPaletteClosed animate:YES];
-        }
-    }
-
 }
 
 - (void)collapsePaletteIntersectingRect:(NSRect)frame except:(NSWindow *)window
 {
-    for (ERPalettePanel *p in [_leftTabs tabs]) {
-        if (p != window && NSIntersectsRect([p frame], frame)) {
-            [p setState:ERPaletteClosed animate:YES];
+    for (ERPaletteTabView *tabView in _tabViews) {
+        for (ERPalettePanel *p in [tabView tabs]) {
+            if (p != window && NSIntersectsRect([p frame], frame)) {
+                [p setState:ERPaletteClosed animate:YES];
+            }
         }
-    }
-    for (ERPalettePanel *p in [_rightTabs tabs]) {
-        if (p != window && NSIntersectsRect([p frame], frame)) {
-            [p setState:ERPaletteClosed animate:YES];
-        }
-    }
-    for (ERPalettePanel *p in [_upTabs tabs]) {
-        if (p != window && NSIntersectsRect([p frame], frame)) {
-            [p setState:ERPaletteClosed animate:YES];
-        }
-    }
-    for (ERPalettePanel *p in [_downTabs tabs]) {
-        if (p != window && NSIntersectsRect([p frame], frame)) {
-            [p setState:ERPaletteClosed animate:YES];
-        }
-    }
-    
+    }    
 }
 
 - (BOOL)isFrameEmptyFromPalettes:(NSRect)frame except:(NSWindow *)window
 {
-    for (ERPalettePanel *p in [_leftTabs tabs]) {
-        if (p != window && NSIntersectsRect([p contentScreenFrame], frame)) {
-//            NSLog(NSStringFromRect([p contentFrame]));
-//            NSLog(NSStringFromRect(frame));
-            
-            return NO;
+    for (ERPaletteTabView *tabView in _tabViews) {
+        for (ERPalettePanel *p in [tabView tabs]) {
+            if (p != window && NSIntersectsRect([p contentScreenFrame], frame)) {
+                return NO;
+            }
         }
     }
-    for (ERPalettePanel *p in [_rightTabs tabs]) {
-        if (p != window && NSIntersectsRect([p contentScreenFrame], frame)) {
-            return NO;
-        }
-    }
-    for (ERPalettePanel *p in [_upTabs tabs]) {
-        if (p != window && NSIntersectsRect([p contentScreenFrame], frame)) {
-            return NO;
-        }
-    }
-    for (ERPalettePanel *p in [_downTabs tabs]) {
-        if (p != window && NSIntersectsRect([p contentScreenFrame], frame)) {
-            return NO;
-        }
-    }
-    
     return YES;
 }
-
-@synthesize leftTabs = _leftTabs, rightTabs = _rightTabs, upTabs = _upTabs, downTabs = _downTabs;
 
 #pragma mark Notifications
 

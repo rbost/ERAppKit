@@ -43,6 +43,11 @@
 + (CGFloat)tabMargin;
 
 /**
+ * Returns the thickness of the tab bars.
+ */
++ (CGFloat)barThickness;
+
+/**
  * Intializes a newly created tab view.
  *
  * @param holder The holder view owning the new tab view.
@@ -50,6 +55,17 @@
  * @return The newly initialized tab view
  */
 - (id)initWithHolder:(ERPaletteHolderView *)holder position:(ERPalettePanelPosition)position;
+
+/**
+ * Intializes a newly created tab view and specifies its frame.
+ *
+ * @param holder The holder view owning the new tab view.
+ * @param frame The frame of the newly initialized tab view.
+ * @param position The position of the tab view with respect to the holder
+ * @return The newly initialized tab view
+ */
+- (id)initWithHolder:(ERPaletteHolderView *)holder frame:(NSRect)frame position:(ERPalettePanelPosition)position;
+
 /**
  * Add a newly initialized palette with a given content view, icon and title
  *

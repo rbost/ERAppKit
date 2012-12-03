@@ -31,12 +31,18 @@
     [menuRadiusSlider setFloatValue:[ERMenu menuRadius]];
     
     // for the palettes tests
-    [[self paletteHolder] addPaletteWithContentView:[self paletteContent1] icon:[NSImage imageNamed:@"tool-arrow"] title:@"Content 1" atPosition:ERPalettePanelPositionUp];
-    [[self paletteHolder] addPaletteWithContentView:[self paletteContent2] icon:[NSImage imageNamed:@"tool-bezier"] title:@"Content 2" atPosition:ERPalettePanelPositionLeft];
-    [[self paletteHolder] addPaletteWithContentView:[self paletteContent3] icon:[NSImage imageNamed:@"tool-text"] title:@"Content 3" atPosition:ERPalettePanelPositionRight];
-    [[self paletteHolder] addPaletteWithContentView:[self paletteContent4] icon:[NSImage imageNamed:@"tool-oval"] title:@"Content 4" atPosition:ERPalettePanelPositionDown];
-    [[self paletteHolder] addPaletteWithContentView:[self paletteContent5] icon:[NSImage imageNamed:@"tool-rectangle"] title:@"Content 5" atPosition:ERPalettePanelPositionUp];
-    [[self paletteHolder] addPaletteWithContentView:[self paletteContent6] icon:[NSImage imageNamed:@"tool-zoom"] title:@"Content 6" atPosition:ERPalettePanelPositionLeft];
+    ERPaletteTabView *upTabs = [[self paletteHolder] addTabViewWithPosition:ERPalettePanelPositionUp];
+    ERPaletteTabView *leftTabs = [[self paletteHolder] addTabViewWithPosition:ERPalettePanelPositionLeft];
+    ERPaletteTabView *rightTabs = [[self paletteHolder] addTabViewWithPosition:ERPalettePanelPositionRight];
+    ERPaletteTabView *downTabs1 = [[self paletteHolder] addTabViewWithSize:200 location:[ERPaletteTabView barThickness] position:ERPalettePanelPositionDown];
+    ERPaletteTabView *downTabs2 = [[self paletteHolder] addTabViewWithSize:200 location:200+2*[ERPaletteTabView barThickness] position:ERPalettePanelPositionDown];
+    
+    [upTabs addPaletteWithContentView:[self paletteContent1] icon:[NSImage imageNamed:@"tool-arrow"] title:@"Content 1"];
+    [leftTabs addPaletteWithContentView:[self paletteContent2] icon:[NSImage imageNamed:@"tool-bezier"] title:@"Content 2"];
+    [rightTabs addPaletteWithContentView:[self paletteContent3] icon:[NSImage imageNamed:@"tool-text"] title:@"Content 3"];
+    [downTabs1 addPaletteWithContentView:[self paletteContent4] icon:[NSImage imageNamed:@"tool-oval"] title:@"Content 4"];
+    [upTabs addPaletteWithContentView:[self paletteContent5] icon:[NSImage imageNamed:@"tool-rectangle"] title:@"Content 5"];
+    [downTabs2 addPaletteWithContentView:[self paletteContent6] icon:[NSImage imageNamed:@"tool-zoom"] title:@"Content 6"];    
 }
 
 - (void)showDummyMenu:(NSEvent *)event

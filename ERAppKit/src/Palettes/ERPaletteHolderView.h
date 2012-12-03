@@ -19,21 +19,37 @@
 
 @interface ERPaletteHolderView : NSView
 {
-    ERPaletteTabView *_leftTabs;
-    ERPaletteTabView *_rightTabs;
-    ERPaletteTabView *_upTabs;
-    ERPaletteTabView *_downTabs;
+    NSMutableArray *_tabViews;
 }
 
 /**
- * Adds a palette with the specified content view, icon and title on the given tab bar
- *
- * @param contentView The content of the new palette
- * @param icon The icon associated with the new palette
- * @param paletteTitle The title chosen for the palette
- * @param pos The position representing the tab bar used to add put the new palette
+ * Adds a new tab to the receiver. 
+ * @param view The added tab view. It should be entirely intialized (position, frame, ...) before added to ensure correct functionning
  */
-- (void)addPaletteWithContentView:(NSView *)contentView icon:(NSImage *)icon title:(NSString *)paletteTitle atPosition:(ERPalettePanelPosition)pos;
+- (void)addTabView:(ERPaletteTabView *)view;
+
+/**
+ * Initializes a new tab view and adds it the the receiver's tab views.
+ * @param tabSize The size of the newly initialized tab view. For vertical tabs (if position is left and right, this sets the height of the tab view; otherwise sets the width).
+ * @param location The location of the newly initialized tab view (if position is left and right, this sets the y position of the tab view; otherwise sets the x position).
+ * @param pos The position of the newly initialized tab view. See ERPaletteTabView class documentation.
+ * @return The newly intialized tab view.
+ */
+- (ERPaletteTabView *)addTabViewWithSize:(CGFloat)tabSize location:(CGFloat)location position:(ERPalettePanelPosition)pos;
+
+/**
+ * Initializes a new tab view with the maximum size and adds it the the receiver's tab views.
+ * @param pos The position of the newly initialized tab view. See ERPaletteTabView class documentation.
+ * @return The newly intialized tab view.
+ */
+- (ERPaletteTabView *)addTabViewWithPosition:(ERPalettePanelPosition)pos;
+
+
+/**
+ * Removes a tab view to the receiver.
+ * @param view The tab view to remove.
+ */
+- (void)removeTabView:(ERPaletteTabView *)view;
 
 /**
  * Checks if a screen frame contains some palette
