@@ -22,7 +22,9 @@ After installing the framework in your target, you will be able to use all the c
 `#import <ERAppKit/ERAppKit.h>`
 * if you only want to use the radial menus, use `#import <ERAppKit/ERMenu.h>`
 * if what you want is only palettes, use `#import <ERAppKit/ERPalette.h>`
-             
+    
+You can find help on how to use the frameworks components in the [wiki](https://github.com/rbost/ERAppKit/wiki).
+         
 License
 -------
 ERAppKit is licensed under the terms of the [GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl-3.0.en.html). You can find a copy of the license with the sources.
