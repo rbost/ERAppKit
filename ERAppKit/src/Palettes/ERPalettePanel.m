@@ -205,11 +205,21 @@ static CGFloat __tabHeight = 30.;
 {
     ERPaletteOpeningDirection dir = [self preferedOpeningDirection];
     if ([[self holder] isFrameEmptyFromPalettes:[self contentFrameForOpeningDirection:dir] except:self]) {
+        if (![NSScreen isFrameOnscreen:[self contentFrameForOpeningDirection:dir]]) {
+            return ERPaletteInsideOpeningDirection;
+        }
         return dir;
     }
     dir = (dir == ERPaletteInsideOpeningDirection)? ERPaletteOutsideOpeningDirection : ERPaletteInsideOpeningDirection;
     if ([[self holder] isFrameEmptyFromPalettes:[self contentFrameForOpeningDirection:dir] except:self]) {
+        if (![NSScreen isFrameOnscreen:[self contentFrameForOpeningDirection:dir]]) {
+            return ERPaletteInsideOpeningDirection;
+        }
         return dir;
+    }
+    
+    if (![NSScreen isFrameOnscreen:[self contentFrameForOpeningDirection:dir]]) {
+        return ERPaletteInsideOpeningDirection;
     }
     
     return [self preferedOpeningDirection];

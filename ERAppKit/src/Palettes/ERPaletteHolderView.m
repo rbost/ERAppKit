@@ -227,3 +227,18 @@ NSComparisonResult viewSort(id v1, id v2, void* context)
 }
 
 @end
+
+@implementation NSScreen (ERAppKit)
+
++ (BOOL)isFrameOnscreen:(NSRect)frame
+{
+    NSRect screenRect = NSZeroRect;
+    
+    for (NSScreen *s in [NSScreen screens]) {
+        screenRect = NSUnionRect(screenRect, [s visibleFrame]);
+    }
+    
+    return NSPointInRect(frame.origin, screenRect) && !NSIntersectsRect(screenRect, frame);
+}
+
+@end

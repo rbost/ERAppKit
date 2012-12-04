@@ -59,4 +59,15 @@
  * @return YES if no palette (except window) of the holder view intersects frame  
  */
 - (BOOL)isFrameEmptyFromPalettes:(NSRect)frame except:(NSWindow *)window;
+
 @end
+
+@interface NSScreen (ERAppKit)
+/**
+ * Returns YES if the frame is entirely visible on screen.
+ *
+ * @param frame The frame to check.
+ */
++ (BOOL)isFrameOnscreen:(NSRect)frame;
+@end
+
