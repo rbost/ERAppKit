@@ -19,13 +19,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
-        _closeButton = [[ERPaletteButton alloc] initWithFrame:NSMakeRect(NSMaxX([self bounds])-15, (frame.size.height-10.)/2., 10, 10)];
-        [self addSubview:_closeButton];
-        [_closeButton release];
-        [_closeButton setTarget:[self window]];
-        [_closeButton setAction:@selector(collapse:)];
-        
+        // Initialization code here.       
         
         _mouseOverArea = [[NSTrackingArea alloc] initWithRect:[self bounds]
                                                       options: (NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp )
