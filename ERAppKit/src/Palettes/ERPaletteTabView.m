@@ -325,7 +325,7 @@ static CGFloat __barThickness = 30.;
     [palette invalidateShadow];
     
     [self updateTabsLocations];
-    [self updateBarFrame:NO];
+    [self updateBarFrame:YES];
 }
 
 - (void)removePalette:(ERPalettePanel *)palette
@@ -343,7 +343,7 @@ static CGFloat __barThickness = 30.;
         [[self window] removeChildWindow:palette];
         [self updateTabsLocations];
         
-        [self updateBarFrame:NO];
+        [self updateBarFrame:YES];
     }
 }
 
