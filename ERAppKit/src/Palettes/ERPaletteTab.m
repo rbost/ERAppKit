@@ -177,7 +177,7 @@
     
     NSBezierPath *bp = [NSBezierPath bezierPathWithRoundedRect:tabRect radius:TAB_ROUNDED_RADIUS corners:corners];
     
-    [[NSColor colorWithCalibratedWhite:0.1 alpha:0.9] set];
+    [[NSColor colorWithCalibratedWhite:0.1 alpha:0.95] set];
 
     [bp fill];
     
