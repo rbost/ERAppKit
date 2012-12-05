@@ -381,6 +381,45 @@ static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpen
         return;
     }
     NSRect newFrame;
+    newFrame = [self frameForState:state position:[self palettePosition] openingDirection:[self openingDirection]];
+
+    if (animate) {
+        [NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setCompletionHandler:^{[self updateTitleViewPlacement:YES];}];
+
+        [[self animator] setFrame:newFrame display:YES];
+        
+        [NSAnimationContext endGrouping];
+    }else{
+        [self setFrame:newFrame display:YES];
+    }
+    
+
+    [_titleView updateCloseButtonPosition];
+
+    ERPaletteState oldState = _state;
+    _state = state;
+
+    if ([self state] == ERPaletteTooltip || (oldState == ERPaletteTooltip && [self state] == ERPaletteClosed)) {
+        [_content setHidden:YES];
+    }else{
+        [_content setHidden:NO];
+    }
+    
+    if(oldState == ERPaletteClosed)
+        [self updateTitleViewPlacement:NO];
+    
+}
+
+- (NSRect)frameForState:(ERPaletteState)state position:(ERPalettePanelPosition)palettePosition openingDirection:(ERPaletteOpeningDirection)direction
+{
+    ERPalettePanelPosition pos = palettePosition;
+    
+    if (direction == ERPaletteInsideOpeningDirection) {
+        pos = (pos + 2)%4;
+    }
+    
+    NSRect newFrame;
     
     if (state == ERPaletteClosed) {
         NSRect tabFrame = [self tabRect];
@@ -388,7 +427,7 @@ static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpen
         tabFrame = [self convertRectToScreen:tabFrame];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidCloseNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:tabFrame] forKey:ERPaletteNewFrameKey]];
-
+        
         newFrame = tabFrame;
     }else if (state == ERPaletteOpened) {
         NSSize contentSize = [self paletteContentSize];
@@ -396,35 +435,33 @@ static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpen
         newFrame.size = [self openedPaletteSize];
         
         tabFrame = [self tabRect];
-        
-        ERPalettePanelPosition pos = [self effectiveHeaderPosition];
-        
+                
         switch (pos) {
             case ERPalettePanelPositionLeft:
                 newFrame.origin.x = NSMinX(tabFrame) - contentSize.width;
                 newFrame.origin.y = NSMaxY(tabFrame) - contentSize.height;
                 break;
-
+                
             case ERPalettePanelPositionRight:
                 newFrame.origin.x = NSMinX(tabFrame);
                 newFrame.origin.y = NSMaxY(tabFrame) - contentSize.height;
                 break;
-
+                
             case ERPalettePanelPositionUp:
                 newFrame.origin = tabFrame.origin;
                 break;
-
+                
             case ERPalettePanelPositionDown:
                 newFrame.origin.x = NSMinX(tabFrame);
                 newFrame.origin.y = NSMinY(tabFrame) - contentSize.height;
                 break;
-
+                
             default:
                 break;
         }
         newFrame = [[self contentView] convertRect:newFrame toView:nil];
         newFrame = [self convertRectToScreen:newFrame];
-
+        
         NSRect contentFrame = [self contentFrameForOpeningDirection:[self openingDirection]];
         [[NSNotificationCenter defaultCenter] postNotificationName:ERPaletteDidOpenNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSValue valueWithRect:contentFrame] forKey:ERPaletteNewFrameKey]];
         
@@ -435,9 +472,7 @@ static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpen
         
         newFrame = tabRect;
         
-        
-        ERPalettePanelPosition pos = [self effectiveHeaderPosition];
-        
+                
         switch (pos) {
             case ERPalettePanelPositionLeft:
                 newFrame.size.width += [self paletteContentSize].width;
@@ -462,38 +497,11 @@ static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpen
             default:
                 break;
         }
-
+        
         newFrame = [self convertRectToScreen:newFrame];
-        
-    }
-
-    if (animate) {
-        [NSAnimationContext beginGrouping];
-        [[NSAnimationContext currentContext] setCompletionHandler:^{[self updateTitleViewPlacement:YES];}];
-//        [[NSAnimationContext currentContext] setDuration:2.];
-
-        [[self animator] setFrame:newFrame display:YES];
-        
-        [NSAnimationContext endGrouping];
-    }else{
-        [self setFrame:newFrame display:YES];
     }
     
-
-    [_titleView updateCloseButtonPosition];
-
-    ERPaletteState oldState = _state;
-    _state = state;
-
-    if ([self state] == ERPaletteTooltip || (oldState == ERPaletteTooltip && [self state] == ERPaletteClosed)) {
-        [_content setHidden:YES];
-    }else{
-        [_content setHidden:NO];
-    }
-    
-    if(oldState == ERPaletteClosed)
-        [self updateTitleViewPlacement:NO];
-    
+    return newFrame;
 }
 
 #pragma mark Content view management
