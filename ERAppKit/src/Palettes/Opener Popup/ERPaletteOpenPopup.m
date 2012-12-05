@@ -58,12 +58,28 @@
         [button1 setTarget:palette]; [button1 setAction:@selector(openLeft:)];
         button2 = [[ERPaletteOpenButton alloc] initWithFrame:NSMakeRect(60, 0, 30, [ERPalettePanel tabWidth]-8.)]; [button2 setOrientation:ERPalettePanelPositionRight];
         [button2 setTarget:palette]; [button2 setAction:@selector(openRight:)];
+        
+        if ([palette state] == ERPaletteOpened) {
+            if ([palette effectiveHeaderPosition] == ERPalettePanelPositionLeft) {
+                [button1 setHidden:YES];
+            }else{
+                [button2 setHidden:YES];
+            }
+        }
     }else{
         button1 = [[ERPaletteOpenButton alloc] initWithFrame:NSMakeRect(0, 0, 30, [ERPalettePanel tabWidth]-8.)];[button1 setOrientation:ERPalettePanelPositionUp];
         [button1 setTarget:palette]; [button1 setAction:@selector(openUp:)];
         
         button2 = [[ERPaletteOpenButton alloc] initWithFrame:NSMakeRect(0, 59, 30, [ERPalettePanel tabWidth]-8.)]; [button2 setOrientation:ERPalettePanelPositionDown];
         [button2 setTarget:palette]; [button2 setAction:@selector(openDown:)];
+      
+        if ([palette state] == ERPaletteOpened) {
+            if ([palette effectiveHeaderPosition] == ERPalettePanelPositionDown) {
+                [button1 setHidden:YES];
+            }else{
+                [button2 setHidden:YES];
+            }
+        }
     }
 
     
