@@ -238,7 +238,7 @@ NSComparisonResult viewSort(id v1, id v2, void* context)
         screenRect = NSUnionRect(screenRect, [s visibleFrame]);
     }
     
-    return NSPointInRect(frame.origin, screenRect) && !NSIntersectsRect(screenRect, frame);
+    return NSContainsRect(screenRect, frame);
 }
 
 @end
