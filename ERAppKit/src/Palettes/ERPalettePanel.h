@@ -96,6 +96,16 @@ typedef enum {
 +(NSSize)tabSizeForPanelPosition:(ERPalettePanelPosition)pos;
 
 /**
+ * Returns the preferred opening direction for newly created palettes.
+ */
++ (ERPaletteOpeningDirection)defaultOpeningDirection;
+/**
+ * Sets the default opening direction for newly created palettes.
+ * @param dir The new default direction.
+ */
++ (void)setDefaultOpeningDirection:(ERPaletteOpeningDirection)dir;
+
+/**
  * Initialize a new palette panel
  *
  * @param content The view to be displayed in the palette

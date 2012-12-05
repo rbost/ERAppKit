@@ -23,6 +23,8 @@ NSString *ERPalettePboardType = @"erappkit.palettePboardType";
 static CGFloat __tabWidth = 40.;
 static CGFloat __tabHeight = 30.;
 
+static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpeningDirection;
+
 @implementation ERPalettePanel
 
 +(CGFloat)tabWidth
@@ -44,6 +46,18 @@ static CGFloat __tabHeight = 30.;
     }
 }
 
+#pragma mark Customization
+
++ (ERPaletteOpeningDirection)defaultOpeningDirection
+{
+    return __defaultOpeningDirection;
+}
+
++ (void)setDefaultOpeningDirection:(ERPaletteOpeningDirection)dir
+{
+    __defaultOpeningDirection = dir;
+}
+
 #pragma mark Initialization and overrides
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
@@ -54,8 +68,8 @@ static CGFloat __tabHeight = 30.;
     [self setContentView:contentView];
 
     _state = ERPaletteClosed;
-    _openingDirection = ERPaletteInsideOpeningDirection;
-    _preferedOpeningDirection = ERPaletteInsideOpeningDirection;
+    _preferedOpeningDirection = [ERPalettePanel defaultOpeningDirection];
+    _openingDirection = _preferedOpeningDirection;
 
     return self;
 }
