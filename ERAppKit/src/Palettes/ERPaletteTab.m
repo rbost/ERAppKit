@@ -294,9 +294,7 @@
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
     [_mouseOverTimer stop];
-    if ([[self palette] state] == ERPaletteOpened) {
-        return;
-    }
+
     NSPoint screenLocation;
     NSRect tabRect;
     [self _getDrawingRectsTabRect:NULL bounds:&tabRect];

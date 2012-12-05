@@ -174,11 +174,40 @@ static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpen
 
 - (void)setOpeningDirection:(ERPaletteOpeningDirection)openingDirection
 {
-    _openingDirection = openingDirection;
-    [self updateContentPlacement];
-    [self updateAutoresizingMask];
+    [self setOpeningDirection:openingDirection animate:NO];
 }
 
+- (void)setOpeningDirection:(ERPaletteOpeningDirection)openingDirection animate:(BOOL)animate
+{
+    NSRect newFrame = [self frameForState:[self state] position:[self palettePosition] openingDirection:openingDirection];
+    
+    _openingDirection = openingDirection;
+    
+    if ([self state] == ERPaletteClosed) {
+        [self updateContentPlacement];
+        [self updateAutoresizingMask];
+        [self updateTitleViewPlacement:NO];
+        return;
+    }
+    
+    if (animate) {
+        [NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setCompletionHandler:^{
+            [self invalidateShadow];[self updateAutoresizingMask];
+        }];
+        
+        [self updateContentPlacementAnimate];
+        [self updateTitleViewPlacement:YES];
+        [[self animator] setFrame:newFrame display:YES];
+        
+        [NSAnimationContext endGrouping];
+    }else{
+        [self setFrame:newFrame display:YES];
+        [self updateContentPlacement];
+        [self updateAutoresizingMask];
+        [self updateTitleViewPlacement:NO];
+    }
+}
 - (NSRect)contentFrameForOpeningDirection:(ERPaletteOpeningDirection)dir
 {
     ERPalettePanelPosition pos = [self palettePosition];
@@ -320,6 +349,29 @@ static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpen
     [_content setFrameOrigin:frameOrigin];
     [_tabButton setFrameOrigin:[self tabRect].origin];
 }
+
+- (void)updateContentPlacementAnimate
+{
+    NSPoint frameOrigin = NSZeroPoint;
+    ERPalettePanelPosition pos = [self effectiveHeaderPosition];
+    NSRect tabRect = [self tabRect];
+    
+    if (pos == ERPalettePanelPositionUp) {
+        frameOrigin.y = [ERPaletteContentView paletteTitleHeight]+[ERPalettePanel tabHeight];
+    }else if(pos == ERPalettePanelPositionDown) {
+        frameOrigin.y = NSMinY(tabRect) - [ERPaletteContentView paletteTitleHeight] - [[self content] frame].size.height;
+    }else if (pos == ERPalettePanelPositionRight) {
+        frameOrigin.x = [ERPalettePanel tabHeight];
+        frameOrigin.y = NSMaxY(tabRect) - [ERPaletteContentView paletteTitleHeight] - [[self content] frame].size.height;
+    }else if (pos == ERPalettePanelPositionLeft) {
+        frameOrigin.x = NSMinX(tabRect) - [[self content] frame].size.width;
+        frameOrigin.y = NSMaxY(tabRect) - [ERPaletteContentView paletteTitleHeight] - [[self content] frame].size.height;
+    }
+    
+    [[_content animator] setFrameOrigin:frameOrigin];
+    [[_tabButton animator] setFrameOrigin:[self tabRect].origin];
+}
+
 
 - (void)updateTitleViewPlacement:(BOOL)animate
 {
@@ -770,11 +822,11 @@ static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpen
 
 - (IBAction)openUp:(id)sender
 {
-    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 1) { // up or down
+    if ([self palettePosition]%2 == 1) { // up or down
         if ([self palettePosition] == ERPalettePanelPositionDown) {
-            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
+            [self setOpeningDirection:ERPaletteOutsideOpeningDirection animate:YES];
         }else{
-            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
+            [self setOpeningDirection:ERPaletteInsideOpeningDirection animate:YES];
         }
         
         [self setState:ERPaletteOpened animate:YES];
@@ -783,11 +835,11 @@ static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpen
 
 - (IBAction)openDown:(id)sender
 {
-    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 1) { // up or down
+    if ([self palettePosition]%2 == 1) { // up or down
         if ([self palettePosition] == ERPalettePanelPositionDown) {
-            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
+            [self setOpeningDirection:ERPaletteInsideOpeningDirection animate:YES];
         }else{
-            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
+            [self setOpeningDirection:ERPaletteOutsideOpeningDirection animate:YES];
         }
         
         [self setState:ERPaletteOpened animate:YES];
@@ -796,11 +848,11 @@ static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpen
 
 - (IBAction)openRight:(id)sender
 {
-    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 0) { // up or down
+    if ([self palettePosition]%2 == 0) { // left or right
         if ([self palettePosition] == ERPalettePanelPositionRight) {
-            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
+            [self setOpeningDirection:ERPaletteOutsideOpeningDirection animate:YES];
         }else{
-            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
+            [self setOpeningDirection:ERPaletteInsideOpeningDirection animate:YES];
         }
         
         [self setState:ERPaletteOpened animate:YES];
@@ -809,11 +861,11 @@ static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpen
 
 - (IBAction)openLeft:(id)sender
 {
-    if ([self state] == ERPaletteClosed && [self palettePosition]%2 == 0) { // up or down
+    if ([self palettePosition]%2 == 0) { // left or right
         if ([self palettePosition] == ERPalettePanelPositionRight) {
-            [self setOpeningDirection:ERPaletteInsideOpeningDirection];
+            [self setOpeningDirection:ERPaletteInsideOpeningDirection animate:YES];
         }else{
-            [self setOpeningDirection:ERPaletteOutsideOpeningDirection];
+            [self setOpeningDirection:ERPaletteOutsideOpeningDirection animate:YES];
         }
         
         [self setState:ERPaletteOpened animate:YES];
