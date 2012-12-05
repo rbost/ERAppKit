@@ -404,9 +404,15 @@ static ERPaletteOpeningDirection __defaultOpeningDirection = ERPaletteInsideOpen
         }
     }
     if (animate) {
+        [NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setCompletionHandler:^{[self invalidateShadow];}];
+        
         [[_titleView animator] setFrameOrigin:frameOrigin];
+        
+        [NSAnimationContext endGrouping];
     }else{
-        [_titleView setFrameOrigin:frameOrigin];        
+        [_titleView setFrameOrigin:frameOrigin];
+        [self invalidateShadow];
     }
 }
 
