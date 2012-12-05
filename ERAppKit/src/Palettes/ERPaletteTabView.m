@@ -295,7 +295,7 @@ static CGFloat __barThickness = 30.;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paletteStateDidChange:) name:ERPaletteDidCloseNotification object:palette];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paletteStateDidChange:) name:ERPaletteDidOpenNotification object:palette];
 
-    // this also order the panel out
+    [palette makeKeyAndOrderFront:self];
     [[self window] addChildWindow:palette ordered:NSWindowAbove];
     
     [self updateTabsLocations];
@@ -320,7 +320,7 @@ static CGFloat __barThickness = 30.;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paletteStateDidChange:) name:ERPaletteDidCloseNotification object:palette];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paletteStateDidChange:) name:ERPaletteDidOpenNotification object:palette];
     
-    // this also order the panel out
+    [palette makeKeyAndOrderFront:self];
     [[self window] addChildWindow:palette ordered:NSWindowAbove];
     [palette invalidateShadow];
     
